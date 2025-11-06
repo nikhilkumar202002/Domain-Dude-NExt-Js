@@ -8,10 +8,10 @@
 }
 .banner-content h1{
     font-size: 48px;
-    font-weight: 400;
+    font-weight: 350;
     color: white;
     line-height: 60px;
-    width: 58%;
+    width: 62%;
 }
 .banner-content p{
     font-size: 17px;
@@ -60,4 +60,20 @@
 }
 .banner-btn{
     margin-top: 40PX;
+}
+.banner-content-highlight {
+  font-family: var(--font-highlight);
+  background: linear-gradient(90deg, #0054FF, #00D4FF, #0054FF);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glowGradient 4s ease infinite;
+  text-shadow: 0 0 10px rgba(0, 84, 255, 0.6);
+  font-weight: 500;
+}
+
+@keyframes glowGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }

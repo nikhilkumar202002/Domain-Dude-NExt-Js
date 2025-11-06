@@ -9,7 +9,7 @@ const Banner = () => {
         <section className="banner">
             <div className="banner-container container">
                 <div className="banner-content">
-                    <h1>Leading Website Development & Digital Marketing Agency <span className="banner-content-highlight">in Kochi.</span></h1>
+                    <h1>Leading Website Development & Digital Marketing Agency <span className="banner-content-highlight">In Kochi.</span></h1>
                     <p>We crafts stunning websites and data-driven marketing strategies that help brands grow online and attract more customers.</p>
                     <div className="banner-counter">
                         <h3>Trusted by 100+ Brands Worldwide</h3>

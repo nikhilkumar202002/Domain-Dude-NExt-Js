@@ -7,6 +7,7 @@
   --secondary: #0DAAFF;
   --third: #97E4FF;
   --text: #BEBEBE;
+  --font-highlight: var(--font-petit);
 }
 body{
   margin: 0;
