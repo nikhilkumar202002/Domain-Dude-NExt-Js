@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import { Petit_Formal_Script } from "next/font/google";
+import Header from "./components/header/Header";
 import "./globals.css";
 
 const neueMontreal = localFont({
@@ -44,6 +45,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${neueMontreal.variable} ${inter.variable} ${petitFormal.variable}`}>
       <body>
+         <Header />
         {children}
       </body>
     </html>

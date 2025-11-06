@@ -5,6 +5,7 @@
   display: flex;
   align-items: center; /* center vertically */
   justify-content: center; /* center horizontally */
+  overflow: hidden;
 }
 .bubble1,
 .bubble2,
@@ -119,4 +120,33 @@
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+@media (min-width:1440px) {
+    .banner-content{
+        padding-top: 120px !important;
+    }
+}
+@media (max-width:720px) {
+    .banner{
+        height: 750px;
+    }
+    .banner-content h1{
+        width: 100%;
+        font-size: 50px;
+    }
+    .banner-content p{
+        width: 100%;
+        font-size: 14px;
+    }
+}
+@media (max-width:420px) {
+    .banner-content h1{
+        width: 100%;
+        font-size: 50px;
+    }
+    .banner-content p{
+        width: 100%;
+        font-size: 14px;
+    }
 }

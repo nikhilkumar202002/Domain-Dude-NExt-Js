@@ -5,7 +5,7 @@
   gap: 8px;
   text-decoration: none;
   font-family: var(--font-neue, 'Neue Montreal'), sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   border-radius: 30px 30px 30px 0px;
   font-size: 17px;
   transition: all 0.25s ease;
