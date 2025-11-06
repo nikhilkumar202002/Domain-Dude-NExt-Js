@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import MainButton from "../../common/MainButton";
+import Clientslider from "../../common/Clientslider";
 import "./Home.css";
 
 const Banner = () => {
@@ -126,6 +127,10 @@ const Banner = () => {
             <div className="banner-btn">
               <MainButton label="Let’s Build Something" />
             </div>
+          </div>
+
+          <div className="banner-slider">
+            <Clientslider />
           </div>
         </div>
       </section>

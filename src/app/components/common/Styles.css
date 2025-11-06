@@ -19,5 +19,48 @@
   padding: 10px 20px;
 }
 
+/* Logo Slider */
 
+.logo-carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: transparent;
+  padding: 40px 0;
+}
 
+.logo-track {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  width: max-content;
+  will-change: transform;
+}
+
+.logo-item {
+  flex: 0 0 auto;
+  width: 160px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.logo-item:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.logo-item img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+.logo-item:hover img {
+  filter: grayscale(0%);
+}
