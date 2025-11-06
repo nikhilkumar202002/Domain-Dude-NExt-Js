@@ -1,0 +1,63 @@
+.banner {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* full screen height */
+  display: flex;
+  align-items: center; /* center vertically */
+  justify-content: center; /* center horizontally */
+}
+.banner-content h1{
+    font-size: 48px;
+    font-weight: 400;
+    color: white;
+    line-height: 60px;
+    width: 58%;
+}
+.banner-content p{
+    font-size: 17px;
+    color: var(--text);
+    font-weight: 400;
+    font-family: var(--font-inter);
+    padding-top: 10px;
+    width: 50%;
+
+}
+.banner-counter h3{
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text);
+}
+.banner-counters-item{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    h4{
+        font-size: 20px;
+        font-weight: 400;
+        color: white;
+    }
+    p{
+        font-size: 14px;
+        font-family: var(--font-neue);
+        font-weight: 400;
+        color: var(--text);
+        width: 100%;
+        padding-top: 0px;
+    }
+}
+.vertical-line{
+    width: 1px;
+    height: 24px;
+    background-color: var(--text);
+}
+.banner-counters{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.banner-counter{
+    padding-top: 30px;
+}
+.banner-btn{
+    margin-top: 40PX;
+}

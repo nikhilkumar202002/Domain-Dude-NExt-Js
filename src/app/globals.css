@@ -3,6 +3,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #0054FF;
+  --secondary: #0DAAFF;
+  --third: #97E4FF;
+  --text: #BEBEBE;
 }
 body{
   margin: 0;
@@ -11,8 +15,33 @@ body{
   font-family: var(--font-inter), sans-serif;
   background-color: black;
 }
+.container {
+  width: 100%;
+  max-width: 1440px; /* optional limit, adjust if needed */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 96px;
+  padding-right: 96px;
+}
+
+/* Tablets & smaller screens */
+@media (max-width: 1024px) {
+  .container {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+}
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-neue), sans-serif;
   font-weight: 700;
 }
+

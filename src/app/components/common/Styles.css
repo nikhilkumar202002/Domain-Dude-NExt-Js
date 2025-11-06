@@ -1,0 +1,23 @@
+.main-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  font-family: var(--font-neue, 'Neue Montreal'), sans-serif;
+  font-weight: 500;
+  border-radius: 30px 30px 30px 0px;
+  font-size: 17px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+/* Variants */
+.main-btn.primary {
+  background-color: #0054FF;
+  color: #fff;
+  padding: 10px 20px;
+}
+
+
+
