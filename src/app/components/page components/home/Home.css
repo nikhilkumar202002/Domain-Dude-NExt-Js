@@ -6,6 +6,49 @@
   align-items: center; /* center vertically */
   justify-content: center; /* center horizontally */
 }
+.bubble1,
+.bubble2,
+.bubble3 {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.5;
+  mix-blend-mode: screen;
+}
+
+.bubble1 {
+  background: radial-gradient(circle, #0054FF 0%, transparent 70%);
+  top: 10%;
+  left: 20%;
+}
+
+.bubble2 {
+  background: radial-gradient(circle, #0DAAFF 0%, transparent 70%);
+  top: 40%;
+  right: 15%;
+}
+
+.bubble3 {
+  background: radial-gradient(circle, #97E4FF 0%, transparent 70%);
+  bottom: 10%;
+  left: 40%;
+}
+
+/* ✅ Noise overlay */
+.noise {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://www.transparenttextures.com/patterns/noise.png");
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
 .banner-content h1{
     font-size: 48px;
     font-weight: 350;
