@@ -3,7 +3,7 @@
   width: 100%;
   height: 100vh; /* full screen height */
   display: flex;
-  align-items: center; /* center vertically */
+  flex-direction: column; /* center vertically */
   justify-content: center; /* center horizontally */
   overflow: hidden;
 }
@@ -50,6 +50,14 @@
   mix-blend-mode: overlay;
   z-index: 1;
 }
+.overlay-banner{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    background: linear-gradient(to top, black, rgba(0, 0, 0, 0) 100%);
+    z-index: 2;
+}
 .banner-content h1{
     font-size: 48px;
     font-weight: 350;
@@ -61,10 +69,18 @@
     font-size: 17px;
     color: var(--text);
     font-weight: 400;
-    font-family: var(--font-inter);
+    font-family: var(--font-neue);
     padding-top: 10px;
     width: 50%;
 
+}
+
+.banner-slider {
+  width: 100%;
+  position: absolute;
+  bottom: 0; /* Fix to bottom of banner */
+  left: 0;
+  padding: 20px 0;
 }
 .banner-counter h3{
     font-size: 14px;
@@ -106,14 +122,14 @@
     margin-top: 40PX;
 }
 .banner-content-highlight {
-  font-family: var(--font-highlight);
+  font-family: var(--font-neue);
   background: linear-gradient(90deg, #0054FF, #00D4FF, #0054FF);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: glowGradient 4s ease infinite;
   text-shadow: 0 0 10px rgba(0, 84, 255, 0.6);
-  font-weight: 500;
+  font-weight: 300;
 }
 
 @keyframes glowGradient {
@@ -124,12 +140,12 @@
 
 @media (min-width:1440px) {
     .banner-content{
-        padding-top: 120px !important;
+        padding-top: 140px !important;
     }
 }
 @media (max-width:720px) {
     .banner{
-        height: 750px;
+        height: 100vh;
     }
     .banner-content h1{
         width: 100%;
@@ -149,4 +165,133 @@
         width: 100%;
         font-size: 14px;
     }
+}
+
+/* about us section */
+.about-left-content h3{
+  font-size: 25px;
+  font-weight: 300;
+  color: rgb(156, 156, 156);
+}
+.about-left-content h2{
+  font-size: 35px;
+  font-weight: 400;
+  color: white;
+  font-family: var(--font-neue);
+  line-height: 39px;
+}
+.about-main-heading{
+  font-size: 45px;
+  font-weight: 400;
+  color: white;
+}
+.about-left-content p{
+  font-size: 17px;
+  color: var(--text);
+  font-weight: 300;
+  font-family: var(--font-inter);
+  padding: 10px 0px 40px;
+}
+
+.about-card-one{
+  width: 100%;
+  padding: 15px 20px;
+  background-color: var(--primary);
+  border-radius: 20px;
+  h3{
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+  }
+  p{
+    font-size: 14px;
+    color: rgb(215, 215, 215);
+    font-weight: 400;
+    line-height: 15px;
+    padding-top: 4px;
+  }
+}
+
+.about-card-common {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1); /* 20% white */
+  backdrop-filter: blur(250px);          /* background blur */
+  -webkit-backdrop-filter: blur(10px);  /* for Safari */
+}
+
+.about-card-two{
+  width: 90%;
+}
+.about-card-three{
+  width: 85%;
+}
+.about-card-four{
+  width: 78%;
+}
+.about-card-dot {
+  width: 12px;
+  height: 12px;
+  background-color: var(--primary);
+  border-radius: 30px;
+  transition: 0.3s ease;
+}
+
+.about-card-dot.active {
+  box-shadow: 0 0 10px var(--primary), 
+              0 0 20px var(--primary), 
+              0 0 30px var(--primary);
+}
+.about-card-flex{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.about-box-vertical-line{
+  width: 1px;
+  height: 450px;
+  background-color: #525252;
+}
+.about-content-cards{
+  display: flex;
+}
+.about-cards{
+  position: relative;
+  margin-left: -6px;
+}
+.about-main{
+  position: relative;
+  padding: 100px 0px;
+  overflow: hidden;
+}
+.about-section-bg-image{
+  position: absolute;
+  right: -150px;
+  bottom: -150px;
+}
+.about-section-bg-image img{
+  transform: rotate(200);
+  filter: blur(30px);
+  opacity: 80%;
+}
+/* Tablets */
+@media (max-width: 1024px) {
+  .about-section-bg-image img {
+    width: 70vw;
+    max-width: 500px;
+    opacity: 0.45;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .about-section-bg-image {
+    top: auto;
+    bottom: -50px;
+    right: -50px;
+  }
+  .about-section-bg-image img {
+    width: 90vw;
+    max-width: 450px;
+    opacity: 0.35;
+  }
 }

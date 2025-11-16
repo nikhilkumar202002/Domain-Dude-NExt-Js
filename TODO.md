@@ -1,0 +1,2 @@
+- [x] Move Client Logo folder from src/assets/ to public/
+- [x] Update logos paths in Clientslider.tsx from "/assets/Client Logo/" to "/Client Logo/"

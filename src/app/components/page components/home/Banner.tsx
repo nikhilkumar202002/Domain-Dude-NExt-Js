@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import MainButton from "../../common/MainButton";
-import Clientslider from "../../common/Clientslider";
+
 import "./Home.css";
 
 const Banner = () => {
@@ -129,9 +129,7 @@ const Banner = () => {
             </div>
           </div>
 
-          <div className="banner-slider">
-            <Clientslider />
-          </div>
+        <div className="overlay-banner"></div>
         </div>
       </section>
     </>

@@ -46,3 +46,27 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
+
+.banner-section {
+  position: relative;
+  z-index: 1;
+  overflow: visible !important; /* prevents cutting */
+}
+
+.clients-section {
+  position: relative;
+  z-index: 2;
+  background: #000; /* ensures clean separation */
+}
+
+/* spacing between sections */
+.section-gap {
+  height: 60px; /* adjust as needed */
+}
+
+/* prevent clipping on logo carousel */
+.logo-carousel {
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
