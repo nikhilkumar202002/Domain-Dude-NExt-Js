@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 import { Petit_Formal_Script } from "next/font/google";
 import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
 import "./globals.css";
 
 const neueMontreal = localFont({
@@ -47,6 +48,7 @@ export default function RootLayout({
       <body>
          <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

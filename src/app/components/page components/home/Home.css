@@ -295,3 +295,262 @@
     opacity: 0.35;
   }
 }
+
+/* Service-section */
+
+.service-section-header, .portfolio-section-header{
+  color: white;
+  font-family: var(--font-neue);
+  text-align: center;
+  h3{
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--text);
+  }
+  h2{
+    font-size: 35px;
+    font-weight: 400;
+    line-height: 40px;
+    width: 60%;
+    margin: 0 auto;
+  }
+}
+.service-section-card {
+  position: relative;
+  width: 400px;
+  background: rgba(255, 255, 255, 0.05); /* white with 5% opacity */
+  backdrop-filter: blur(150px);          /* background blur */
+  -webkit-backdrop-filter: blur(350px);  /* Safari support */
+  border-radius: 30px;
+  border: 1px solid #565656;    
+  height: 550px;   
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  padding: 0px 20px 20px;  
+  overflow: hidden;    
+  margin: 0 auto;      /* optional (looks better) */
+}
+.service-section-card-abtract{
+  position: absolute;
+  top: -45px;
+  left: -60px;
+}
+.service-section-card-icon{
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary);
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: white;
+}
+.service-section-card-body{
+  padding-top: 15px;
+  color: white;
+  font-family: var(--font-neue);
+  z-index: 3;
+  h3{
+    font-size: 22px;
+    font-weight: 400;
+  }
+  p{
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text);
+    padding-top: 3px;
+    line-height: 21px;
+  }
+  a{
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+    padding-top: 15px;
+  }
+}
+.service-section-card-abtract-two {
+  position: absolute;
+  top: -50px;       /* Adjust vertical alignment if needed */
+  left: auto;       /* Override the left: -60px from the base class */
+  right: -55px;     /* Position it on the right side (negative to hang off edge) */
+  transform: scaleX(-1); /* Mirror the SVG */
+}
+/* The Glow Layer */
+.service-section-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit; /* Inherit the 30px radius */
+  
+  /* The Magic: Radial gradient centered at mouse coordinates */
+  background: radial-gradient(
+    800px circle at var(--mouse-x) var(--mouse-y), 
+    rgba(255, 255, 255, 0.1), /* Inner color (glow) */
+    transparent 40%           /* Outer color (fade out) */
+  );
+  
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.5s ease; /* Smooth fade in/out */
+  z-index: 2; /* Places it above background but check content visibility */
+  pointer-events: none; /* CRITICAL: Allows you to click links/buttons underneath */
+}
+
+/* Show the glow on hover */
+.service-section-card:hover::before {
+  opacity: 1;
+}
+.service-section-card-wrapper {
+  margin-top: 30px;
+  width: 100%;
+  position: relative;
+}
+
+/* --- Custom Navigation Buttons --- */
+.custom-swiper-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white; /* White Background */
+  color: black;            /* Black Icon */
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  
+  /* Hide by default */
+  opacity: 0;
+  visibility: hidden;
+}
+/* Hover Effect: Show buttons when hovering the wrapper */
+.service-section-card-wrapper:hover .custom-swiper-btn {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Positioning */
+.prev-btn {
+  left: -25px; /* Half overlapping */
+}
+
+.next-btn {
+  right: -25px; /* Half overlapping */
+}
+
+/* When at the beginning (isBeginning = true), 
+   the Left Arrow (.prev-btn.disabled) gets low opacity 
+*/
+.prev-btn.disabled {
+  opacity: 0.3 !important; /* Override the hover opacity */
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Optional: Same logic for Right Arrow at the end */
+.next-btn.disabled {
+  opacity: 0.3 !important;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Swiper Padding adjustment so arrows don't overlap content too much */
+.service-swiper {
+  padding: 20px 0; 
+}
+
+/* Responsive: On mobile, maybe keep arrows inside or hidden */
+@media (max-width: 768px) {
+  .prev-btn { left: 10px; }
+  .next-btn { right: 10px; }
+}
+.service-section{
+  position: relative;
+  padding: 100px 0px;
+  overflow: hidden;
+}
+/* .service-section-bg-image{
+  position: absolute;
+  bottom: -150px;      
+  left: -150px;       
+  transform: scaleX(-1);
+  right: auto;
+} */
+
+/* Portfolio section */
+
+.portfolio-section-portfolio-item {
+  width: 100%;
+  height: 550px;
+  /* REQUIRED: Keeps the zoomed image inside the box */
+  overflow: hidden; 
+  /* MOVED: Border radius should be on the container to mask the image properly */
+  border-radius: 20px; 
+}
+
+.portfolio-section-portfolio-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* REMOVED: Border radius is now on the parent container */
+  /* REQUIRED: Makes the zoom smooth */
+  transition: transform 0.5s ease; 
+}
+
+/* The Hover Effect */
+.portfolio-section-portfolio-item:hover img {
+  transform: scale(1.1); /* Zooms in 10% */
+}
+
+/* Your other classes remain largely the same */
+.portfolio-section-portfolio-item.center {
+  width: 100%;
+  height: 265px;
+}
+
+.portfolio-section-portfolio-item.second {
+  width: 100%;
+  height: 400px;
+}
+
+/* Redundant rules for .second img can be removed if they are the same as the base img class */
+.portfolio-section-portfolio-item.second img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portfolio-section-portfolio-rows {
+  padding-top: 30px;
+}
+.portfolio-section{
+  position: relative;
+  padding: 0px 0px 100px;
+  overflow: hidden;
+}
+.portfolio-section-bg-image{
+    position: absolute;
+  bottom: -150px;      
+  left: -150px;       
+  transform: scaleX(-1);
+  right: auto;
+  filter: blur(30px);
+  opacity: 80%;
+  z-index: 0;
+}
+/* Add this to ensure content sits above the background */
+.portfolio-container {
+  position: relative;
+  z-index: 1; 
+}
