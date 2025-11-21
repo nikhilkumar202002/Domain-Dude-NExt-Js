@@ -2,99 +2,192 @@
 
 import Logo from "../../../assets/Domine Dude white.svg";
 import Image from "next/image";
-import { FiPhoneCall } from "react-icons/fi";
-import { MdLocationPin } from "react-icons/md";
-import { FaInstagram, FaFacebookF, FaLinkedinIn, FaPinterest   } from "react-icons/fa";
+import { FaInstagram, FaFacebookF, FaLinkedinIn, FaPinterest } from "react-icons/fa";
 import { AiOutlineCopyright } from "react-icons/ai";
+import MainButton from "../common/MainButton";
 import "./Footer.css";
+import { motion } from "framer-motion"; // 1. Import Framer Motion
 
 const Footer = () => {
+
+  // 2. Define Animation Variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1, // Speed of the cascade
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const fadeUpVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" }
+    },
+  };
+
+  const taglineVariants = {
+    hidden: { opacity: 0, scale: 0.95, filter: "blur(10px)" },
+    visible: { 
+      opacity: 1, 
+      scale: 1, 
+      filter: "blur(0px)",
+      transition: { duration: 1, ease: "easeOut" }
+    },
+  };
+
   return (
     <>
-        <footer className="footer-section">
-            <div className="footer-container container">
-                <div className="footer-row grid grid-cols-4 gap-20 md:gap-20">
-                    <div className="footer-col">
-                        <div className="footer-logo">                           
-                            <Image src={Logo} alt="Domain Dude Logo" height={50} />
-                        </div>
-                        <p>We are a creative digital agency from Kochi crafting meaningful brand experiences through powerful design, content, strategy & growth marketing.</p>
+      <footer className="footer-section">
+        <motion.div 
+            className="footer-container container"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }} // Animates when 10% is visible, only once
+            variants={containerVariants}
+        >
+            {/* --- TOP SECTION --- */}
+            <motion.div className="footer-top" variants={fadeUpVariants}>
+                <div className="footer-logo-bottom">
+                    <Image src={Logo} alt="Domain Dude Logo" width={0} height={0} />
+                </div>
+                <div className="footer-top-cta">
+                    <h2>Need more clarity? Let our team help you.</h2>
+                    <div className="footer-top-btn">
+                        <MainButton label="We are Here to Assist" />
                     </div>
+                </div>
+            </motion.div>
 
-                    <div className="footer-col">
-                        <h4>Quick Links</h4>
-                        <div className="footer-col-items">
-                            <a href="#">Home</a>
-                            <a href="#">About Us</a>
-                            <a href="#">Services</a>    
-                            <a href="#">Portfolio</a>
-                            <a href="#">Blogs</a>
-                            <a href="#">Contact</a>
+            {/* --- LINKS GRID --- */}
+            <motion.div className="footer-row grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-20" variants={containerVariants}>
+                
+                {/* Col 1 */}
+                <motion.div className="footer-col" variants={fadeUpVariants}>
+                    <h4>Quick Links</h4>
+                    <div className="footer-col-items">
+                        <a href="#">Home</a>
+                        <a href="#">About Us</a>
+                        <a href="#">Services</a>    
+                        <a href="#">Portfolio</a>
+                        <a href="#">Blogs</a>
+                        <a href="#">Contact</a>
+                    </div>
+                </motion.div>
+      
+                {/* Col 2 */}
+                <motion.div className="footer-col footer-col-second" variants={fadeUpVariants}>
+                    <h4>Services</h4>
+                    <div className="footer-col-items">
+                        <a href="#">Branding & Identity</a>
+                        <a href="#">UI/UX Design</a>
+                        <a href="#">Website Development</a>    
+                        <a href="#">Digital Marketing</a>
+                        <a href="#">Social Media Management</a>
+                        <a href="#">Growth Strategy</a>
+                    </div>
+                </motion.div>
+
+                {/* Col 3 */}
+                <motion.div className="footer-col" variants={fadeUpVariants}>
+                    <h4>Resources</h4>
+                    <div className="footer-col-items">
+                        <a href="#">Case Studies</a>
+                        <a href="#">Our Process</a>
+                        <a href="#">Client Testimonials</a>    
+                        <a href="#">FAQs</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms & Conditions</a>
+                    </div>
+                </motion.div>
+
+                {/* Col 4 */}
+                <motion.div className="footer-col" variants={fadeUpVariants}>
+                    <h4>Get in Touch</h4>
+                    <div className="footer-col-items">
+                        <a href="#">Contact Us</a>
+                        <a href="#">Our Process</a>
+                        <a href="#">Book a Free Consultation</a>    
+                    </div>
+                </motion.div>
+            </motion.div> 
+
+            {/* --- CONTACT INFO SECTION --- */}
+            <motion.div className="footer-contact-section" variants={containerVariants}>
+                <div className="footer-contact-flex">
+                    
+                    <motion.div className="footer-contact-item" variants={fadeUpVariants}>
+                        <h2>Email</h2>
+                        <div className="footer-contact-inside">
+                            <p><a href="">info@domaindude.com</a></p>
+                            <span>(for sales enquiry)</span>
+                        </div>
+                        <div className="footer-contact-inside">
+                            <p><a href="">info@padamonline.com</a></p>
+                            <span>(for creatives)</span>
+                        </div>
+                    </motion.div>
+
+                    <motion.div className="footer-contact-item" variants={fadeUpVariants}>
+                        <h2>Phone</h2>
+                        <div className="footer-contact-inside">
+                            <p><a href="">+91 77360 16507</a></p>
+                            <span>(for sales enquiry)</span>
+                        </div>
+                        <div className="footer-contact-inside">
+                            <p><a href="">+91 90480 06320</a></p>
+                            <span>(for creatives)</span>
+                        </div>
+                    </motion.div>
+
+                    <motion.div className="footer-contact-item" variants={fadeUpVariants}>
+                        <h2>Address</h2>
+                        <div className="footer-contact-inside">
+                            <p><a href="">House Number 74, Deepam Rd, Ponnurunni, Vyttila, Ernakulam, Kerala 682019</a></p>
+                        </div>
+                    </motion.div>
+                    
+                </div>
+            </motion.div>
+
+            {/* --- COPYRIGHT & TAGLINE --- */}
+            <div className="footer-copyright">
+                <motion.div className="footer-copyright-flex" variants={fadeUpVariants}>
+                    <div className="footer-copyright-left">
+                        <p className="flex items-center justify-center md:justify-start gap-2 text-center md:text-left">
+                            <AiOutlineCopyright/>2025 Domain Dude. All Rights Reserved.
+                        </p>
+                    </div>
+                    <div className="footer-copyright-righr">
+                        <div className="footer-copyright-social">
+                            <a href=""><FaInstagram/></a>
+                            <a href=""><FaFacebookF/></a>
+                            <a href=""><FaLinkedinIn/></a>
+                            <a href=""><FaPinterest/></a>
                         </div>
                     </div>
-
-                      <div className="footer-col footer-col-second">
-                        <h4>Services</h4>
-                        <div className="footer-col-items">
-                            <a href="#">Branding & Identity</a>
-                            <a href="#">UI/UX Design</a>
-                            <a href="#">Website Development</a>    
-                            <a href="#">Digital Marketing</a>
-                            <a href="#">Social Media Management</a>
-                            <a href="#">Growth Strategy</a>
-                        </div>
-                    </div>
-
-                      <div className="footer-col">
-                        <h4>Contact</h4>
-                        <div className="footer-col-items">
-                            <div className="footer-col-flex">
-                                <span className="footer-col-icons">
-                                    <MdLocationPin/>
-                                </span>
-                                <p className="footer-col-text">Domain Dude, Kochi, India</p>
-                            </div>
-                             <div className="footer-col-flex call">
-                                <span className="footer-col-icons">
-                                    <FiPhoneCall/>
-                                </span>
-                                <div>
-                                    <div>
-                                        <a className="footer-col-links">+91 77360 16507</a>
-                                    </div>
-                                    <div>
-                                        <a className="footer-col-links">+91 77360 16507</a>                                     
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                        <h4 className="mt-4">Social</h4>
-                        <div className="footer-social-icons flex mt-2 gap-2">
-                            <div className="footer-social-icon">
-                                <a href="#"><FaInstagram/></a>
-                            </div>
-                              <div className="footer-social-icon">
-                                <a href="#"><FaFacebookF/></a>
-                            </div>
-
-                              <div className="footer-social-icon">
-                                <a href="#"><FaLinkedinIn/></a>
-                            </div>
-                              <div className="footer-social-icon">
-                                <a href="#"><FaPinterest/></a>
-                            </div>
-                        </div>
-                    </div>
-                </div> 
-
-                <div className="footer-copyright">
-                    <p className="flex items-center gap-2"><AiOutlineCopyright/>2025 Domain Dude. All Rights Reserved.</p>
-                </div>           
-            </div>
-        </footer>
+                </motion.div>
+              
+                {/* Big Tagline Animation */}
+                <motion.div 
+                    className="footer-top-tagline"
+                    variants={taglineVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                >
+                    <h2><span>D</span>esign. <span>D</span>evelop. <span>D</span>eliver.</h2>
+                </motion.div>
+            </div>          
+        </motion.div>
+      </footer>
     </>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

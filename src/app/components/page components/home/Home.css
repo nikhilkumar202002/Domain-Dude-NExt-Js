@@ -298,7 +298,7 @@
 
 /* Service-section */
 
-.service-section-header, .portfolio-section-header{
+.service-section-header, .portfolio-section-header, .testimonial-header{
   color: white;
   font-family: var(--font-neue);
   text-align: center;
@@ -474,6 +474,14 @@
 @media (max-width: 768px) {
   .prev-btn { left: 10px; }
   .next-btn { right: 10px; }
+  .service-section-header,.portfolio-section-header,.testimonial-header{
+    h2{
+      width: 90%;
+    }
+    .service-section,.about-main{
+      padding: 50px 0px;
+    }
+  }
 }
 .service-section{
   position: relative;
@@ -553,4 +561,185 @@
 .portfolio-container {
   position: relative;
   z-index: 1; 
+}
+
+/* Testimonial Section */
+
+.testimonial-wrapper {
+  width: 100%;
+  margin-top: 40px;
+  overflow: hidden; 
+  display: block; /* Ensures it takes up space */
+}
+
+.testimonial-swiper {
+  width: 100%;
+  padding-bottom: 20px; /* Prevents cutting off shadows/borders */
+}
+
+.testimonial-card{
+  position: relative;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05); /* white with 5% opacity */
+  backdrop-filter: blur(150px);          /* background blur */
+  -webkit-backdrop-filter: blur(350px);  /* Safari support */
+  border-radius: 30px;
+  border: 1px solid #565656;      
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px;  
+  overflow: hidden;    
+
+  height: 100%; 
+  width: 100%;
+  min-height: 300px;
+}
+.testimonial-card-content{
+  color: white;
+  font-family: var(--font-neue);
+  z-index: 3;
+  p{
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 25px;
+  }
+}
+.testimonial-card-footer{
+  h4{
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+    padding-top: 15px;
+  }
+  p{
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text);
+  }
+}
+.left-arrow, .right-arrow {
+ border: none; /* Remove default button border */
+  font-size: 22px;
+  color: black;
+  cursor: pointer;
+  background-color: white;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.testimonial-footer-arrow{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.google-review-text{
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+}
+.testimonial-footer-google {
+  /* --- Existing Styles --- */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(150px);
+  -webkit-backdrop-filter: blur(350px);
+  padding: 15px 20px;
+  border-radius: 35px;
+  position: relative; 
+  overflow: hidden; 
+  border: 1px solid #333;
+  cursor: pointer; 
+}
+
+/* The Glow Layer */
+.testimonial-footer-google::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: radial-gradient(
+    300px circle at var(--mouse-x) var(--mouse-y), 
+    rgba(255, 255, 255, 0.15), /* Glow color */
+    transparent 50%            /* Fade out */
+  );
+  
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.5s ease;
+  z-index: 1; /* Sits above background color */
+  pointer-events: none;
+}
+
+/* Show glow on hover */
+.testimonial-footer-google:hover::before {
+  opacity: 1;
+}
+
+/* Ensure text/icons sit ON TOP of the glow */
+.testimonial-footer-google .google-icon,
+.testimonial-footer-google .google-review-text {
+  position: relative;
+  z-index: 2; 
+}
+.testimonial-footer-flex{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 40px;
+}
+.star{
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.swiper-slide {
+  height: auto;
+  display: flex; /* Ensures the card stretches to fill the slide height */
+}
+
+/* Arrow Hover Effects */
+.left-arrow:hover, .right-arrow:hover {
+  background-color: #0054FF; /* Use your primary color */
+  color: white;
+}
+.testimonial-section{
+  position: relative;
+  padding: 100px 0px;
+  overflow: hidden;
+}
+
+@media (max-width:1080px) {
+  .testimonial-footer-flex{
+    flex-direction: column;
+    gap: 20px;
+  }
+  .service-section-card{
+    width: 100% !important;
+    height: 450px;
+  }
+  .service-section-card-abtract{
+    top: -32px;
+    left: -44px;
+  }
+  .service-section-card-abtract-two{
+    top: -32px;
+    left: auto;
+    right: -44px; 
+  }
+  .service-section-card-abtract,.service-section-card-abtract-two img{
+    width: 300px;
+  }
+  .testimonial-card{
+    padding: 20px;
+  }
 }

@@ -1,89 +1,391 @@
-.footer-col p{
-    color: white;
-    font-family: var(--font-neue);
-    font-weight: 300;
-    font-size: 17px;
-    padding-top: 15px;
+/* =========================================
+   1. Footer Layout & Background Effects
+   ========================================= */
+.footer-section {
+  position: relative;
+  padding: 60px 0 0px;
+  overflow: hidden; /* Prevents the glow from causing scrollbars */
+  z-index: 1;
 }
-.footer-col h4{
-    color: white;
-    font-weight: 400;
-    font-family: var(--font-neue);
-    font-size: 18px;
+
+.footer-container {
+  position: relative;
+  z-index: 2;
 }
-.footer-col-items{
+
+/* Northern Lights / Bottom Glow Effect */
+.footer-section::before {
+  content: "";
+  position: absolute;
+  bottom: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 700px;
+  
+  /* Multi-color Gradient */
+  background: radial-gradient(
+    circle,
+    rgba(0, 212, 255, 0.5) 0%,   /* Bright Cyan Core */
+    rgba(0, 84, 255, 0.5) 30%,   /* Primary Blue */
+    rgba(75, 0, 130, 0.3) 60%,   /* Deep Indigo */
+    transparent 80%              /* Fade out */
+  );
+
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* =========================================
+   2. Footer Top Section (Tagline, Logo, CTA)
+   ========================================= */
+.footer-top {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Logo takes 1 part, CTA takes 2 parts */
+  align-items: center; 
+  gap: 40px;
+  width: 100%;
+  padding: 150px 0 80px;
+  border-bottom: 1px solid rgb(49, 49, 49);
+}
+
+/* Tagline (Large Text) */
+.footer-top-tagline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 0px;
+}
+
+.footer-top-tagline h2 {
+  font-size: 100px;
+  font-weight: 400;
+  color: white;
+  font-family: var(--font-neue);
+  margin-bottom: 20px;
+}
+
+.footer-top-tagline h2 span {
+  color: var(--primary);
+}
+
+/* Logo */
+.footer-logo-bottom {
+  width: 100%;
+}
+
+.footer-logo-bottom img {
+  width: 250px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Call to Action (CTA) & Button Area */
+.footer-top-cta {
+  display: flex;
+  flex-direction: column;
+  padding-top: 15px;
+  align-items: flex-end; /* Pushes content to right */
+  text-align: right;
+  justify-content: center;
+}
+
+.footer-top-cta h2 {
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+  font-family: var(--font-neue);
+}
+
+/* Fix for nested wrapper if present */
+.footer-top-cta .footer-top-cta {
+  align-items: flex-end;
+  width: 100%;
+}
+
+/* =========================================
+   3. Main Columns (Links & Text)
+   ========================================= */
+.footer-row {
+  padding: 50px 0px;
+}
+
+.footer-col h4 {
+  color: white;
+  font-weight: 400;
+  font-family: var(--font-neue);
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.footer-col p {
+  color: white;
+  font-family: var(--font-neue);
+  font-weight: 300;
+  font-size: 17px;
+  padding-top: 15px;
+  line-height: 1.6;
+}
+
+/* Link Lists */
+.footer-col-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.footer-col-items a {
+  color: var(--text);
+  font-family: var(--font-neue);
+  font-weight: 400;
+  transition: 0.3s ease;
+  display: inline-block;
+}
+
+.footer-col-items a:hover {
+  color: var(--primary);
+  transform: translateX(5px);
+}
+
+/* Flex layouts within columns (e.g. Icon + Text) */
+.footer-col-flex {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-col-flex a {
+  font-size: 16px;
+  font-weight: 400 !important;
+  font-family: var(--font-neue);
+  color: white;
+  padding-top: 0px;
+  cursor: pointer;
+  display: block;
+  line-height: 1.5;
+}
+
+.footer-col-flex a:hover {
+  color: var(--secondary);
+}
+
+.footer-col-icons {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: var(--primary);
+  color: white;
+  font-size: 15px;
+}
+
+/* Text utility classes */
+.footer-col-text {
+  font-size: 16px;
+  font-weight: 400 !important;
+  font-family: var(--font-neue);
+  color: white;
+  padding-top: 0px !important;
+}
+
+.footer-col-text.call {
+  display: flex;
+  align-items: start !important;
+  justify-content: start !important;
+  gap: 12px;
+}
+
+/* =========================================
+   4. Contact Section (Email, Phone, Address)
+   ========================================= */
+.footer-contact-section {
+  border-top: 1px solid rgb(49, 49, 49);
+  padding: 50px 0px 50px;
+}
+
+.footer-contact-flex {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr; /* Desktop Layout */
+  gap: 40px;
+  width: 100%;
+}
+
+.footer-contact-item h2 {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--primary);
+}
+
+.footer-contact-item p {
+  font-size: 17px;
+  font-weight: 400;
+  color: white;
+  margin-top: 10px;
+}
+
+.footer-contact-item span {
+  font-size: 15px;
+  color: rgb(109, 109, 109);
+}
+
+/* =========================================
+   5. Copyright & Social Section
+   ========================================= */
+.footer-copyright {
+  padding: 50px 0px 0px;
+  border-top: 1px solid rgb(49, 49, 49);
+  position: relative;
+}
+
+.footer-copyright-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-copyright p {
+  font-size: 14px;
+  color: rgb(141, 141, 141);
+  font-family: var(--font-neue);
+  font-weight: 400;
+}
+
+/* Social Icons */
+.footer-copyright-social {
+  display: flex;
+  gap: 8px;
+  color: var(--text);
+  font-size: 18px;
+}
+
+.footer-social-icon {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: var(--primary);
+  color: white;
+  font-size: 16px;
+  transition: 0.3s ease;
+}
+
+.footer-social-icon:hover {
+  background-color: white;
+  color: var(--primary);
+  transform: translateY(-3px);
+}
+.footer-top-btn{
+    padding-top: 10px;
+}
+/* =========================================
+   6. Media Queries (Responsive)
+   ========================================= */
+
+/* --- Tablet (max-width: 1024px) --- */
+@media (max-width: 1024px) {
+  .footer-section {
+    padding: 50px 0 20px;
+  }
+  
+  .footer-col p {
+    font-size: 16px;
+  }
+  .footer-top-tagline{
+    padding: 40px 0px;
+  }
+  .footer-top-tagline h2 {
+    font-size: 35px;
+  }
+}
+
+/* --- Small Tablet / Large Phone (max-width: 900px) --- */
+/* Handles the Contact Section Grid change */
+@media (max-width: 900px) {
+  .footer-contact-flex {
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: auto auto;  
+    gap: 40px;
+  }
+
+  /* 1. Email Item -> Row 1, Column 1 (Top Left) */
+  .footer-contact-item:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* 2. Phone Item -> Row 2, Column 1 (Bottom Left) */
+  .footer-contact-item:nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  /* 3. Address Item -> Column 2, Spans both rows (Right Side) */
+  .footer-contact-item:nth-child(3) {
+    grid-column: 2;
+    grid-row: 1 / span 2; 
+  }
+}
+
+/* --- Mobile (max-width: 768px) --- */
+@media (max-width: 768px) {
+  .footer-section {
+    padding: 40px 0 20px;
+  }
+
+  /* Stack Top Section */
+  .footer-top {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 10px;
-}
-.footer-col-items a{
-    color: var(--text);
-    font-family: var(--font-neue);
-    font-weight: 300;
-}
-.footer-section{
-    padding: 60px 0 20px;
-}
-.footer-col-icons{
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    border-radius: 50%;
-    background-color: var(--primary);
-    color: white;
-    font-size: 15px;
-}
-.footer-col-flex{
+    text-align: center;
+    gap: 30px;
+  }
+
+  /* Center Logo */
+  .footer-logo-bottom {
     display: flex;
+    justify-content: center; /* Important for centering logo */
+    width: 100%;
+  }
+
+  /* Center CTA */
+  .footer-top-cta {
     align-items: center;
-    gap: 12px;
-}
-.footer-col-text{
-    font-size: 16px;
-    font-weight: 400 !important;
-    font-family: var(--font-neue);
-    color: white;
-    padding-top: 0px !important;
-}
-.footer-col-text.call{
+    text-align: center;
+  }
+
+  /* Stack Main Columns */
+  .footer-col {
     display: flex;
-    align-items: start !important;
-    justify-content: start !important;
-    gap: 12px;
-}
-.footer-col-flex a{
-    font-size: 16px;
-    font-weight: 400 !important;
-    font-family: var(--font-neue);
-    color: white;
-    padding-top: 10px ;
-    cursor: pointer;
-}
-.footer-col-flex a:hover{
-    color: var(--secondary);
-}
-.footer-social-icon{
-     width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    background-color: var(--primary);
-    color: white;
-    font-size: 15px;
-}
-.footer-copyright{
-    padding-top: 20px;
-    border-top: 1px solid rgb(49, 49, 49);
+    flex-direction: column;
+  }
+
+  /* Copyright Adjustments */
+  .footer-copyright {
     margin-top: 30px;
+  }
+
+  .footer-copyright p {
+    font-size: 13px;
+  }
 }
-.footer-copyright p{
-    font-size: 14px;
-    color: rgb(141, 141, 141);
-    font-family: var(--font-neue);
-    font-weight: 400;
+
+/* --- Small Mobile (max-width: 400px) --- */
+@media (max-width: 400px) {
+  /* Stack Contact Items Vertically */
+  .footer-contact-flex {
+    grid-template-columns: 1fr; 
+  }
+  
+  .footer-contact-item:nth-child(1),
+  .footer-contact-item:nth-child(2),
+  .footer-contact-item:nth-child(3) {
+    grid-column: auto;
+    grid-row: auto;
+  }
 }

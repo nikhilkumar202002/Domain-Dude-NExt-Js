@@ -18,117 +18,110 @@ const logos = [
 const Clientslider = () => {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef(null);
-const headerRef = useRef(null);
-const carouselRef = useRef(null);
-
-useLayoutEffect(() => {
-  const track = trackRef.current;
-  if (!track) return;
-
-  // FADE-UP ANIMATIONS
-  gsap.from(sectionRef.current, {
-    opacity: 0,
-    y: 40,
-    duration: 1,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: sectionRef.current,
-      start: "top 80%",
-    },
-  });
-
-  gsap.from(headerRef.current, {
-    opacity: 0,
-    y: 20,
-    duration: 0.8,
-    ease: "power2.out",
-    scrollTrigger: {
-      trigger: sectionRef.current,
-      start: "top 75%",
-    },
-  });
-
-  gsap.from(carouselRef.current, {
-    opacity: 0,
-    y: 30,
-    duration: 0.9,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: sectionRef.current,
-      start: "top 70%",
-    },
-  });
-
-  // MARQUEE ANIMATION (UNCHANGED)
-  const items = Array.from(track.children) as HTMLElement[];
-  const totalWidth = items.reduce(
-    (sum, el) => sum + el.offsetWidth + 80,
-    0
-  );
-
-  while (track.scrollWidth < window.innerWidth * 2) {
-    items.forEach((el) => {
-      const clone = el.cloneNode(true);
-      track.appendChild(clone);
-    });
-  }
-
-  const ctx = gsap.context(() => {
-    gsap.to(track, {
-      x: `-=${totalWidth}`,
-      duration: 25,
-      ease: "none",
-      repeat: -1,
-      modifiers: {
-        x: (x) => `${parseFloat(x) % -totalWidth}px`,
-      },
-    });
-  }, trackRef);
-
-  return () => ctx.revert();
-}, []);
+  const headerRef = useRef(null);
+  const carouselRef = useRef(null);
+  
+  // We store the marquee animation here so we can pause/slow it later
+  const marqueeTween = useRef<gsap.core.Tween | null>(null);
 
   useLayoutEffect(() => {
     const track = trackRef.current;
     if (!track) return;
 
+    // 1. Calculate single set width
     const items = Array.from(track.children) as HTMLElement[];
-
-    // Total width of all logo items including gap
-    const totalWidth = items.reduce(
-      (sum, el) => sum + el.offsetWidth + 80, // gap = 80px (as per your CSS)
+    const singleSetWidth = items.reduce(
+      (sum, el) => sum + el.offsetWidth + 100, // 100 is your CSS gap + padding
       0
     );
 
-    // Duplicate logos enough times to cover the visible area
-    while (track.scrollWidth < window.innerWidth * 2) {
-      items.forEach((el) => {
-        const clone = el.cloneNode(true);
-        track.appendChild(clone);
-      });
+    // 2. Clone items to fill screen (Double assurance for seamlessness)
+    if (track.children.length === logos.length) {
+        while (track.scrollWidth < window.innerWidth * 3) {
+            items.forEach((el) => {
+                const clone = el.cloneNode(true);
+                track.appendChild(clone);
+            });
+        }
     }
 
     const ctx = gsap.context(() => {
-      gsap.to(track, {
-        x: `-=${totalWidth}`,
-        duration: 25, // speed
+      // --- FADE ANIMATIONS ---
+      gsap.from(sectionRef.current, {
+        opacity: 0,
+        y: 40,
+        duration: 0.5,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+      });
+
+      gsap.from(headerRef.current, {
+        opacity: 0,
+        y: 20,
+        duration: 0.5,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+        },
+      });
+
+      gsap.from(carouselRef.current, {
+        opacity: 0,
+        y: 30,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 70%",
+        },
+      });
+
+      // --- MARQUEE ANIMATION ---
+      marqueeTween.current = gsap.to(track, {
+        x: `-=${singleSetWidth}`, 
+        duration: 20, // CHANGED FROM 30 TO 20 (Lower number = Faster speed)
         ease: "none",
         repeat: -1,
         modifiers: {
-          x: (x) => `${parseFloat(x) % -totalWidth}px`,
+          x: (x) => {
+            return `${parseFloat(x) % singleSetWidth}px`;
+          },
         },
       });
-    }, trackRef);
+    }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
+  // --- HOVER HANDLERS ---
+  const handleMouseEnter = () => {
+    // Slow down to 10% speed on hover
+    if (marqueeTween.current) marqueeTween.current.timeScale(0.1);
+  };
+
+  const handleMouseLeave = () => {
+    // Resume normal speed
+    if (marqueeTween.current) marqueeTween.current.timeScale(1);
+  };
+
   return (
-    <div className="container py-10 flex-column" ref={sectionRef}>
+    <div className="py-10 flex-column" ref={sectionRef}>
       <div className="client-header" ref={headerRef}>
-        <h4>300+ <span>Numbers-driven with benefits list</span></h4>
+        <h4>
+          300+ <span>Numbers-driven with benefits list</span>
+        </h4>
       </div>
-      <section className="logo-carousel" ref={carouselRef}>
+      
+      <section 
+        className="logo-carousel" 
+        ref={carouselRef}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         {/* Overlays */}
         <div className="overlay overlay-left"></div>
         <div className="overlay overlay-right"></div>

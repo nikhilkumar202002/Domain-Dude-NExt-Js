@@ -5,6 +5,7 @@ import { Petit_Formal_Script } from "next/font/google";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import "./globals.css";
+import favicon from "../assets/fav-icon.png";
 
 const neueMontreal = localFont({
   src: [
@@ -36,6 +37,9 @@ const petitFormal = Petit_Formal_Script({
 export const metadata: Metadata = {
   title: "Digital Marketing Agency in Kochi | Domain Dude",
   description: "Boost your brand’s online presence with Domain Dude — a creative digital agency specializing in website development, result-driven digital marketing, and high-impact video production. We help businesses grow and scale fast.",
+  icons: {
+    icon: favicon.src,
+  },
 };
 
 export default function RootLayout({

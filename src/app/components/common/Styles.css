@@ -8,18 +8,79 @@
   font-weight: 400;
   border-radius: 30px 30px 30px 0px;
   font-size: 17px;
-  transition: all 0.25s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Smooth easing */
   cursor: pointer;
+  position: relative;
+  overflow: hidden; /* Keeps the animations inside the pill */
 }
+
 /* Variants */
 .main-btn.primary {
   background-color: #0054FF;
   color: #fff;
   padding: 10px 20px;
+  border: 1px solid transparent;
+  box-shadow: 0 8px 20px 0px rgba(0, 84, 255, 0.5);
 }
-/* Logo Slider */
-.logo-carousel {
 
+/* --- HOVER EFFECTS --- */
+
+/* 1. The Glow Effect */
+.main-btn:hover {
+  box-shadow: 0 0 25px rgba(0, 84, 255, 0.6); /* Soft Blue Glow */
+  transform: translateY(-2px); /* Subtle lift */
+}
+
+/* 2. Arrow Animation (Moves Up-Right) */
+.main-btn .arrow-icon {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.main-btn:hover .arrow-icon {
+  transform: translate(3px, -3px); /* Moves Diagonally */
+}
+
+/* 3. Letters Fade Up (Rolling Text Effect) */
+.main-btn .label {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  height: 1.2em; /* Height of one line of text */
+  line-height: 1.2em;
+}
+
+/* The original text */
+.main-btn .label span {
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* The duplicate text (hidden below initially) */
+.main-btn .label::after {
+  content: attr(data-text); /* Grabs text from React prop */
+  display: block;
+  position: absolute;
+  top: 100%; /* Sits below the visible area */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #fff; /* Ensure text color matches */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Extra glow on the new text */
+}
+
+/* Hover state for text */
+.main-btn:hover .label span {
+  transform: translateY(-150%); /* Original text shoots up */
+}
+
+.main-btn:hover .label::after {
+  transform: translateY(-100%); /* New text slides up into view */
+}
+
+
+/* --- EXISTING LOGO SLIDER CSS BELOW (Unchanged) --- */
+.logo-carousel {
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -74,7 +135,6 @@
     color: rgb(122, 122, 122);
   }
 }
-/* --- Overlay gradients --- */
 .overlay {
   position: absolute;
   top: 0;
