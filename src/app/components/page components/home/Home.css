@@ -718,6 +718,119 @@
   overflow: hidden;
 }
 
+/* Faq styles */
+
+.faq-header h2{
+  font-size: 56px;
+  color: black;
+  font-family: var(--font-neue);
+  font-weight: 500;
+  line-height: 65px;
+}
+.faq-header p{
+  font-size: 15px;
+  padding-top: 15px;
+  color: rgb(75, 75, 75);
+}
+.faq-header-highlight{
+  font-style: italic;
+}
+.faq-section{
+  padding: 200px 0px;
+}
+/* --- LAYOUT & STICKY LOGIC --- */
+
+/* 1. Ensure the grid aligns items at the start so sticky works */
+.faq-flex-box {
+  align-items: start; 
+  position: relative;
+}
+
+/* 2. The Sticky Left Column */
+.faq-left-content {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 100px; /* Adjust this value based on your Navbar height */
+  height: fit-content;
+}
+
+/* --- EXISTING STYLES (Keep your border/glow logic) --- */
+.faq-accoridan-header h3 {
+  font-size: 20px;
+  font-weight: 400;
+  font-family: var(--font-neue);
+  color: black;
+  margin: 0;
+}
+
+.faq-accordian-icon {
+  background-color: var(--primary);
+  min-width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.faq-accoridan-content {
+  padding-top: 20px; 
+}
+
+.faq-accoridan-content p {
+  font-size: 16px;
+  font-family: var(--font-neue);
+  font-weight: 400;
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --- GLOWING MOVING BORDER LOGIC (From your code) --- */
+.faq-accordian-items {
+  padding: 30px;
+  border-radius: 25px;
+  position: relative; 
+  background: transparent;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.faq-accordian-items.active::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg, 
+    transparent 240deg, 
+    var(--primary) 360deg
+  );
+  filter: drop-shadow(0 0 20px var(--primary)); 
+  animation: rotate-border 3s linear infinite;
+  z-index: -2;
+}
+
+.faq-accordian-items.active::after {
+  content: '';
+  position: absolute;
+  inset: 1.5px; 
+  background: white; /* Important: This stays white for the card background */
+  border-radius: 23px;
+  z-index: -1;
+}
+
+@keyframes rotate-border {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 @media (max-width:1080px) {
   .testimonial-footer-flex{
     flex-direction: column;

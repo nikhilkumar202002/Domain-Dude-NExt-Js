@@ -7,8 +7,6 @@ import Google from "../../../../assets/Icons/google.svg";
 import Star from "../../../../assets/Icons/star.svg";
 import "./Home.css";
 import Image from "next/image";
-
-// Import Swiper Core, Modules, and specific CSS
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperType } from "swiper"; 
 import { Autoplay, Navigation } from "swiper/modules"; 
@@ -30,12 +28,12 @@ const Testimonial = () => {
   };
 
   return (
-    <section className="testimonial-section">
+    <section className="testimonial-section text-white py-20 relative z-10">
       <div className="container testimonial-container"> 
         
-        <div className="testimonial-header">
-             <h3>Stories of Satisfaction</h3>
-            <h2>Discover why clients love working with us.</h2>
+        <div className="testimonial-header mb-12">
+             <h3 className="text-xl opacity-80 mb-2">Stories of Satisfaction</h3>
+            <h2 className="text-4xl font-bold">Discover why clients love working with us.</h2>
         </div>
 
         <div className="testimonial-wrapper">
@@ -43,48 +41,29 @@ const Testimonial = () => {
                 onSwiper={setSwiperRef}
                 modules={[Autoplay, Navigation]}
                 spaceBetween={20}
-                slidesPerView={1} // Default fallback
+                slidesPerView={1}
                 loop={true} 
                 speed={800}
-                autoplay={{
-                    delay: 4000,
-                    disableOnInteraction: false,
-                    pauseOnMouseEnter: true
-                }}
-                // --- UPDATED BREAKPOINTS HERE ---
+                autoplay={{ delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: true }}
                 breakpoints={{
-                    // 0px and up (Mobile): Shows 1.5 cards
-                    0: { 
-                        slidesPerView: 1.3, 
-                        spaceBetween: 20 
-                    },
-                    // 640px and up (Large Mobile/Tablet): Shows 2 cards
-                    640: { 
-                        slidesPerView: 2, 
-                        spaceBetween: 20 
-                    },
-                    // 1024px and up (Desktop): Shows 3 cards
-                    1024: { 
-                        slidesPerView: 3, 
-                        spaceBetween: 20 
-                    },
-                    // 1400px and up (Large Desktop): Shows 4 cards
-                    1400: { 
-                        slidesPerView: 4, 
-                        spaceBetween: 20 
-                    },
+                    0: { slidesPerView: 1.3, spaceBetween: 20 },
+                    640: { slidesPerView: 2, spaceBetween: 20 },
+                    1024: { slidesPerView: 3, spaceBetween: 20 },
+                    1400: { slidesPerView: 4, spaceBetween: 20 },
                 }}
                 className="testimonial-swiper"
             >
                 {testimonials.map((item) => (
-                    <SwiperSlide key={item.id}>
-                        <div className="testimonial-card">
-                            <div className="testimonial-card-content"> 
-                                <p>{item.content}</p>
+                    // CHANGE 1: Added !h-auto and !flex to ensure slide stretches to row height
+                    <SwiperSlide key={item.id} className="!h-auto !flex">
+                        {/* CHANGE 2: h-full ensures card fills the slide height */}
+                        <div className="testimonial-card bg-zinc-900/50 border border-zinc-800 p-6 rounded-2xl h-full flex flex-col">
+                            <div className="testimonial-card-content mb-6 flex-grow"> 
+                                <p className="text-gray-300 leading-relaxed">{item.content}</p>
                             </div>
-                            <div className="testimonial-card-footer">
-                                <h4>{item.name}</h4>
-                                <p>{item.role}</p>
+                            <div className="testimonial-card-footer mt-auto">
+                                <h4 className="font-bold text-white text-lg">{item.name}</h4>
+                                <p className="text-sm text-gray-400">{item.role}</p>
                             </div>
                         </div>
                     </SwiperSlide>
@@ -92,40 +71,30 @@ const Testimonial = () => {
             </Swiper>
         </div>      
 
-        <div className="testimonial-footer-flex">
-            {/* Custom Arrows */}
-            <div className="testimonial-footer-arrow">
-                <button 
-                    className="left-arrow" 
-                    onClick={() => swiperRef?.slidePrev()}
-                    type="button" 
-                >
-                    <IoIosArrowBack/>
+        <div className="testimonial-footer-flex flex justify-between items-center mt-10">
+            <div className="testimonial-footer-arrow flex gap-4">
+                <button className="left-arrow bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all text-white" onClick={() => swiperRef?.slidePrev()} type="button">
+                    <IoIosArrowBack size={24}/>
                 </button>
-                <button 
-                    className="right-arrow" 
-                    onClick={() => swiperRef?.slideNext()}
-                    type="button"
-                >
-                    <IoIosArrowForward/>
+                <button className="right-arrow bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all text-white" onClick={() => swiperRef?.slideNext()} type="button">
+                    <IoIosArrowForward size={24}/>
                 </button>
             </div>
-
-            <div className="testimonial-footer-google" onMouseMove={handleMouseMove}>
-                <span className="google-icon">
-                    <Image width={35} height={35} alt="Google Reviews" src={Google}/>
+            {/* ... Google Review Part ... */}
+             <div className="testimonial-footer-google flex items-center gap-3" onMouseMove={handleMouseMove}>
+                <span className="google-icon bg-white p-2 rounded-full">
+                    <Image width={24} height={24} alt="Google Reviews" src={Google}/>
                 </span>
-                <span className="google-review-text">
-                    Read us on Google Reviews
-                    <div className="star">
+                <span className="google-review-text text-sm">
+                    <div className="opacity-70">Read us on Google Reviews</div>
+                    <div className="star flex gap-1 mt-1">
                         {[...Array(5)].map((_, i) => (
-                             <span key={i}><Image width={15} height={15} alt="Star" src={Star}/></span>
+                             <span key={i}><Image width={12} height={12} alt="Star" src={Star}/></span>
                         ))}
                     </div>
                 </span>
             </div>
         </div>      
-
       </div>
     </section>
   )
