@@ -260,8 +260,13 @@
 }
 .about-main{
   position: relative;
-  padding: 100px 0px;
+  width: 100%;
+  height: 100vh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .about-section-bg-image{
   position: absolute;
@@ -370,6 +375,7 @@
     padding-top: 15px;
   }
 }
+
 .service-section-card-abtract-two {
   position: absolute;
   top: -50px;       /* Adjust vertical alignment if needed */
@@ -485,8 +491,13 @@
 }
 .service-section{
   position: relative;
-  padding: 100px 0px;
+  width: 100%;
+  padding: 150px 0px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 /* .service-section-bg-image{
   position: absolute;
@@ -862,7 +873,9 @@
 .tools{
   background-color: white;
   font-family: var(--font-neue);
+  width: 100%;
   padding: 150px 0px;
+  /* padding: 150px 0px; */
 }
 .tools-header-left{
   h4{

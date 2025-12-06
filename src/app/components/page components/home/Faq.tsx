@@ -15,46 +15,49 @@ const Faq = () => {
     const [activeIndex, setActiveIndex] = useState<number | null>(0);
     const faqSectionRef = useRef<HTMLDivElement>(null);
     const triggerItemRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
 
     const toggleAccordion = (index: number) => {
         setActiveIndex(activeIndex === index ? null : index);
     };
 
     useGSAP(() => {
-        const wrapper = document.querySelector(".theme-transition-wrapper");
+        const wrapper = document.querySelector("#footer-flow");
         
         if (wrapper && faqSectionRef.current) {
             
-            // --- SEQUENCED TIMELINE ---
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: faqSectionRef.current,
-                    // Start earlier (top 75%) so user sees change immediately upon entering
-                    start: "top 75%", 
-                    // End when the section is near the top
-                    end: "top 20%",    
-                    scrub: 1,         
+                    start: "top 65%", // Trigger before content fully enters
+                    end: "top 35%",    
+                    scrub: true,         
                 }
             });
 
-            // 1. INITIAL SETUP: Force content to be hidden (autoAlpha handles opacity + visibility)
-            gsap.set(".faq-accordians", { autoAlpha: 0 });
-
-            // 2. TIMELINE SEQUENCE
-            // 0% -> 50% of scroll: Fade Background to White & Text to Black
+            // 1. TIMELINE: Turn Wrapper WHITE and Text BLACK
             tl.to(wrapper, { backgroundColor: "#ffffff", ease: "none", duration: 1 })
               .to(".faq-header h2, .faq-header p", { color: "#000000", ease: "none", duration: 1 }, "<");
 
-            // 50% -> 100% of scroll: Fade Content In
-            // The '+0.1' delay ensures it waits until background is done
-            tl.to(".faq-accordians", { 
-                autoAlpha: 1, // Changes opacity to 1 and visibility to visible
-                ease: "power2.out", 
-                duration: 1 
-            }, ">"); // '>' means start after previous animation finishes
+            // 2. Reveal Content
+            if(contentRef.current) {
+                 gsap.fromTo(contentRef.current, 
+                    { autoAlpha: 0, y: 50 },
+                    { 
+                        autoAlpha: 1, 
+                        y: 0, 
+                        duration: 1,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: faqSectionRef.current,
+                            start: "top 70%",
+                            toggleActions: "play reverse play reverse"
+                        }
+                    }
+                );
+            }
 
-
-            // --- 3. Left Header Bounce (Triggered by 3rd Accordion) ---
+            // 3. Header Animation (Specific Bounce)
             if (triggerItemRef.current) {
                  gsap.fromTo(".faq-header", 
                     { y: 50, autoAlpha: 0 }, 
@@ -77,13 +80,9 @@ const Faq = () => {
 
     return (
         <section ref={faqSectionRef} className="faq-section py-20 relative z-10"> 
-            <div className="container faq-container mx-auto px-6">
-                
+            <div ref={contentRef} className="container faq-container mx-auto px-6 relative z-20">
                 <div className="faq-flex-box grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-20 items-start">
-                    
-                    {/* Left Side - Sticky Header */}
                     <div className="faq-left-content sticky top-[150px] z-20">
-                        {/* Start hidden (autoAlpha: 0 in GSAP handles this) */}
                         <div className="faq-header opacity-0"> 
                             <h2 className="text-4xl font-bold leading-tight">
                                 Frequently<br /> Asked <br /> 
@@ -94,9 +93,6 @@ const Faq = () => {
                             </p>
                         </div>
                     </div>
-
-                    {/* Right Side - Accordions */}
-                    {/* REMOVED 'opacity-0' class. GSAP .set() handles hiding it now. */}
                     <div className="faq-accordians flex flex-col gap-6 w-full">
                         {faqData.map((item, index) => (
                             <div 
@@ -113,7 +109,6 @@ const Faq = () => {
                                         {activeIndex === index ? <IoIosArrowUp /> : <IoIosArrowDown />}
                                     </span>
                                 </div>
-
                                 <AnimatePresence initial={false}>
                                     {activeIndex === index && (
                                         <motion.div

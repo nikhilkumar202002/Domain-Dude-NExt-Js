@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from "react"; 
+import React, { useState, useRef } from "react"; 
 import { testimonials } from "../../../data/Testimonialdata"; 
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import Google from "../../../../assets/Icons/google.svg";
@@ -11,12 +11,45 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperType } from "swiper"; 
 import { Autoplay, Navigation } from "swiper/modules"; 
 
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
 import "swiper/css";
 import "swiper/css/navigation"; 
 import "swiper/css/autoplay"; 
 
+gsap.registerPlugin(ScrollTrigger);
+
 const Testimonial = () => {
   const [swiperRef, setSwiperRef] = useState<SwiperType | null>(null);
+  const sectionRef = useRef(null);
+  const contentRef = useRef(null);
+
+  useGSAP(() => {
+    // 1. INITIALIZE FOOTER FLOW (Black)
+    const wrapper = document.querySelector("#footer-flow");
+    if(wrapper) {
+        gsap.to(wrapper, { backgroundColor: "#000000", duration: 0.1, overwrite: "auto" });
+    }
+
+    // 2. EXIT ANIMATION: Fade out to FAQ
+    if (contentRef.current) {
+        gsap.to(contentRef.current, {
+            opacity: 0,
+            y: -50,
+            scale: 0.98,
+            ease: "none",
+            scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "bottom 70%", // Start fading out earlier
+                end: "bottom 20%",
+                scrub: true,
+            }
+        });
+    }
+
+  }, { scope: sectionRef });
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { currentTarget: target } = e;
@@ -28,14 +61,12 @@ const Testimonial = () => {
   };
 
   return (
-    <section className="testimonial-section text-white py-20 relative z-10">
-      <div className="container testimonial-container"> 
-        
+    <section className="testimonial-section text-white py-20 relative z-10" ref={sectionRef}>
+      <div ref={contentRef} className="container testimonial-container relative z-20"> 
         <div className="testimonial-header mb-12">
              <h3 className="text-xl opacity-80 mb-2">Stories of Satisfaction</h3>
             <h2 className="text-4xl font-bold">Discover why clients love working with us.</h2>
         </div>
-
         <div className="testimonial-wrapper">
             <Swiper
                 onSwiper={setSwiperRef}
@@ -54,9 +85,7 @@ const Testimonial = () => {
                 className="testimonial-swiper"
             >
                 {testimonials.map((item) => (
-                    // CHANGE 1: Added !h-auto and !flex to ensure slide stretches to row height
                     <SwiperSlide key={item.id} className="!h-auto !flex">
-                        {/* CHANGE 2: h-full ensures card fills the slide height */}
                         <div className="testimonial-card bg-zinc-900/50 border border-zinc-800 p-6 rounded-2xl h-full flex flex-col">
                             <div className="testimonial-card-content mb-6 flex-grow"> 
                                 <p className="text-gray-300 leading-relaxed">{item.content}</p>
@@ -70,7 +99,6 @@ const Testimonial = () => {
                 ))}
             </Swiper>
         </div>      
-
         <div className="testimonial-footer-flex flex justify-between items-center mt-10">
             <div className="testimonial-footer-arrow flex gap-4">
                 <button className="left-arrow bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all text-white" onClick={() => swiperRef?.slidePrev()} type="button">
@@ -80,7 +108,6 @@ const Testimonial = () => {
                     <IoIosArrowForward size={24}/>
                 </button>
             </div>
-            {/* ... Google Review Part ... */}
              <div className="testimonial-footer-google flex items-center gap-3" onMouseMove={handleMouseMove}>
                 <span className="google-icon bg-white p-2 rounded-full">
                     <Image width={24} height={24} alt="Google Reviews" src={Google}/>
