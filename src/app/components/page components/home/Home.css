@@ -15,7 +15,7 @@
   height: 500px;
   border-radius: 50%;
   filter: blur(120px);
-  opacity: 0.5;
+  opacity: 0.8;
   mix-blend-mode: screen;
 }
 
@@ -352,6 +352,21 @@
   font-size: 30px;
   color: white;
 }
+.service-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.25s ease-out;
+}
+.service-section-card:hover .service-glow {
+  opacity: 1;
+}
 .service-section-card-body{
   padding-top: 15px;
   color: white;
@@ -363,10 +378,10 @@
   }
   p{
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 400;
     color: var(--text);
     padding-top: 3px;
-    line-height: 21px;
+    line-height: 22px;
   }
   a{
     font-size: 16px;

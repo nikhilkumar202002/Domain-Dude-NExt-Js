@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import React, { useState, useRef } from "react"; 
 import { testimonials } from "../../../data/Testimonialdata"; 
@@ -8,8 +8,8 @@ import Star from "../../../../assets/Icons/star.svg";
 import "./Home.css";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Swiper as SwiperType } from "swiper"; 
 import { Autoplay, Navigation } from "swiper/modules"; 
+import { motion } from "framer-motion";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -22,18 +22,16 @@ import "swiper/css/autoplay";
 gsap.registerPlugin(ScrollTrigger);
 
 const Testimonial = () => {
-  const [swiperRef, setSwiperRef] = useState<SwiperType | null>(null);
+  const [swiperRef, setSwiperRef] = useState<any>(null);
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
 
   useGSAP(() => {
-    // 1. INITIALIZE FOOTER FLOW (Black)
     const wrapper = document.querySelector("#footer-flow");
     if(wrapper) {
         gsap.to(wrapper, { backgroundColor: "#000000", duration: 0.1, overwrite: "auto" });
     }
-
-    // 2. EXIT ANIMATION: Fade out to FAQ
+    // Fade out logic for exit (Keep GSAP)
     if (contentRef.current) {
         gsap.to(contentRef.current, {
             opacity: 0,
@@ -42,32 +40,36 @@ const Testimonial = () => {
             ease: "none",
             scrollTrigger: {
                 trigger: sectionRef.current,
-                start: "bottom 70%", // Start fading out earlier
+                start: "bottom 70%", 
                 end: "bottom 20%",
                 scrub: true,
             }
         });
     }
-
   }, { scope: sectionRef });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { currentTarget: target } = e;
-    const rect = target.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    target.style.setProperty("--mouse-x", `${x}px`);
-    target.style.setProperty("--mouse-y", `${y}px`);
-  };
 
   return (
     <section className="testimonial-section text-white py-20 relative z-10" ref={sectionRef}>
       <div ref={contentRef} className="container testimonial-container relative z-20"> 
-        <div className="testimonial-header mb-12">
+        
+        <motion.div 
+            className="testimonial-header mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+        >
              <h3 className="text-xl opacity-80 mb-2">Stories of Satisfaction</h3>
             <h2 className="text-4xl font-bold">Discover why clients love working with us.</h2>
-        </div>
-        <div className="testimonial-wrapper">
+        </motion.div>
+
+        <motion.div 
+            className="testimonial-wrapper"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.2 }}
+        >
             <Swiper
                 onSwiper={setSwiperRef}
                 modules={[Autoplay, Navigation]}
@@ -75,7 +77,7 @@ const Testimonial = () => {
                 slidesPerView={1}
                 loop={true} 
                 speed={800}
-                autoplay={{ delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: true }}
+                autoplay={{ delay: 4000, disableOnInteraction: false }}
                 breakpoints={{
                     0: { slidesPerView: 1.3, spaceBetween: 20 },
                     640: { slidesPerView: 2, spaceBetween: 20 },
@@ -98,29 +100,34 @@ const Testimonial = () => {
                     </SwiperSlide>
                 ))}
             </Swiper>
-        </div>      
+        </motion.div>      
+        
         <div className="testimonial-footer-flex flex justify-between items-center mt-10">
             <div className="testimonial-footer-arrow flex gap-4">
-                <button className="left-arrow bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all text-white" onClick={() => swiperRef?.slidePrev()} type="button">
+                <button className="left-arrow bg-white/10 hover:bg-white/20 p-3 rounded-full text-white" onClick={() => swiperRef?.slidePrev()}>
                     <IoIosArrowBack size={24}/>
                 </button>
-                <button className="right-arrow bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all text-white" onClick={() => swiperRef?.slideNext()} type="button">
+                <button className="right-arrow bg-white/10 hover:bg-white/20 p-3 rounded-full text-white" onClick={() => swiperRef?.slideNext()}>
                     <IoIosArrowForward size={24}/>
                 </button>
             </div>
-             <div className="testimonial-footer-google flex items-center gap-3" onMouseMove={handleMouseMove}>
+             <motion.div 
+                className="testimonial-footer-google flex items-center gap-3" 
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+             >
                 <span className="google-icon bg-white p-2 rounded-full">
-                    <Image width={24} height={24} alt="Google Reviews" src={Google}/>
+                    <Image width={24} height={24} alt="Google" src={Google}/>
                 </span>
                 <span className="google-review-text text-sm">
                     <div className="opacity-70">Read us on Google Reviews</div>
                     <div className="star flex gap-1 mt-1">
-                        {[...Array(5)].map((_, i) => (
-                             <span key={i}><Image width={12} height={12} alt="Star" src={Star}/></span>
-                        ))}
+                        {[...Array(5)].map((_, i) => (<span key={i}><Image width={12} height={12} alt="Star" src={Star}/></span>))}
                     </div>
                 </span>
-            </div>
+            </motion.div>
         </div>      
       </div>
     </section>

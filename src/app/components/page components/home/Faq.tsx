@@ -14,8 +14,6 @@ gsap.registerPlugin(ScrollTrigger);
 const Faq = () => {
     const [activeIndex, setActiveIndex] = useState<number | null>(0);
     const faqSectionRef = useRef<HTMLDivElement>(null);
-    const triggerItemRef = useRef<HTMLDivElement>(null);
-    const contentRef = useRef<HTMLDivElement>(null);
 
     const toggleAccordion = (index: number) => {
         setActiveIndex(activeIndex === index ? null : index);
@@ -23,67 +21,34 @@ const Faq = () => {
 
     useGSAP(() => {
         const wrapper = document.querySelector("#footer-flow");
-        
         if (wrapper && faqSectionRef.current) {
-            
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: faqSectionRef.current,
-                    start: "top 65%", // Trigger before content fully enters
-                    end: "top 35%",    
+                    // Start early (85%) and finish early (55%)
+                    start: "top 85%",
+                    end: "top 55%",    
                     scrub: true,         
                 }
             });
-
-            // 1. TIMELINE: Turn Wrapper WHITE and Text BLACK
             tl.to(wrapper, { backgroundColor: "#ffffff", ease: "none", duration: 1 })
               .to(".faq-header h2, .faq-header p", { color: "#000000", ease: "none", duration: 1 }, "<");
-
-            // 2. Reveal Content
-            if(contentRef.current) {
-                 gsap.fromTo(contentRef.current, 
-                    { autoAlpha: 0, y: 50 },
-                    { 
-                        autoAlpha: 1, 
-                        y: 0, 
-                        duration: 1,
-                        ease: "power2.out",
-                        scrollTrigger: {
-                            trigger: faqSectionRef.current,
-                            start: "top 70%",
-                            toggleActions: "play reverse play reverse"
-                        }
-                    }
-                );
-            }
-
-            // 3. Header Animation (Specific Bounce)
-            if (triggerItemRef.current) {
-                 gsap.fromTo(".faq-header", 
-                    { y: 50, autoAlpha: 0 }, 
-                    {
-                        y: 0,
-                        autoAlpha: 1,
-                        duration: 1,
-                        ease: "back.out(1.7)",
-                        scrollTrigger: {
-                            trigger: triggerItemRef.current,
-                            start: "top 85%",
-                            toggleActions: "play reverse play reverse"
-                        }
-                    }
-                );
-            }
         }
-
     }, { scope: faqSectionRef });
 
     return (
         <section ref={faqSectionRef} className="faq-section py-20 relative z-10"> 
-            <div ref={contentRef} className="container faq-container mx-auto px-6 relative z-20">
+            <div className="container faq-container mx-auto px-6 relative z-20">
                 <div className="faq-flex-box grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-20 items-start">
                     <div className="faq-left-content sticky top-[150px] z-20">
-                        <div className="faq-header opacity-0"> 
+                        <motion.div 
+                            className="faq-header"
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            // Wait for white background
+                            viewport={{ once: true, margin: "-55% 0px 0px 0px" }}
+                            transition={{ duration: 0.8 }}
+                        > 
                             <h2 className="text-4xl font-bold leading-tight">
                                 Frequently<br /> Asked <br /> 
                                 <span className="faq-header-highlight text-[var(--primary)]">Questions</span>
@@ -91,14 +56,28 @@ const Faq = () => {
                             <p className="mt-6 text-lg transition-colors duration-300">
                                 At Domain Dude, we Design, Develop, and Deliver digital solutions that help your brand grow.
                             </p>
-                        </div>
+                        </motion.div>
                     </div>
-                    <div className="faq-accordians flex flex-col gap-6 w-full">
+                    
+                    <motion.div 
+                        className="faq-accordians flex flex-col gap-6 w-full"
+                        initial="hidden"
+                        whileInView="visible"
+                        // Trigger list slightly after header
+                        viewport={{ once: true, margin: "-55% 0px 0px 0px" }}
+                        variants={{
+                            hidden: { opacity: 0 },
+                            visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+                        }}
+                    >
                         {faqData.map((item, index) => (
-                            <div 
+                            <motion.div 
                                 key={item.id}
-                                ref={index === 2 ? triggerItemRef : null} 
                                 className={`faq-accordian-items ${activeIndex === index ? "active" : ""}`}
+                                variants={{
+                                    hidden: { opacity: 0, y: 20 },
+                                    visible: { opacity: 1, y: 0 }
+                                }}
                             >
                                 <div
                                     className="faq-accoridan-header flex justify-between items-center cursor-pointer relative z-10"
@@ -125,9 +104,9 @@ const Faq = () => {
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>

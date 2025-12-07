@@ -8,71 +8,125 @@ import Portfolio4 from "../../../../assets/Portfolio/paddle-boat.jpg";
 import Portfolio5 from "../../../../assets/Portfolio/pantry-india.jpg";
 import Portfolio6 from "../../../../assets/Portfolio/thebridgate.jpg";
 import Portfolio7 from "../../../../assets/Portfolio/vismaya.jpg";
-import Abstract from "../../../../assets/Images/Abstract-right.svg";
 import MainButton from "../../common/MainButton";
 import Image from "next/image";
 import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Draggable } from "gsap/Draggable"; 
 import { useGSAP } from "@gsap/react";
+import { motion } from "framer-motion";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, Draggable);
 
 const Portfolio = () => {
-  const containerRef = useRef(null);
-  const contentRef = useRef(null);
+  const containerRef = useRef(null);      
+  const contentWrapperRef = useRef(null); 
+  
+  const portfolioImages = [Portfolio1, Portfolio2, Portfolio3, Portfolio4, Portfolio5, Portfolio6, Portfolio7];
+  const rowConfig = [{ duration: 35 }, { duration: 55 }, { duration: 40 }, { duration: 60 }, { duration: 45 }];
+  const totalRows = [...rowConfig, ...rowConfig, ...rowConfig]; 
 
   useGSAP(() => {
-    // ENTRANCE ANIMATION: Smooth Fade In
-    gsap.fromTo(contentRef.current, 
-        { opacity: 0, y: 60 },
-        { 
-            opacity: 1, 
-            y: 0, 
-            duration: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: "top 75%",
-                toggleActions: "play reverse play reverse"
-            }
-        }
-    );
+    // 2. Setup Horizontal Marquees & Drag Logic (KEPT EXACTLY AS IS)
+    const rowTweens = []; 
+    rowConfig.forEach((row, i) => {
+      const tracks = gsap.utils.toArray(`.track-type-${i}`);
+      const tween = gsap.to(tracks, { xPercent: -50, repeat: -1, duration: row.duration, ease: "none" });
+      rowTweens.push(tween);
+    });
+
+    const rowHeight = 220;
+    const gap = 15;
+    const singleSetHeight = (rowHeight + gap) * rowConfig.length; 
+    let currentY = -singleSetHeight; 
+    gsap.set(contentWrapperRef.current, { y: currentY });
+
+    const proxy = document.createElement("div"); 
+    Draggable.create(proxy, {
+      trigger: containerRef.current, 
+      type: "x,y",
+      onPress: () => rowTweens.forEach((t) => t.pause()),
+      onDrag: function () {
+        const dx = this.deltaX; 
+        rowTweens.forEach((t, i) => {
+          const track = document.querySelector(`.track-type-${i}`);
+          if (!track) return;
+          const totalDist = track.offsetWidth / 2;
+          const progressChange = -(dx / totalDist);
+          t.progress(gsap.utils.wrap(0, 1, t.progress() + progressChange));
+        });
+        const dy = this.deltaY;
+        currentY += dy;
+        if (currentY > -50) currentY -= singleSetHeight;
+        else if (currentY < (-singleSetHeight * 2) + 50) currentY += singleSetHeight;
+        gsap.set(contentWrapperRef.current, { y: currentY });
+      },
+      onDragEnd: () => rowTweens.forEach((t) => t.play()),
+    });
   }, { scope: containerRef });
 
   return (
-    <section className="portfolio-section py-20 relative z-10" ref={containerRef}>
-      <div className="portfolio-section-bg-image absolute top-0 right-0 -z-10 opacity-20">
-        <Image src={Abstract} width={750} height={0} alt="Abstract" />
-      </div>
+    <section className="portfolio-section py-20 relative z-10 bg-[#000000]">
       
-      <div ref={contentRef} className="portfolio-container container relative z-20">
-        <div className="portfolio-section-header mb-12 text-white">
-          <h3 className="opacity-80">Creative Highlights</h3>
-          <h2 className="text-4xl font-bold">A Glimpse Into Our Creative Journey</h2>
-        </div>
+      {/* Header with Framer Delay */}
+      <motion.div 
+        className="portfolio-section-header mb-15 text-white container mx-auto text-center"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <h3 className="tracking-wider">Creative Highlights</h3>
+        <h2>A Glimpse Into Our Journey</h2>
+      </motion.div>
 
-        <div className="portfolio-section-portfolio-rows">
-            {/* ROW 1 */}
-            <div className="portfolio-section-portfolio-row grid grid-cols-1 md:grid-cols-3 gap-5">
-              <div className="portfolio-section-col"><div className="portfolio-section-portfolio-item rounded-xl overflow-hidden"><Image src={Portfolio1} width={400} height={300} alt="Portfolio1" className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" /></div></div>
-              <div className="portfolio-section-col flex flex-col gap-5">
-                <div className="portfolio-section-portfolio-item rounded-xl overflow-hidden"><Image src={Portfolio2} width={400} height={300} alt="Portfolio2" className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" /></div>
-                <div className="portfolio-section-portfolio-item rounded-xl overflow-hidden"><Image src={Portfolio3} width={400} height={300} alt="Portfolio3" className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" /></div>
+      {/* --- CONTAINER --- */}
+      <motion.div 
+        ref={containerRef} 
+        className="w-full h-[1060px] overflow-hidden relative cursor-grab active:cursor-grabbing"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.3 }}
+        viewport={{ once: true }}
+      >
+        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#000000] to-transparent z-30 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#000000] to-transparent z-30 pointer-events-none"></div>
+
+        <div ref={contentWrapperRef} className="flex flex-col gap-[15px] will-change-transform">
+          {totalRows.map((row, physicalIndex) => {
+            const typeIndex = physicalIndex % 5; 
+            return (
+              <div key={physicalIndex} className="w-full overflow-hidden">
+                <div className={`track-type-${typeIndex} flex w-fit gap-[15px] will-change-transform`}>
+                  {[...portfolioImages, ...portfolioImages].map((img, imgIndex) => (
+                    <div key={`orig-${physicalIndex}-${imgIndex}`} className="relative h-[220px] w-[320px] flex-shrink-0 rounded-xl overflow-hidden select-none group">
+                      <Image src={img} alt="Portfolio" fill draggable={false} className="object-cover transition-transform duration-500 pointer-events-none group-hover:scale-110" />
+                      <div className="absolute inset-0 bg-black/40 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none"></div>
+                    </div>
+                  ))}
+                  {[...portfolioImages, ...portfolioImages].map((img, imgIndex) => (
+                     <div key={`dup-${physicalIndex}-${imgIndex}`} className="relative h-[220px] w-[320px] flex-shrink-0 rounded-xl overflow-hidden select-none group">
+                      <Image src={img} alt="Portfolio" fill draggable={false} className="object-cover transition-transform duration-500 pointer-events-none group-hover:scale-110" />
+                      <div className="absolute inset-0 bg-black/40 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none"></div>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="portfolio-section-col"><div className="portfolio-section-portfolio-item rounded-xl overflow-hidden"><Image src={Portfolio4} width={400} height={300} alt="Portfolio4" className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" /></div></div>
-            </div>
-            {/* ROW 2 */}
-            <div className="portfolio-section-portfolio-row grid grid-cols-1 md:grid-cols-3 gap-6 mt-5">
-               <div className="portfolio-section-col"><div className="portfolio-section-portfolio-item rounded-xl overflow-hidden"><Image src={Portfolio5} width={400} height={300} alt="Portfolio5" className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" /></div></div>
-               <div className="portfolio-section-col"><div className="portfolio-section-portfolio-item rounded-xl overflow-hidden"><Image src={Portfolio6} width={400} height={300} alt="Portfolio6" className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" /></div></div>
-               <div className="portfolio-section-col"><div className="portfolio-section-portfolio-item rounded-xl overflow-hidden"><Image src={Portfolio7} width={400} height={300} alt="Portfolio7" className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" /></div></div>
-            </div>
+            );
+          })}
         </div>
-        <div className="portfolio-section-btn flex justify-center mt-10">
-          <MainButton label="View All Portfolio" />
-        </div>
-      </div>
+      </motion.div>
+
+      <motion.div 
+        className="portfolio-section-btn flex justify-center mt-12"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        viewport={{ once: true }}
+      >
+        <MainButton label="View All Portfolio" />
+      </motion.div>
     </section>
   );
 };
