@@ -18,7 +18,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
-import { motion } from "framer-motion"; 
+// 1. Import Variants type
+import { motion, Variants } from "framer-motion"; 
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -37,15 +38,13 @@ const Servicesection = () => {
       
       // THEME TRANSITION: White -> Black
       if (wrapper) {
-        // FIX: Use fromTo to enforce the color range (White to Black)
-        // This ensures that when scrolling UP, it transitions exactly back to White.
         gsap.fromTo(wrapper, 
           { backgroundColor: "#ffffff" },
           {
             backgroundColor: "#000000",
             color: "#ffffff",
             overwrite: "auto",
-            immediateRender: false, // Important to prevent premature color locking
+            immediateRender: false,
             scrollTrigger: {
               trigger: sectionRef.current,
               start: "top 85%",
@@ -68,7 +67,8 @@ const Servicesection = () => {
     { id: 6, title: "Brand Strategy", desc: "Define your unique brand identity with strategic planning and creative positioning.", icon: <MdOutlineCampaign /> },
   ];
 
-  const fadeInUp = {
+  // 2. Add type annotation here
+  const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
   };

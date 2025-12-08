@@ -6,32 +6,33 @@ import { FaInstagram, FaFacebookF, FaLinkedinIn, FaPinterest } from "react-icons
 import { AiOutlineCopyright } from "react-icons/ai";
 import MainButton from "../common/MainButton";
 import "./Footer.css";
-import { motion } from "framer-motion"; // 1. Import Framer Motion
+// 1. Import Variants type specifically
+import { motion, Variants } from "framer-motion"; 
 
 const Footer = () => {
 
-  // 2. Define Animation Variants
-  const containerVariants = {
+  // 2. Add ': Variants' annotation to your animation objects
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1, // Speed of the cascade
+        staggerChildren: 0.1,
         delayChildren: 0.2,
       },
     },
   };
 
-  const fadeUpVariants = {
+  const fadeUpVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.6, ease: "easeOut" } // Now TS knows this is a valid Easing string
     },
   };
 
-  const taglineVariants = {
+  const taglineVariants: Variants = {
     hidden: { opacity: 0, scale: 0.95, filter: "blur(10px)" },
     visible: { 
       opacity: 1, 
@@ -48,7 +49,7 @@ const Footer = () => {
             className="footer-container container"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }} // Animates when 10% is visible, only once
+            viewport={{ once: true, amount: 0.1 }}
             variants={containerVariants}
         >
             {/* --- TOP SECTION --- */}

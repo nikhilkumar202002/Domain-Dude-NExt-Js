@@ -20,16 +20,18 @@ import { motion } from "framer-motion";
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
 const Portfolio = () => {
-  const containerRef = useRef(null);      
-  const contentWrapperRef = useRef(null); 
+  // 1. ADDED TYPES TO REFS
+  const containerRef = useRef<HTMLDivElement>(null);      
+  const contentWrapperRef = useRef<HTMLDivElement>(null); 
   
   const portfolioImages = [Portfolio1, Portfolio2, Portfolio3, Portfolio4, Portfolio5, Portfolio6, Portfolio7];
   const rowConfig = [{ duration: 35 }, { duration: 55 }, { duration: 40 }, { duration: 60 }, { duration: 45 }];
   const totalRows = [...rowConfig, ...rowConfig, ...rowConfig]; 
 
   useGSAP(() => {
-    // 2. Setup Horizontal Marquees & Drag Logic (KEPT EXACTLY AS IS)
-    const rowTweens = []; 
+    // 2. ADDED TYPE TO ROWTWEENS ARRAY
+    const rowTweens: gsap.core.Tween[] = []; 
+
     rowConfig.forEach((row, i) => {
       const tracks = gsap.utils.toArray(`.track-type-${i}`);
       const tween = gsap.to(tracks, { xPercent: -50, repeat: -1, duration: row.duration, ease: "none" });
@@ -47,10 +49,12 @@ const Portfolio = () => {
       trigger: containerRef.current, 
       type: "x,y",
       onPress: () => rowTweens.forEach((t) => t.pause()),
-      onDrag: function () {
+      // 3. ADDED TYPE TO 'this'
+      onDrag: function (this: any) {
         const dx = this.deltaX; 
         rowTweens.forEach((t, i) => {
-          const track = document.querySelector(`.track-type-${i}`);
+          // 4. CAST TRACK AS HTMLELEMENT (for offsetWidth)
+          const track = document.querySelector(`.track-type-${i}`) as HTMLElement;
           if (!track) return;
           const totalDist = track.offsetWidth / 2;
           const progressChange = -(dx / totalDist);

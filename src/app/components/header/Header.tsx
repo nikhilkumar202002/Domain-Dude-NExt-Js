@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+// 1. Import Variants type
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import Logo from "../../../assets/Domine Dude white.svg";
 import Image from "next/image";
 import {
@@ -17,15 +18,15 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
 
-  // Animation variants
-  const drawerVariants = {
+  // 2. Add Type Annotation ': Variants'
+  const drawerVariants: Variants = {
     hidden: { y: "-100%", opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
         duration: 0.45,
-        ease: [0.25, 1, 0.5, 1],
+        ease: [0.25, 1, 0.5, 1], // Now TS knows this is a Bezier curve
         when: "beforeChildren",
         staggerChildren: 0.08,
       },
@@ -37,7 +38,7 @@ const Header = () => {
     },
   };
 
-  const linkVariants = {
+  const linkVariants: Variants = {
     hidden: { opacity: 0, y: 10 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.35 } },
   };

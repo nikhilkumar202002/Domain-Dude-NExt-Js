@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image"; // 1. Import StaticImageData type
 import Figma from "../../../../public/Tools/figma.png";
 import Meta from "../../../../public/Tools/facebook-meta.png";
 import Framer from "../../../../public/Tools/framer.png";
@@ -15,9 +15,15 @@ import Wix from "../../../../public/Tools/wix.png";
 import Wordpress from "../../../../public/Tools/wordpress.png";
 import Adobe from "../../../../public/Tools/adobe.png";
 
+// 2. Define the shape of a single tool item
+interface ToolItem {
+  name: string;
+  src: StaticImageData;
+}
+
 const Toolsslider = () => {
 
-  const allTools = [
+  const allTools: ToolItem[] = [ // Optional: Explicitly type this array for safety
     { name: "Figma", src: Figma },
     { name: "Meta", src: Meta },
     { name: "Framer", src: Framer },
@@ -90,7 +96,8 @@ const Toolsslider = () => {
   );
 };
 
-const LogoSet = ({ items }) => {
+// 3. Apply the type to the props here
+const LogoSet = ({ items }: { items: ToolItem[] }) => {
   return (
     // UPDATED: gap-[50px] and pr-[50px]
     // REMOVED: min-w-full (This was causing the large blank gap)
