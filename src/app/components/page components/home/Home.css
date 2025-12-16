@@ -261,7 +261,8 @@
 .about-main{
   position: relative;
   width: 100%;
-  height: 100vh;
+  padding: 150px 0px;
+  /* height: 100vh; */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -285,6 +286,11 @@
     max-width: 500px;
     opacity: 0.45;
   }
+  .faq-left-content {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+  }
 }
 
 /* Mobile */
@@ -298,6 +304,9 @@
     width: 90vw;
     max-width: 450px;
     opacity: 0.35;
+  }
+  .about-main{
+    padding: 50px 0px;
   }
 }
 
@@ -503,6 +512,9 @@
       padding: 50px 0px;
     }
   }
+  .faq-left-content {
+    height: fit-content;
+  }
 }
 .service-section{
   position: relative;
@@ -514,6 +526,7 @@
   align-items: center;
   justify-content: center;
 }
+
 /* .service-section-bg-image{
   position: absolute;
   bottom: -150px;      
@@ -880,6 +893,18 @@
   }
   .testimonial-card{
     padding: 20px;
+  }
+  .faq-section{
+    padding: 50px 0px;
+  }
+  .tools{
+    padding: 50px 0px !important;
+  }
+  .tools-sliders{
+    padding-top: 20px;
+  }
+  .tools-header-right{
+    padding: 20px 0px;
   }
 }
 

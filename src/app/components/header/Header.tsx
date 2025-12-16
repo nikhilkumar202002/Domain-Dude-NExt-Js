@@ -60,7 +60,7 @@ const Header = () => {
                   <a href="#">Home</a>
                 </div>
                 <div className="navbar-item">
-                  <a href="#">About</a>
+                  <a href="/about">About</a>
                 </div>
                 <div className="navbar-item">
                   <a href="#" className="with-arrow">

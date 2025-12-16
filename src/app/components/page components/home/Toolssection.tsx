@@ -15,25 +15,27 @@ const Toolssection = () => {
 
   useGSAP(() => {
     const wrapper = document.querySelector("#main-flow");
+    const mm = gsap.matchMedia(); // 1. Initialize MatchMedia
 
-    // 1. THEME TRANSITION: Black -> White
-    // We use scrub here so the color change is tied to the scroll position directly
-    if (wrapper) {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 65%", // Trigger slightly earlier than content
-          end: "top 35%",   
-          scrub: true,
+    // 2. Wrap Color Transition in Desktop Media Query
+    mm.add("(min-width: 769px)", () => {
+        if (wrapper) {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 65%",
+                end: "top 35%",   
+                scrub: true,
+                }
+            });
+            
+            // Only animates to WHITE on desktop
+            tl.to(wrapper, { backgroundColor: "#ffffff", duration: 1 })
+              .to(".tools-header-left h2, .tools-header-left p, .tools-header-left h4, .tools-header-card h3, .tools-header-card p", { color: "#000000", duration: 1 }, "<");
         }
-      });
-      
-      tl.to(wrapper, { backgroundColor: "#ffffff", duration: 1 })
-        .to(".tools-header-left h2, .tools-header-left p, .tools-header-left h4, .tools-header-card h3, .tools-header-card p", { color: "#000000", duration: 1 }, "<");
-    }
+    });
 
-    // 2. ENTRANCE: Fade In Up
-    // Critical: Use toggleActions so it replays when scrolling back up
+    // 3. ENTRANCE: Fade In Up (Runs on ALL devices)
     gsap.fromTo(contentRef.current, 
         { opacity: 0, y: 60 },
         { 
@@ -45,7 +47,7 @@ const Toolssection = () => {
                 trigger: containerRef.current,
                 start: "top 70%",
                 end: "bottom 70%",
-                toggleActions: "play reverse play reverse" // Enables fading in/out on both scroll directions
+                toggleActions: "play reverse play reverse"
             }
         }
     );
@@ -54,26 +56,29 @@ const Toolssection = () => {
 
   return (
     <section className="tools relative z-10" ref={containerRef}>
-        <div ref={contentRef} className="tools-container container relative z-20">
+   
+        <div ref={contentRef} className="tools-container container relative z-20 text-white md:text-inherit">
             <div className="tools-header-flex grid grid-cols-1 md:grid-cols-2 gap-20">
                 <div className="tools-header-left">
-                    <h4>Tools We Use</h4>
-                    <h2>Empowering <span className="tools-header-highlight">Digital Growth</span> for Businesses</h2>
-                    <p>At Domain Dude, we rely on industry-leading tools and technologies to deliver high-performance digital solutions.</p>
+                    {/* Added text-gray classes for mobile default */}
+                    <h4 className="text-gray-400 md:text-inherit">Tools We Use</h4>
+                    <h2 className="text-white md:text-inherit">Empowering <span className="tools-header-highlight">Digital Growth</span> for Businesses</h2>
+                    <p className="text-gray-300 md:text-inherit">At Domain Dude, we rely on industry-leading tools and technologies to deliver high-performance digital solutions.</p>
                 </div>
                 
                 <div className="tools-header-right grid grid-cols-2 gap-4">
                     <div className="tools-header-card">
-                        <h3>99%</h3>
-                        <p>Seamless integration</p>
+                        {/* Force text black on cards because they have white/gray bg even on mobile */}
+                        <h3 className="!text-black">99%</h3>
+                        <p className="!text-gray-600">Seamless integration</p>
                     </div>
                       <div className="tools-header-card">
-                        <h3>40%</h3>
-                        <p>Productivity boost</p>
+                        <h3 className="!text-black">40%</h3>
+                        <p className="!text-gray-600">Productivity boost</p>
                     </div>
                 </div>
             </div>
-            <div className="tools-sliders mt-12">
+            <div className="tools-sliders">
                 <Toolsslider/>
             </div>
         </div>

@@ -32,31 +32,33 @@ const Servicesection = () => {
   const [disablePrev, setDisablePrev] = useState(true);
   const [disableNext, setDisableNext] = useState(false);
 
-  useGSAP(
-    () => {
-      const wrapper = document.querySelector("#main-flow");
-      
-      // THEME TRANSITION: White -> Black
-      if (wrapper) {
-        gsap.fromTo(wrapper, 
-          { backgroundColor: "#ffffff" },
-          {
-            backgroundColor: "#000000",
-            color: "#ffffff",
-            overwrite: "auto",
-            immediateRender: false,
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 85%",
-              end: "top 55%",
-              scrub: true,
-            },
-          }
-        );
-      }
-    },
-    { scope: sectionRef }
-  );
+ /* Inside Servicesection.tsx useGSAP */
+useGSAP(() => {
+    const wrapper = document.querySelector("#main-flow");
+    const mm = gsap.matchMedia();
+
+    // Only run the "Return to Black" logic on Desktop
+    // On mobile, it never turned white, so we don't need to turn it back
+    mm.add("(min-width: 769px)", () => {
+        if (wrapper) {
+            gsap.fromTo(wrapper, 
+              { backgroundColor: "#ffffff" },
+              {
+                backgroundColor: "#000000",
+                color: "#ffffff",
+                overwrite: "auto",
+                immediateRender: false,
+                scrollTrigger: {
+                  trigger: sectionRef.current,
+                  start: "top 85%",
+                  end: "top 55%",
+                  scrub: true,
+                },
+              }
+            );
+        }
+    });
+}, { scope: sectionRef });
 
   const services = [
     { id: 1, title: "Web Development", desc: "Build powerful, responsive, and high-performance websites tailored to your business needs.", icon: <LuGlobeLock /> },

@@ -20,60 +20,75 @@ import { motion } from "framer-motion";
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
 const Portfolio = () => {
-  // 1. ADDED TYPES TO REFS
   const containerRef = useRef<HTMLDivElement>(null);      
   const contentWrapperRef = useRef<HTMLDivElement>(null); 
   
   const portfolioImages = [Portfolio1, Portfolio2, Portfolio3, Portfolio4, Portfolio5, Portfolio6, Portfolio7];
   const rowConfig = [{ duration: 35 }, { duration: 55 }, { duration: 40 }, { duration: 60 }, { duration: 45 }];
+  
+  // We keep the full list for desktop, but will hide extra rows on mobile via CSS
   const totalRows = [...rowConfig, ...rowConfig, ...rowConfig]; 
 
   useGSAP(() => {
-    // 2. ADDED TYPE TO ROWTWEENS ARRAY
     const rowTweens: gsap.core.Tween[] = []; 
+    const mm = gsap.matchMedia();
 
+    // 1. Setup Infinite Marquee (Runs on all devices)
     rowConfig.forEach((row, i) => {
+      // This will safely find only the tracks that are currently visible/rendered
       const tracks = gsap.utils.toArray(`.track-type-${i}`);
-      const tween = gsap.to(tracks, { xPercent: -50, repeat: -1, duration: row.duration, ease: "none" });
-      rowTweens.push(tween);
+      if (tracks.length > 0) {
+        const tween = gsap.to(tracks, { xPercent: -50, repeat: -1, duration: row.duration, ease: "none" });
+        rowTweens.push(tween);
+      }
     });
 
-    const rowHeight = 220;
-    const gap = 15;
-    const singleSetHeight = (rowHeight + gap) * rowConfig.length; 
-    let currentY = -singleSetHeight; 
-    gsap.set(contentWrapperRef.current, { y: currentY });
-
-    const proxy = document.createElement("div"); 
-    Draggable.create(proxy, {
-      trigger: containerRef.current, 
-      type: "x,y",
-      onPress: () => rowTweens.forEach((t) => t.pause()),
-      // 3. ADDED TYPE TO 'this'
-      onDrag: function (this: any) {
-        const dx = this.deltaX; 
-        rowTweens.forEach((t, i) => {
-          // 4. CAST TRACK AS HTMLELEMENT (for offsetWidth)
-          const track = document.querySelector(`.track-type-${i}`) as HTMLElement;
-          if (!track) return;
-          const totalDist = track.offsetWidth / 2;
-          const progressChange = -(dx / totalDist);
-          t.progress(gsap.utils.wrap(0, 1, t.progress() + progressChange));
-        });
-        const dy = this.deltaY;
-        currentY += dy;
-        if (currentY > -50) currentY -= singleSetHeight;
-        else if (currentY < (-singleSetHeight * 2) + 50) currentY += singleSetHeight;
+    // 2. Setup Desktop-Only Logic (Draggable & Vertical Scroll)
+    mm.add("(min-width: 769px)", () => {
+        const rowHeight = 220;
+        const gap = 15;
+        const singleSetHeight = (rowHeight + gap) * rowConfig.length; 
+        let currentY = -singleSetHeight; 
+        
+        // Set initial position
         gsap.set(contentWrapperRef.current, { y: currentY });
-      },
-      onDragEnd: () => rowTweens.forEach((t) => t.play()),
+
+        const proxy = document.createElement("div"); 
+        Draggable.create(proxy, {
+            trigger: containerRef.current, 
+            type: "x,y",
+            onPress: () => rowTweens.forEach((t) => t.pause()),
+            onDrag: function (this: any) {
+                const dx = this.deltaX; 
+                rowTweens.forEach((t, i) => {
+                const track = document.querySelector(`.track-type-${i}`) as HTMLElement;
+                if (!track) return;
+                const totalDist = track.offsetWidth / 2;
+                const progressChange = -(dx / totalDist);
+                t.progress(gsap.utils.wrap(0, 1, t.progress() + progressChange));
+                });
+                
+                const dy = this.deltaY;
+                currentY += dy;
+                if (currentY > -50) currentY -= singleSetHeight;
+                else if (currentY < (-singleSetHeight * 2) + 50) currentY += singleSetHeight;
+                gsap.set(contentWrapperRef.current, { y: currentY });
+            },
+            onDragEnd: () => rowTweens.forEach((t) => t.play()),
+        });
     });
+
+    // 3. Mobile Logic (Optional: Reset Y position to 0 if coming from desktop)
+    mm.add("(max-width: 768px)", () => {
+         gsap.set(contentWrapperRef.current, { y: 0 });
+    });
+
   }, { scope: containerRef });
 
   return (
     <section className="portfolio-section py-20 relative z-10 bg-[#000000]">
       
-      {/* Header with Framer Delay */}
+      {/* Header */}
       <motion.div 
         className="portfolio-section-header mb-15 text-white container mx-auto text-center"
         initial={{ opacity: 0, y: 40 }}
@@ -86,29 +101,37 @@ const Portfolio = () => {
       </motion.div>
 
       {/* --- CONTAINER --- */}
+      {/* Updated Height: h-[700px] for mobile (fits 3 rows), h-[1060px] for desktop */}
+      {/* Updated Cursor: Only grab cursor on md screens */}
       <motion.div 
         ref={containerRef} 
-        className="w-full h-[1060px] overflow-hidden relative cursor-grab active:cursor-grabbing"
+        className="w-full h-[700px] md:h-[1060px] overflow-hidden relative md:cursor-grab md:active:cursor-grabbing"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.3 }}
         viewport={{ once: true }}
       >
-        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-[#000000] to-transparent z-30 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#000000] to-transparent z-30 pointer-events-none"></div>
+        {/* Black Gradient Overlays (Preserved) */}
+        <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-gradient-to-b from-[#000000] to-transparent z-30 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-full h-24 md:h-32 bg-gradient-to-t from-[#000000] to-transparent z-30 pointer-events-none"></div>
 
         <div ref={contentWrapperRef} className="flex flex-col gap-[15px] will-change-transform">
           {totalRows.map((row, physicalIndex) => {
             const typeIndex = physicalIndex % 5; 
+            // Logic: Show first 3 rows always. Hide rows index 3+ on mobile (md:block shows them on desktop).
+            const visibilityClass = physicalIndex < 3 ? "block" : "hidden md:block";
+
             return (
-              <div key={physicalIndex} className="w-full overflow-hidden">
+              <div key={physicalIndex} className={`w-full overflow-hidden ${visibilityClass}`}>
                 <div className={`track-type-${typeIndex} flex w-fit gap-[15px] will-change-transform`}>
+                  {/* Original Set */}
                   {[...portfolioImages, ...portfolioImages].map((img, imgIndex) => (
                     <div key={`orig-${physicalIndex}-${imgIndex}`} className="relative h-[220px] w-[320px] flex-shrink-0 rounded-xl overflow-hidden select-none group">
                       <Image src={img} alt="Portfolio" fill draggable={false} className="object-cover transition-transform duration-500 pointer-events-none group-hover:scale-110" />
                       <div className="absolute inset-0 bg-black/40 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none"></div>
                     </div>
                   ))}
+                  {/* Duplicate Set for Loop */}
                   {[...portfolioImages, ...portfolioImages].map((img, imgIndex) => (
                      <div key={`dup-${physicalIndex}-${imgIndex}`} className="relative h-[220px] w-[320px] flex-shrink-0 rounded-xl overflow-hidden select-none group">
                       <Image src={img} alt="Portfolio" fill draggable={false} className="object-cover transition-transform duration-500 pointer-events-none group-hover:scale-110" />
