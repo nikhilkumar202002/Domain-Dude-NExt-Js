@@ -70,8 +70,7 @@ const Aboutcompany = () => {
   return (
     <section className="about-company" ref={containerRef}>
       <div className="about-company-container container">
-        <div className="about-company-flex grid grid-cols-2 gap-20 items-center">
-          
+        <div className="about-company-flex grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center">
           {/* Video Container */}
           <div className="about-company-video" ref={videoRef}>
             {isVisible ? (
