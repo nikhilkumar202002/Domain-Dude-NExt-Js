@@ -13,6 +13,7 @@ import {
 } from "react-icons/fi";
 import "./Header.css";
 import MainButton from "../common/MainButton";
+import Link from "next/link";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -47,17 +48,19 @@ const Header = () => {
     <>
       <nav>
         <section className="navbar">
-          <div className="navbar-container container">
+          <div className="navbar-container px-[17px] md:px-15">
             <div className="navbar-flex flex items-center justify-between py-5">
               {/* Logo */}
-              <div className="logo">
+           <div className="logo">
+              <Link href="/">
                 <Image src={Logo} alt="Domain Dude" width={180} height={0} />
-              </div>
+              </Link>
+            </div>
 
               {/* Desktop Navigation */}
               <div className="navbar-items desktop-menu">
                 <div className="navbar-item">
-                  <a href="#">Home</a>
+                  <a href="/">Home</a>
                 </div>
                 <div className="navbar-item">
                   <a href="/about">About</a>

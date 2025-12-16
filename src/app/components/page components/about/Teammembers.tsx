@@ -74,7 +74,7 @@ const Teammembers = () => {
             </p>
           </div>
 
-          <div className="team-members-wrapper grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-5 items-center">
+          <div className="team-members-wrapper grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-5 items-center">
             {/* Card 1 */}
             <div className="team-members-card">
               <Image src={Devan} alt="Deven Subramaniyan" width={0} height={0} />
