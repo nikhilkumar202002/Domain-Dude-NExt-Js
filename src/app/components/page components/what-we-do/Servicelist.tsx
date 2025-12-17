@@ -64,8 +64,9 @@ const Servicelist = () => {
         <div className="container">
           <div className="service-list-flex flex flex-col md:flex-row gap-10 md:gap-30 items-start">
             
-            {/* Header Section - 30% Width (Sticky) */}
-            <div className="service-list-header w-full md:w-[30%] sticky top-32">
+            {/* Header Section - 30% Width (Sticky ONLY on Desktop) */}
+            {/* CHANGED: Added 'md:' prefix to sticky and top-32 */}
+            <div className="service-list-header w-full md:w-[30%] md:sticky md:top-32">
               {/* Manually constructing H2 to preserve the specific span styling for "Scale." */}
               <h2>
                 <div className="word-wrapper"><div className="word-span">Build.&nbsp;</div></div>
@@ -99,7 +100,7 @@ const Servicelist = () => {
                     <h4>{service.id}. {service.title}</h4>
                     <p>{service.description}</p>
 
-                    <div className="service-list-card-keypoints flex gap-2 pt-[20px]">
+                    <div className="service-list-card-keypoints flex flex-wrap gap-2 pt-[20px]">
                       {service.keyPoints.map((point, i) => (
                         <div key={i} className="service-list-card-keypoint">
                           {point}

@@ -331,17 +331,23 @@ const Header = () => {
                   </motion.div>
                 </div>
 
-                <motion.div className="drawer-links" variants={drawerVariants}>
-                  {["Home", "Work", "About", "Career", "Contact"].map((item) => (
-                    <motion.a
-                      key={item}
-                      href="#"
-                      variants={linkVariants}
-                      whileHover={{ x: 6 }}
-                    >
-                      {item}
-                    </motion.a>
-                  ))}
+             <motion.div className="drawer-links" variants={drawerVariants}>
+  {[
+    { name: "Home", href: "/" },
+    { name: "About Us", href: "/about" },
+    { name: "What We do", href: "/our-service" },
+    { name: "Work", href: "/works" },
+    { name: "Contact", href: "/contact" },
+  ].map((item) => (
+    <Link key={item.name} href={item.href} legacyBehavior>
+      <motion.a
+        variants={linkVariants}
+        whileHover={{ x: 6 }}
+      >
+        {item.name}
+      </motion.a>
+    </Link>
+  ))}
                 </motion.div>
               </motion.div>
             )}

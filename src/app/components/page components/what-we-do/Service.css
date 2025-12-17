@@ -223,3 +223,54 @@
 .service-list {
   padding: 150px 0px;
 }
+
+.tech-tools{
+    background-color: white;
+    padding: 150px 0px 100px;
+}
+.tech-tools-header{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 4px;
+    font-family: var(--font-neue);
+}
+.tech-tools-header h2{
+    font-size: 45px;
+    color: black;
+    font-weight: 400;
+}
+.tech-tools-header p{
+    font-size: 15px;
+    color: rgb(73, 73, 73);
+}
+
+@media (max-width:1080px) {
+    .service-banner-header h1{
+        font-size: 30px;
+        width: 100%;
+        line-height: 44px;
+    }
+    .service-banner-header p{
+        font-size: 14px;
+        width: 100%;
+    }
+    .service-banner-cta{
+        padding-bottom: 30px;
+    }
+    .service-list{
+        padding: 60px 0px;
+    }
+    .tech-tools{
+        padding: 60px 0px 40px;
+    }
+    .tech-tools-header h2{
+        font-size: 38px;
+        line-height: 40px;
+    }
+    .tech-tools-header p{
+        font-size: 14px;
+        padding-top: 15px !important;
+    }
+
+}
