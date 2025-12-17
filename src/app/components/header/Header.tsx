@@ -1,27 +1,105 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Logo from "../../../assets/Domine Dude white.svg";
 import Image from "next/image";
 import Link from "next/link";
 import {
   FiArrowUpRight,
-  FiArrowDownRight,
   FiMenu,
   FiX,
-  FiChevronRight, // Added for menu items
+  FiChevronRight,
+  FiCheckCircle,
 } from "react-icons/fi";
 import "./Header.css";
 import MainButton from "../common/MainButton";
 
+// --- DATASET: Services & Key Points ---
+const servicesData = [
+  {
+    id: 1,
+    title: "Web Development",
+    href: "/services/web-development",
+    keyPoints: [
+      "Custom Frontend (React/Next.js)",
+      "Backend API Integration",
+      "CMS Solutions (WordPress/Shopify)",
+      "Progressive Web Apps (PWA)",
+      "Website Maintenance",
+    ],
+  },
+  {
+    id: 2,
+    title: "Digital Marketing",
+    href: "/services/digital-marketing",
+    keyPoints: [
+      "Social Media Marketing (SMM)",
+      "Google Ads (PPC)",
+      "Content Marketing Strategy",
+      "Email Marketing Campaigns",
+      "Conversion Rate Optimization",
+    ],
+  },
+  {
+    id: 3,
+    title: "UI/UX Designing",
+    href: "/services/ui-ux-design",
+    keyPoints: [
+      "User Research & Personas",
+      "Wireframing & Prototyping",
+      "Mobile App UI Design",
+      "Website Interface Design",
+      "Design Systems",
+    ],
+  },
+  {
+    id: 4,
+    title: "App Development",
+    href: "/services/app-development",
+    keyPoints: [
+      "iOS App Development",
+      "Android App Development",
+      "Cross-Platform (Flutter/React Native)",
+      "App Store Optimization",
+      "App UI/UX Integration",
+    ],
+  },
+  {
+    id: 5,
+    title: "SEO Optimization",
+    href: "/services/seo",
+    keyPoints: [
+      "On-Page SEO",
+      "Off-Page Link Building",
+      "Technical SEO Audits",
+      "Keyword Research",
+      "Local SEO Ranking",
+    ],
+  },
+  {
+    id: 6,
+    title: "Brand Strategy",
+    href: "/services/branding",
+    keyPoints: [
+      "Brand Identity & Logo",
+      "Brand Voice & Messaging",
+      "Rebranding Strategy",
+      "Market Positioning",
+      "Visual Style Guides",
+    ],
+  },
+];
+
 const Header = () => {
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   
-  // 1. New State for Mega Menu
+  // Mega Menu States
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
+  const [activeServiceIndex, setActiveServiceIndex] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,6 +115,13 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Helper function for simple exact match links
+  const isActive = (path: string) => (pathname === path ? "active" : "");
+
+  // Helper for "What we do" (Matches parent page OR any child service page)
+  const isServicesActive = 
+    pathname === "/our-services" || pathname.startsWith("/services");
+
   const navbarStyleVariants: Variants = {
     top: {
       backgroundColor: "rgba(0, 0, 0, 0)",
@@ -48,8 +133,7 @@ const Header = () => {
       boxShadow: "0px 0px 0px rgba(0,0,0,0)",
     },
     scrolled: {
-      backgroundColor: "rgba(255, 255, 255, 0.05)",
-      backdropFilter: "blur(12px)",
+      backgroundColor: "black",
       borderRadius: "0px 30px 0px 0px",
       border: "1px solid rgba(255, 255, 255, 0.1)",
       paddingTop: "10px",
@@ -60,25 +144,14 @@ const Header = () => {
     },
   };
 
-  // 2. Mega Menu Variants (Glassmorphism)
   const megaMenuVariants: Variants = {
-    hidden: { 
-      opacity: 0, 
-      y: 10, // Slide down slightly
-      scale: 0.98,
-      display: "none"
-    },
+    hidden: { opacity: 0, y: 10, scale: 0.98, display: "none" },
     visible: { 
-      opacity: 1, 
-      y: 0, 
-      scale: 1,
-      display: "grid", // Using Grid layout
+      opacity: 1, y: 0, scale: 1, display: "grid",
       transition: { duration: 0.2, ease: "easeOut" }
     },
     exit: { 
-      opacity: 0, 
-      y: 10, 
-      scale: 0.98,
+      opacity: 0, y: 10, scale: 0.98,
       transition: { duration: 0.15, ease: "easeIn" },
       transitionEnd: { display: "none" }
     }
@@ -89,12 +162,7 @@ const Header = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: {
-        duration: 0.45,
-        ease: [0.25, 1, 0.5, 1],
-        when: "beforeChildren",
-        staggerChildren: 0.08,
-      },
+      transition: { duration: 0.45, ease: [0.25, 1, 0.5, 1], when: "beforeChildren", staggerChildren: 0.08 },
     },
     exit: {
       y: "-100%",
@@ -144,23 +212,31 @@ const Header = () => {
               </div>
 
               <div className="navbar-items desktop-menu">
-                <div className="navbar-item"><a href="#">Home</a></div>
-                <div className="navbar-item"><a href="/about">About</a></div>
+                <div className="navbar-item">
+                    <Link href="/" className={isActive("/")}>Home</Link>
+                </div>
+                <div className="navbar-item">
+                    <Link href="/about" className={isActive("/about")}>About</Link>
+                </div>
                 
-                {/* 3. "What we do" Item with Hover Handlers */}
+                {/* Mega Menu Item */}
                 <div 
                   className="navbar-item relative" 
                   onMouseEnter={() => setMegaMenuOpen(true)}
                   onMouseLeave={() => setMegaMenuOpen(false)}
                 >
-                  <a href="#" className="with-arrow" style={{ cursor: "default" }}>
+                  <Link 
+                    href="/our-services" 
+                    // UPDATED LINE: Checks if menu is open OR if the route matches
+                    className={`with-arrow ${megaMenuOpen || isServicesActive ? "active" : ""}`} 
+                    style={{ cursor: "default" }}
+                  >
                     What we do
                     <span className={`navbar-arrow transition-transform duration-300 ${megaMenuOpen ? "rotate-45" : ""}`}>
                       <FiArrowUpRight />
                     </span>
-                  </a>
+                  </Link>
 
-                  {/* 4. The Mega Menu Dropdown */}
                   <AnimatePresence>
                     {megaMenuOpen && (
                       <motion.div 
@@ -170,41 +246,53 @@ const Header = () => {
                         animate="visible"
                         exit="exit"
                       >
-                         {/* Column 1: Services */}
-                         <div className="mega-menu-column">
-                            <h4>Services</h4>
+                         <div className="mega-menu-list">
+                            <h4>Our Services</h4>
                             <ul>
-                                <li><a href="#"><FiChevronRight/> Web Development</a></li>
-                                <li><a href="#"><FiChevronRight/> UI/UX Design</a></li>
-                                <li><a href="#"><FiChevronRight/> Branding</a></li>
-                                <li><a href="#"><FiChevronRight/> SEO Optimization</a></li>
+                                {servicesData.map((service, index) => (
+                                    <li key={service.id} onMouseEnter={() => setActiveServiceIndex(index)}>
+                                        <Link 
+                                            href={service.href}
+                                            className={index === activeServiceIndex ? "active-service" : ""}
+                                        >
+                                            <FiChevronRight className="icon"/> 
+                                            {service.title}
+                                        </Link>
+                                    </li>
+                                ))}
                             </ul>
                          </div>
 
-                         {/* Column 2: Solutions */}
-                         <div className="mega-menu-column">
-                            <h4>Solutions</h4>
-                            <ul>
-                                <li><a href="#"><FiChevronRight/> E-Commerce</a></li>
-                                <li><a href="#"><FiChevronRight/> Corporate Websites</a></li>
-                                <li><a href="#"><FiChevronRight/> Landing Pages</a></li>
-                            </ul>
-                         </div>
-                         
-                         {/* Column 3: Featured (Optional Image/Card) */}
-                         <div className="mega-menu-column featured-column">
-                            <h4>Featured</h4>
-                            <div className="featured-card">
-                                <p>See how we helped <strong>Ayursidhi</strong> scale 300%</p>
+                         <div className="mega-menu-details">
+                            <div className="details-header">
+                                <h4>{servicesData[activeServiceIndex].title}</h4>
+                                <span className="details-tag">Key Highlights</span>
                             </div>
+                            <ul className="details-grid">
+                                {servicesData[activeServiceIndex].keyPoints.map((point, i) => (
+                                    <motion.li 
+                                        key={i}
+                                        initial={{ opacity: 0, x: 10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: i * 0.05 }}
+                                    >
+                                        <FiCheckCircle className="details-icon"/> 
+                                        {point}
+                                    </motion.li>
+                                ))}
+                            </ul>
                          </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
 
-                <div className="navbar-item"><a href="#">Works</a></div>
-                <div className="navbar-item"><a href="#">Contact</a></div>
+                <div className="navbar-item">
+                    <Link href="/works" className={isActive("/works")}>Works</Link>
+                </div>
+                <div className="navbar-item">
+                    <Link href="/contact" className={isActive("/contact")}>Contact</Link>
+                </div>
               </div>
 
               <div className="navbar-btn desktop-menu">
@@ -223,7 +311,7 @@ const Header = () => {
             </div>
           </motion.div>
 
-          <AnimatePresence>
+           <AnimatePresence>
             {isMenuOpen && (
               <motion.div
                 className="mobile-drawer-full"
@@ -232,9 +320,6 @@ const Header = () => {
                 animate="visible"
                 exit="exit"
               >
-                 {/* ... (Keep your drawer content same) ... */}
-                 {/* I omitted the drawer content here to save space, keep it as is! */}
-                 {/* ... */}
                   <div className="drawer-header">
                   <Image src={Logo} alt="Domain Dude" width={150} height={0} />
                   <motion.div
@@ -257,7 +342,6 @@ const Header = () => {
                       {item}
                     </motion.a>
                   ))}
-                  {/* ... Rest of drawer ... */}
                 </motion.div>
               </motion.div>
             )}
