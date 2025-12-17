@@ -162,17 +162,64 @@
     background-color: rgb(22, 22, 22);
     border-radius: 45px;
 }
-.service-list-card-cta{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    a{
-        font-size: 14px;
-        color: white;
-        font-weight: 400;
-    }
+.service-list-card-cta {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }
-.service-list{
-    padding: 150px 0px;
+.service-list-card-cta a {
+  font-size: 14px;
+  color: white;
+  font-weight: 400;
+  text-decoration: none;
+  display: flex; /* Aligns text and arrow */
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  perspective: 1000px; /* Essential for 3D effect */
+}
+
+.service-list-card-cta-arrows {
+  background-color: var(--primary);
+  width: 30px; /* Slightly larger for better click area */
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: white;
+  
+  /* Smooth Rotation Transition */
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease;
+}
+
+/* Arrow Hover State: Rotate 180deg */
+.service-list-card-cta a:hover .service-list-card-cta-arrows {
+  transform: rotate(180deg);
+  background-color: white; /* Optional: Invert colors on hover */
+  color: var(--primary);
+}
+
+/* 2. The Text Wrapper */
+.cta-text-wrapper {
+  display: flex;
+}
+
+/* 3. The 3D Letters */
+.letter-flip {
+  display: inline-block;
+  transform-style: preserve-3d; /* Allows 3D rotation */
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.3s ease;
+}
+
+/* Letter Hover State: Rotate X axis (Flip) */
+.service-list-card-cta a:hover .letter-flip {
+  transform: rotateX(360deg);
+  color: var(--primary); /* Optional: Highlight text color */
+}
+
+/* Existing Styles */
+.service-list {
+  padding: 150px 0px;
 }
