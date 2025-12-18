@@ -291,7 +291,7 @@ const Header = () => {
                     <Link href="/works" className={isActive("/works")}>Works</Link>
                 </div>
                 <div className="navbar-item">
-                    <Link href="/contact" className={isActive("/contact")}>Contact</Link>
+                    <Link href="/contact-us" className={isActive("/contact-us")}>Contact</Link>
                 </div>
               </div>
 

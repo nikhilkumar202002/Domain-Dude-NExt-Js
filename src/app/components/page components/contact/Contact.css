@@ -1,0 +1,203 @@
+.contact-banner{
+    width: 100%;
+    height: 600px;
+    position: relative; 
+    overflow: hidden;
+}
+.contact-banner-container {
+    height: 100%;
+    position: relative; 
+    z-index: 10;
+}
+.bubble1, .bubble2, .bubble3 {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(150px);
+    opacity: 0.6;
+    mix-blend-mode: screen; 
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+.bubble1 { 
+    background: radial-gradient(circle, #0055ff 0%, transparent 70%); 
+}
+.bubble2 { 
+    background: radial-gradient(circle, #00aaff 0%, transparent 70%); 
+}
+.bubble3 { 
+    background: radial-gradient(circle, #97e5ff 0%, transparent 70%); 
+}
+/* 4. Noise Overlay */
+.noise {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://www.transparenttextures.com/patterns/noise.png");
+    opacity: 0.15;
+    mix-blend-mode: overlay;
+    z-index: 1;
+}
+.contact-banner-header{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.contact-banner-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.contact-banner-header h1{
+    font-size: 55px;
+    color: white;
+    font-family: var(--font-neue);
+    font-weight: 300;
+    text-align: center;
+    text-transform: capitalize;
+    line-height: 65px;
+    width: 70%;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0;
+}
+.word-wrapper {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+}
+.word-span {
+    display: inline-block;
+    transform-origin: left bottom; /* For the rotation effect */
+}
+.contact-banner-header p{
+    font-size: 15px;
+    font-family: var(--font-neue);
+    color: var(--text);
+    font-weight: 400;
+    width: 50%;
+    text-align: center;
+    padding-top: 20px;
+}
+.contact-banner-cta{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+@keyframes bounce-glow {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px); 
+    }
+}
+.contact-banner-cta span {
+    color: var(--primary);
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
+    filter: drop-shadow(0 0 5px var(--primary)); 
+    animation: bounce-glow 2s ease-in-out infinite;
+}
+.contact-banner-cta h4{
+    font-size: 14px;
+    font-family: var(--font-neue);
+    font-weight: 400;
+    color: white;
+}
+
+
+.contact-form-section{
+    padding: 150px 0px;
+    font-family: var(--font-neue);
+}
+.contact-form-icon{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px 20px 20px 0px;
+    background-color: var(--primary);
+    color: white;
+}
+.contact-form-info p a{
+    color: var(--text);
+    text-decoration: none;
+    font-size: 18px;
+}
+.contact-form-item p{
+    font-size: 18px;
+    color: var(--text);
+}
+.contact-form-info h2{
+    font-size: 15px;
+    color: white;
+    font-weight: 400;
+    color: var(--primary);
+}
+.contact-form-info p a:hover{
+    color: var(--primary);
+    transition: 400ms;
+}
+.contact-form-info{
+    line-height: 22px;
+}
+.contact-form-item{
+    display: flex;
+    align-items: start;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-group{
+    width: 100%;
+    color: white;
+    font-family: var(--font-neue);
+}
+.form-col input{
+    padding: 10px 20px;
+    width: 100%;
+    border-bottom: 1px solid rgb(39, 39, 39);
+    outline: none;
+    font-size: 15px;
+    font-weight: 300;
+}
+.form-group select{
+    padding: 10px 20px;
+    width: 100%;
+    border-bottom: 1px solid rgb(39, 39, 39);
+    outline: none;
+    font-size: 15px;
+    font-weight: 300;
+}
+.form-group option{
+    background-color: black;
+    color: white;
+    outline: none;
+    border: none;
+    padding: 20px;
+}
+.form-group textarea{
+    padding: 10px 20px;
+    width: 100%;
+    border-bottom: 1px solid rgb(39, 39, 39);
+    outline: none;
+    font-size: 15px;
+    font-weight: 300;
+}

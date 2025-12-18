@@ -207,6 +207,111 @@
     line-height: 26px;
 }
 
+.portfolio-cta {
+    background-color: var(--primary); /* Uses your variable */
+    width: 100%;
+    height: 500px;
+    padding: 60px 0; /* Adds internal breathing room */
+}
+
+.portfolio-cta-container {
+    height: 100%; /* Important: Passes the 500px height down */
+}
+
+.portfolio-cta-flex {
+    height: 100%;
+    display: flex;
+    flex-direction: column; /* Stack vertically */
+    
+    /* This separates them: Header at Top, Button at Bottom */
+    justify-content: space-between; 
+    
+    /* Default horizontal alignment: Left */
+    align-items: flex-start; 
+}
+
+.portfolio-cta-header {
+    width: 100%;
+    max-width: 800px; /* Limits text width for readability */
+}
+
+.portfolio-cta-header h2 {
+    font-size: 45px;
+    color: white;
+    font-family: var(--font-neue);
+    font-weight: 400;
+    line-height: 48px;
+    text-transform: capitalize;
+}
+
+.portfolio-cta-header p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+    padding-top: 10px;
+    max-width: 600px;
+    font-weight: 300;
+}
+
+.service-list-card-cta {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.service-list-card-cta a {
+  font-size: 14px;
+  color: white;
+  font-weight: 400;
+  text-decoration: none;
+  display: flex; /* Aligns text and arrow */
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  perspective: 1000px; /* Essential for 3D effect */
+}
+
+.service-list-card-cta-arrows {
+  background-color: var(--primary);
+  width: 30px; /* Slightly larger for better click area */
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: white;
+  
+  /* Smooth Rotation Transition */
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease;
+}
+
+/* Arrow Hover State: Rotate 180deg */
+.service-list-card-cta a:hover .service-list-card-cta-arrows {
+  transform: rotate(180deg);
+  background-color: white; /* Optional: Invert colors on hover */
+  color: var(--primary);
+}
+
+/* 2. The Text Wrapper */
+.cta-text-wrapper {
+  display: flex;
+}
+
+/* 3. The 3D Letters */
+.letter-flip {
+  display: inline-block;
+  transform-style: preserve-3d; /* Allows 3D rotation */
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.3s ease;
+}
+
+/* Letter Hover State: Rotate X axis (Flip) */
+.service-list-card-cta a:hover .letter-flip {
+  transform: rotateX(360deg);
+  color: white; /* Optional: Highlight text color */
+}
+
+
+
 @media (max-width:1080px) {
     .portfolio-banner-header h1{
         font-size: 30px;
@@ -235,5 +340,19 @@
     .portfolio-list-section p{
         font-size: 14px;
         width: 90%;
+    }
+
+    .portfolio-cta {
+        height: auto; /* Allow auto height on mobile */
+    }
+    .portfolio-cta-flex {
+        gap: 40px; /* Use gap instead of space-between on mobile */
+    }
+    .portfolio-cta-header h2 {
+        font-size: 32px;
+        line-height: 40px;
+    }
+    .portfolio-cta-btn {
+        align-self: flex-start; /* Reset to left on mobile if preferred */
     }
 }
