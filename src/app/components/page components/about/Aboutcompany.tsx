@@ -11,7 +11,7 @@ const Aboutcompany = () => {
   // --- Video Logic ---
   const videoRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const videoSource = "/Videos/domaindude-video.mp4";
+  const videoSource = "/videos/domaindude-video.mp4";
 
   useEffect(() => {
     const observer = new IntersectionObserver(

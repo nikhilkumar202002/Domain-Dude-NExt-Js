@@ -1,0 +1,103 @@
+"use client";
+
+import { useLayoutEffect, useRef } from "react";
+import Image from "next/image";
+import { gsap } from "gsap";
+import Portfolio1 from "../../../assets/Portfolio Slider/DESERTROSEFLOWERS.webp";
+import Portfolio2 from "../../../assets/Portfolio Slider/Techfuge.webp";
+import Portfolio3 from "../../../assets/Portfolio Slider/koffee-junction.webp";
+import Portfolio4 from "../../../assets/Portfolio Slider/metaark-online.webp";
+import Portfolio5 from "../../../assets/Portfolio Slider/pantryindia.webp";
+import "./Styles.css";
+
+const PortfolioHRslider = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tweens = useRef<gsap.core.Tween[]>([]);
+
+  const images = [Portfolio1, Portfolio2, Portfolio3, Portfolio4, Portfolio5];
+  // Duplicate enough times to ensure seamless infinite scroll
+  // (We need enough copies so that 50% of the height covers the viewport + buffer)
+  const items = [...images, ...images, ...images, ...images];
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      tweens.current = [];
+      const columns = gsap.utils.toArray<HTMLElement>(".portfolio-col-track");
+
+      columns.forEach((col, i) => {
+        // 1. Calculate Distance
+        // yPercent: -50 means we move half the total height of the track
+        const distance = col.offsetHeight * 0.5;
+
+        // 2. Define Base Speed (Pixels per Second)
+        // Lower = Slower. 
+        // e.g., 20px/s is very slow. 50px/s is moderate.
+        let baseSpeed = 60; 
+
+        // Optional: Vary speed slightly per column for the "parallax" feel
+        // Col 2 & 4 are slightly faster, others are base speed.
+        if (i === 1 || i === 3) baseSpeed = 30; 
+        if (i === 2) baseSpeed = 50; // Center col fastest
+
+        // 3. Calculate Duration dynamically
+        // Time = Distance / Speed
+        const duration = distance / baseSpeed;
+
+        // 4. Create Tween
+        const t = gsap.to(col, {
+          yPercent: -50, 
+          ease: "none",
+          duration: duration,
+          repeat: -1,
+        });
+
+        tweens.current.push(t);
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Hover Interactions (Slow down)
+  const handleMouseEnter = () => {
+    tweens.current.forEach((t) => {
+      // Slow down to 5% speed (almost stop, but keeps moving smoothly)
+      gsap.to(t, { timeScale: 0.05, duration: 1 }); 
+    });
+  };
+
+  const handleMouseLeave = () => {
+    tweens.current.forEach((t) => {
+      // Resume normal speed
+      gsap.to(t, { timeScale: 1, duration: 1 }); 
+    });
+  };
+
+  return (
+    <div 
+      className="portfolio-vertical-wrapper" 
+      ref={containerRef}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {[0, 1, 2, 3, 4].map((colIndex) => (
+        <div className="portfolio-col" key={colIndex}>
+          <div className="portfolio-col-track">
+            {items.map((src, index) => (
+              <div className="portfolio-item-vertical" key={index}>
+                <Image 
+                  src={src} 
+                  alt={`Portfolio ${index}`} 
+                  className="vertical-img"
+                  priority={index < 5} 
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default PortfolioHRslider;

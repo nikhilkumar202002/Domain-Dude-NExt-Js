@@ -151,3 +151,61 @@
   right: 0;
   background: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
 }
+
+/* --- Portfolio Vertical Slider (Styles.css) --- */
+
+.portfolio-vertical-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  background-color: black;
+  overflow: hidden;
+  position: relative;
+  gap: 20px;
+  /* REMOVED: mask-image (No Overlays) */
+}
+
+.portfolio-col {
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.portfolio-col-track {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px; 
+  will-change: transform;
+}
+
+.portfolio-item-vertical {
+  width: 100%;
+  height: 100%; 
+  
+  position: relative;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.vertical-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: none; /* Original Color */
+  
+  /* REMOVED: transition transform */
+}
+
+/* REMOVED: Hover Scale Effect */
+/* .portfolio-vertical-wrapper:hover .vertical-img { ... } */
+
+@media (max-width: 768px) {
+  .portfolio-item-vertical {
+    height: 20vh;
+  }
+}
