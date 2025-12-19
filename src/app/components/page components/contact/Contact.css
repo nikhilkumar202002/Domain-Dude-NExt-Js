@@ -201,3 +201,176 @@
     font-size: 15px;
     font-weight: 300;
 }
+
+/* --- Contact FAQ Section --- */
+.contact-faq {
+    padding: 150px 0px;
+    font-family: var(--font-neue);
+    background-color: white;
+}
+
+/* --- Title Styling --- */
+.contact-faq-title {
+    font-size: 45px;
+    text-align: center;
+    font-weight: 400;
+    line-height: 58px;
+    
+    /* Force main text to be Black and Normal */
+    color: black !important; 
+    font-style: normal !important;
+    
+    padding-bottom: 50px;
+    display: block;
+}
+
+/* --- Specific Highlight Class ("Asked") --- */
+.highlight-text {
+    /* Override parent's black !important */
+    color: var(--primary) !important; 
+    font-style: italic !important;
+    
+    display: inline-block; 
+}
+
+/* IMPORTANT: Ensure the GSAP animation spans inside the highlight inherit the color */
+.highlight-text .word-wrapper, 
+.highlight-text .word-span {
+    color: inherit !important;
+    font-style: inherit !important;
+}
+
+/* --- Accordion Item --- */
+.contact-faq-accordian-item {
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Visible gray border */
+    padding: 30px 0;
+    transition: background-color 0.3s ease;
+}
+
+/* Remove border for the last item */
+.contact-faq-accordian-item:last-child {
+    border-bottom: none;
+}
+
+.contact-faq-accordian-item:hover {
+    opacity: 0.9;
+}
+
+/* --- Left Number --- */
+.contact-faq-accoridan-left h3 {
+    font-size: 24px;
+    font-weight: 400;
+    color: black;
+    margin-bottom: 0;
+    transition: color 0.3s ease;
+}
+
+/* --- Middle Question --- */
+.contact-faq-accoridan-middle h3 {
+    font-size: 24px;
+    font-weight: 500;
+    color: black;
+    margin-bottom: 0;
+    transition: color 0.3s ease;
+}
+
+/* Active State Colors */
+.contact-faq-accordian-item.active .contact-faq-accoridan-middle h3,
+.contact-faq-accordian-item.active .contact-faq-accoridan-left h3 {
+    color: var(--primary);
+}
+
+/* --- Answer Animation --- */
+.faq-answer-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-faq-accordian-item.active .faq-answer-wrapper {
+    grid-template-rows: 1fr;
+}
+
+.faq-answer-wrapper p {
+    overflow: hidden;
+    color: rgb(49, 49, 49);
+    font-size: 16px;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease, padding 0.4s ease;
+    margin: 0;
+}
+
+.contact-faq-accordian-item.active .faq-answer-wrapper p {
+    opacity: 1;
+    transform: translateY(0);
+    padding-top: 15px;
+}
+
+/* --- Right Icon --- */
+.contact-faq-accoridan-right span {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s ease, color 0.3s ease;
+    color: black;
+}
+
+.contact-faq-accordian-item.active .contact-faq-accoridan-right span {
+    transform: rotate(180deg);
+    color: var(--primary);
+}
+
+/* --- Animation Utilities --- */
+.word-wrapper {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.word-span {
+    display: inline-block;
+    transform-origin: left bottom;
+}
+
+/* --- Mobile Responsive --- */
+@media (max-width: 768px){
+
+    .contact-banner-header h1{
+        font-size: 36px;
+        line-height: 42px;
+        width: 90%;
+    }
+    .contact-banner-header p{
+        width: 80%;
+        font-size: 14px;
+    }
+    .contact-form-section{
+        padding: 100px 0px;
+    }
+    .contact-faq {
+        padding: 100px 0px;
+    }
+}
+@media (max-width: 768px) {
+    .contact-faq {
+        padding: 80px 0;
+    }
+    .contact-faq-title {
+        font-size: 32px;
+        line-height: 1.2;
+    }
+    .contact-faq-accordian-item {
+        gap: 20px;
+    }
+    .contact-faq-accoridan-left h3,
+    .contact-faq-accoridan-middle h3 {
+        font-size: 18px;
+    }
+    .faq-answer-wrapper p {
+        font-size: 14px;
+    }
+}

@@ -13,6 +13,8 @@ import {
   FiChevronRight,
   FiCheckCircle,
 } from "react-icons/fi";
+// Import Social Icons
+import { FaInstagram, FaLinkedinIn, FaXTwitter, FaFacebookF } from "react-icons/fa6";
 import "./Header.css";
 import MainButton from "../common/MainButton";
 
@@ -227,7 +229,6 @@ const Header = () => {
                 >
                   <Link 
                     href="/our-services" 
-                    // UPDATED LINE: Checks if menu is open OR if the route matches
                     className={`with-arrow ${megaMenuOpen || isServicesActive ? "active" : ""}`} 
                     style={{ cursor: "default" }}
                   >
@@ -320,35 +321,49 @@ const Header = () => {
                 animate="visible"
                 exit="exit"
               >
+                  {/* Drawer Header */}
                   <div className="drawer-header">
-                  <Image src={Logo} alt="Domain Dude" width={150} height={0} />
-                  <motion.div
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="close-icon"
-                  >
-                    <FiX size={26} />
-                  </motion.div>
-                </div>
+                    <Image src={Logo} alt="Domain Dude" width={150} height={0} />
+                    <motion.div
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => setIsMenuOpen(false)}
+                      className="close-icon"
+                    >
+                      <FiX size={26} />
+                    </motion.div>
+                  </div>
 
-             <motion.div className="drawer-links" variants={drawerVariants}>
-  {[
-    { name: "Home", href: "/" },
-    { name: "About Us", href: "/about" },
-    { name: "What We do", href: "/our-service" },
-    { name: "Work", href: "/works" },
-    { name: "Contact", href: "/contact" },
-  ].map((item) => (
-    <Link key={item.name} href={item.href} legacyBehavior>
-      <motion.a
-        variants={linkVariants}
-        whileHover={{ x: 6 }}
-      >
-        {item.name}
-      </motion.a>
-    </Link>
-  ))}
-                </motion.div>
+                  {/* Drawer Links (Centered) */}
+                  <motion.div className="drawer-links" variants={drawerVariants}>
+                      {[
+                        { name: "Home", href: "/" },
+                        { name: "About", href: "/about" },
+                        { name: "What we do", href: "/our-services" },
+                        { name: "Works", href: "/works" },
+                        { name: "Contact", href: "/contact-us" },
+                      ].map((item) => (
+                        <Link key={item.name} href={item.href} legacyBehavior>
+                          <motion.a
+                            variants={linkVariants}
+                            whileHover={{ x: 6, color: "var(--secondary)" }}
+                            onClick={() => setIsMenuOpen(false)} // Close on click
+                          >
+                            {item.name}
+                          </motion.a>
+                        </Link>
+                      ))}
+                  </motion.div>
+
+                  {/* Drawer Footer (Social Icons) */}
+                  <div className="drawer-footer">
+                      <div className="social-links">
+                          <Link href="#" target="_blank"><FaInstagram size={20} /></Link>
+                          <Link href="#" target="_blank"><FaLinkedinIn size={20} /></Link>
+                          <Link href="#" target="_blank"><FaXTwitter size={20} /></Link>
+                          <Link href="#" target="_blank"><FaFacebookF size={20} /></Link>
+                      </div>
+                  </div>
+
               </motion.div>
             )}
           </AnimatePresence>

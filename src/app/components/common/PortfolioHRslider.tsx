@@ -16,7 +16,6 @@ const PortfolioHRslider = () => {
 
   const images = [Portfolio1, Portfolio2, Portfolio3, Portfolio4, Portfolio5];
   // Duplicate enough times to ensure seamless infinite scroll
-  // (We need enough copies so that 50% of the height covers the viewport + buffer)
   const items = [...images, ...images, ...images, ...images];
 
   useLayoutEffect(() => {
@@ -26,21 +25,21 @@ const PortfolioHRslider = () => {
 
       columns.forEach((col, i) => {
         // 1. Calculate Distance
-        // yPercent: -50 means we move half the total height of the track
         const distance = col.offsetHeight * 0.5;
 
-        // 2. Define Base Speed (Pixels per Second)
-        // Lower = Slower. 
-        // e.g., 20px/s is very slow. 50px/s is moderate.
+        // --- SAFETY CHECK FOR MOBILE ---
+        // If CSS hides the column (display: none), height is 0. 
+        // We skip animating it to avoid bugs.
+        if (distance < 1) return; 
+
+        // 2. Define Base Speed
         let baseSpeed = 60; 
 
-        // Optional: Vary speed slightly per column for the "parallax" feel
-        // Col 2 & 4 are slightly faster, others are base speed.
+        // Vary speed for parallax effect
         if (i === 1 || i === 3) baseSpeed = 30; 
-        if (i === 2) baseSpeed = 50; // Center col fastest
+        if (i === 2) baseSpeed = 50; 
 
-        // 3. Calculate Duration dynamically
-        // Time = Distance / Speed
+        // 3. Calculate Duration
         const duration = distance / baseSpeed;
 
         // 4. Create Tween
@@ -58,17 +57,15 @@ const PortfolioHRslider = () => {
     return () => ctx.revert();
   }, []);
 
-  // Hover Interactions (Slow down)
+  // Hover Interactions
   const handleMouseEnter = () => {
     tweens.current.forEach((t) => {
-      // Slow down to 5% speed (almost stop, but keeps moving smoothly)
       gsap.to(t, { timeScale: 0.05, duration: 1 }); 
     });
   };
 
   const handleMouseLeave = () => {
     tweens.current.forEach((t) => {
-      // Resume normal speed
       gsap.to(t, { timeScale: 1, duration: 1 }); 
     });
   };

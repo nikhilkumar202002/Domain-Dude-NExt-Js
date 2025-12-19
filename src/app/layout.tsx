@@ -6,6 +6,7 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import "./globals.css";
 import favicon from "../assets/fav-icon.png";
+import Stickybuttons from "./components/common/Stickybuttons";
 
 const neueMontreal = localFont({
   src: [
@@ -53,6 +54,8 @@ export default function RootLayout({
          <Header />
         {children}
         <Footer />
+
+        <Stickybuttons/>
       </body>
     </html>
   );

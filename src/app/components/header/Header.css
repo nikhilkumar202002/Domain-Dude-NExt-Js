@@ -167,14 +167,15 @@
   .drawer-links {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 18px;
-    margin-top: 40px;
+    justify-content: center;
   }
 
   .drawer-links a {
     color: #d7d7d7;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 22px;
     font-family: var(--font-neue);
     transition: color 0.3s ease;
   }

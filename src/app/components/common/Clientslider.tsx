@@ -21,7 +21,6 @@ const Clientslider = () => {
   const headerRef = useRef(null);
   const carouselRef = useRef(null);
   
-  // We store the marquee animation here so we can pause/slow it later
   const marqueeTween = useRef<gsap.core.Tween | null>(null);
 
   useLayoutEffect(() => {
@@ -31,11 +30,11 @@ const Clientslider = () => {
     // 1. Calculate single set width
     const items = Array.from(track.children) as HTMLElement[];
     const singleSetWidth = items.reduce(
-      (sum, el) => sum + el.offsetWidth + 100, // 100 is your CSS gap + padding
+      (sum, el) => sum + el.offsetWidth + 100, 
       0
     );
 
-    // 2. Clone items to fill screen (Double assurance for seamlessness)
+    // 2. Clone items
     if (track.children.length === logos.length) {
         while (track.scrollWidth < window.innerWidth * 3) {
             items.forEach((el) => {
@@ -83,7 +82,8 @@ const Clientslider = () => {
       // --- MARQUEE ANIMATION ---
       marqueeTween.current = gsap.to(track, {
         x: `-=${singleSetWidth}`, 
-        duration: 20, // CHANGED FROM 30 TO 20 (Lower number = Faster speed)
+        // INCREASED DURATION to make it slower (Higher number = Slower speed)
+        duration: 50, 
         ease: "none",
         repeat: -1,
         modifiers: {
@@ -99,12 +99,10 @@ const Clientslider = () => {
 
   // --- HOVER HANDLERS ---
   const handleMouseEnter = () => {
-    // Slow down to 10% speed on hover
     if (marqueeTween.current) marqueeTween.current.timeScale(0.1);
   };
 
   const handleMouseLeave = () => {
-    // Resume normal speed
     if (marqueeTween.current) marqueeTween.current.timeScale(1);
   };
 
@@ -122,7 +120,6 @@ const Clientslider = () => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Overlays */}
         <div className="overlay overlay-left"></div>
         <div className="overlay overlay-right"></div>
 

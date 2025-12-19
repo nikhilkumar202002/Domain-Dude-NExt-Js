@@ -196,16 +196,107 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: none; /* Original Color */
-  
-  /* REMOVED: transition transform */
+  filter: none;
 }
 
-/* REMOVED: Hover Scale Effect */
-/* .portfolio-vertical-wrapper:hover .vertical-img { ... } */
+.sticky-buttons {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: right;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+}
 
+.sticky-button-item {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    /* Keep the default grey border, but we will make it transparent on hover */
+    border: 1px solid rgb(100, 100, 100); 
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black; /* Default background */
+    font-size: 16px;
+    
+    /* essential for positioning pseudo-elements */
+    position: relative; 
+    overflow: hidden; /* Clips the spinning square to a circle */
+    z-index: 1; /* Ensures text stays on top */
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* --- 1. The Spinning Gradient (The "Running" Border) --- */
+.sticky-button-item::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%; /* Large enough to cover corners while spinning */
+    height: 200%;
+    /* Creates a tail effect: Transparent -> Primary Color */
+    background: conic-gradient(transparent, transparent, transparent, var(--primary));
+    transform: translate(-50%, -50%);
+    z-index: -2; /* Sits at the very bottom */
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+/* --- 2. The Inner Mask (Keeps the center black) --- */
+.sticky-button-item::after {
+    content: "";
+    position: absolute;
+    inset: 2px; /* This defines the thickness of the running border (2px) */
+    background-color: black; 
+    border-radius: 50%;
+    z-index: -1; /* Sits between text and gradient */
+}
+
+/* --- HOVER EFFECTS --- */
+.sticky-button-item:hover {
+    /* 1. Slight Primary Glow */
+    box-shadow: 0 0 15px rgba(0, 84, 255, 0.5); 
+    
+    /* 2. Hide the static grey border so the running gradient shows */
+    border-color: transparent; 
+}
+
+.sticky-button-item:hover::before {
+    opacity: 1; /* Show gradient */
+    animation: spinBorder 1.5s linear infinite; /* Start spinning */
+}
+
+/* --- Animation Definition --- */
+@keyframes spinBorder {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
 @media (max-width: 768px) {
   .portfolio-item-vertical {
     height: 20vh;
+  }
+  .portfolio-vertical-wrapper {
+    gap: 10px; 
+  }
+  .portfolio-col-track {
+    gap: 10px; 
+  }
+  .portfolio-col:nth-child(n+4) {
+    display: none;
+  }
+  .sticky-buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    right: 10px;
+    bottom: 10px;
   }
 }
