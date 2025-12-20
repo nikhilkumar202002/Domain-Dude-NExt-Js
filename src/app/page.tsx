@@ -22,6 +22,7 @@ const Page = () => {
           <Toolssection/>
           <Servicesection/>
           <Portfolio/>
+
       </div>
    
       {/* FLOW 2: Testimonial (Black) -> Faq (White) */}

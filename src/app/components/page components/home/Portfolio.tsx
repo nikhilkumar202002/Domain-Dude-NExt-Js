@@ -17,6 +17,8 @@ import { Draggable } from "gsap/Draggable";
 import { useGSAP } from "@gsap/react";
 import { motion } from "framer-motion";
 
+import Portfoliomobile from "./Portfoliomobile";
+
 gsap.registerPlugin(ScrollTrigger, Draggable);
 
 const Portfolio = () => {
@@ -137,7 +139,8 @@ const Portfolio = () => {
       {/* --- CONTAINER --- */}
       <motion.div 
         ref={containerRef} 
-        className="w-full h-[700px] md:h-[1060px] overflow-hidden relative md:cursor-grab md:active:cursor-grabbing"
+        // Added 'hidden md:block' to hide on mobile and show on desktop
+        className="hidden md:block w-full h-[700px] md:h-[1060px] overflow-hidden relative md:cursor-grab md:active:cursor-grabbing"
         style={{
             background: "radial-gradient(circle at center, #1a1a1a 0%, #000000 70%)"
         }}
@@ -175,6 +178,10 @@ const Portfolio = () => {
           })}
         </div>
       </motion.div>
+
+<div className="block md:hidden">
+            <Portfoliomobile/>
+          </div>
 
       <motion.div 
         className="portfolio-section-btn flex justify-center mt-20"
