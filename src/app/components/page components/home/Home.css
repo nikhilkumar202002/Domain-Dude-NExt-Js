@@ -53,6 +53,7 @@
 .overlay-banner{
     position: absolute;
     bottom: 0;
+    left: 0;
     width: 100%;
     height: 80px;
     background: linear-gradient(to top, black, rgba(0, 0, 0, 0) 100%);
@@ -122,14 +123,35 @@
     margin-top: 40PX;
 }
 .banner-content-highlight {
-  font-family: var(--font-neue);
-  background: linear-gradient(90deg, #0054FF, #00D4FF, #0054FF);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: glowGradient 4s ease infinite;
-  text-shadow: 0 0 10px rgba(0, 84, 255, 0.6);
-  font-weight: 300;
+  display: inline-block;
+    /* Remove gradient clip from parent if it exists, to prevent conflict */
+    background: none; 
+    -webkit-text-fill-color: initial;
+    text-shadow: 0 0 30px rgba(0, 85, 255, 0.4);
+    color: #0054FF;
+    font-style: italic;
+    font-weight: 300;
+}
+
+/* Add these to Home.css */
+
+/* Wraps each word to create a 'mask' */
+.word-wrapper {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top; /* Ensures words align correctly */
+}
+
+/* The actual text span that moves up */
+.word-span {
+    display: inline-block;
+    transform-origin: left bottom; /* Makes rotation look better */
+}
+
+/* Optional: Ensure the highlight color applies to the inner spans */
+.banner-content-highlight .word-span {
+    color: inherit; /* Inherits the highlight color from parent */
+    /* If your highlight class uses gradients, apply the gradient logic here instead */
 }
 
 @keyframes glowGradient {
@@ -174,11 +196,11 @@
   color: rgb(156, 156, 156);
 }
 .about-left-content h2{
-  font-size: 35px;
+  font-size: 45px;
   font-weight: 400;
   color: white;
   font-family: var(--font-neue);
-  line-height: 39px;
+  line-height: 55px;
 }
 .about-main-heading{
   font-size: 45px;
@@ -316,18 +338,28 @@
   color: white;
   font-family: var(--font-neue);
   text-align: center;
+  text-transform: capitalize;
   h3{
     font-size: 20px;
     font-weight: 300;
     color: var(--text);
   }
   h2{
-    font-size: 35px;
+    font-size: 45px;
     font-weight: 400;
-    line-height: 40px;
+    line-height: 50px;
     width: 60%;
     margin: 0 auto;
   }
+}
+.heading-highlight{
+  display: inline-block;
+  font-style: italic;
+  background: none;
+  background-size: 200% 200%;
+  -webkit-text-fill-color: initial;
+  -webkit-background-clip: text;
+  color: #0054FF;
 }
 .service-section-card {
   position: relative;
@@ -891,6 +923,12 @@
   .service-section-card-abtract,.service-section-card-abtract-two img{
     width: 300px;
   }
+  .service-section{
+    padding: 50px 0px;
+  }
+  .testimonial-section{
+    padding: 50px 0px;
+  }
   .testimonial-card{
     padding: 20px;
   }
@@ -924,10 +962,10 @@
     color: rgb(68, 68, 68);
   }
   h2{
-    font-size: 40;
-    font-weight: 500;
+    font-size: 45px;
+    font-weight: 400;
     color: black;
-    line-height: 46px;
+    line-height: 52px;
   }
   h3{
     font-size: 25px;
@@ -942,6 +980,7 @@
 }
 .tools-header-highlight{
   color: var(--primary);
+  font-style: italic;
 }
 .tools-header-counter{
   font-size: 28px;

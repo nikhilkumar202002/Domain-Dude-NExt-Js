@@ -22,11 +22,22 @@ gsap.registerPlugin(ScrollTrigger, Draggable);
 const Portfolio = () => {
   const containerRef = useRef<HTMLDivElement>(null);      
   const contentWrapperRef = useRef<HTMLDivElement>(null); 
+  // Ref for the header animation
+  const headerRef = useRef<HTMLDivElement>(null);
   
   const portfolioImages = [Portfolio1, Portfolio2, Portfolio3, Portfolio4, Portfolio5, Portfolio6, Portfolio7];
   const rowConfig = [{ duration: 35 }, { duration: 55 }, { duration: 40 }, { duration: 60 }, { duration: 45 }];
   
   const totalRows = [...rowConfig, ...rowConfig, ...rowConfig]; 
+
+  // --- Helper: Split text into spans for animation ---
+  const splitWords = (text: string) => {
+    return text.split(" ").map((word, index) => (
+      <span key={index} className="word-wrapper inline-block overflow-hidden align-top">
+        <span className="word-span inline-block">{word}&nbsp;</span>
+      </span>
+    ));
+  };
 
   useGSAP(() => {
     const rowTweens: gsap.core.Tween[] = []; 
@@ -80,26 +91,50 @@ const Portfolio = () => {
           gsap.set(contentWrapperRef.current, { y: 0 });
     });
 
-  }, { scope: containerRef });
+    // 4. HEADER TEXT ANIMATION (Word-by-Word)
+    // Note: This is separate from the slider logic but can live in the same useGSAP
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: headerRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+        }
+    });
+
+    // A. Animate "Creative Highlights"
+    tl.from(headerRef.current?.querySelector("h3") || null, {
+        y: 20, opacity: 0, duration: 0.6, ease: "power2.out"
+    })
+    // B. Animate Main Heading Words
+    .from(headerRef.current?.querySelectorAll(".word-span") || [], {
+        y: 50,
+        opacity: 0,
+        rotation: 5,
+        duration: 0.8,
+        stagger: 0.05,
+        ease: "power3.out"
+    }, "-=0.4");
+
+  }, { scope: containerRef }); // Scope mainly for the slider internal tracks
 
   return (
-    // Reverted Section to solid black
     <section className="portfolio-section py-20 relative z-10 bg-[#000000]">
       
-      {/* Header */}
-      <motion.div 
-        className="portfolio-section-header mb-15 text-white container mx-auto text-center"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+      {/* Header - Changed from motion.div to standard div with Ref for GSAP */}
+      <div 
+        ref={headerRef}
+        className="portfolio-section-header mb-20 text-white container mx-auto text-center"
       >
         <h3 className="tracking-wider">Creative Highlights</h3>
-        <h2>A Glimpse Into Our Journey</h2>
-      </motion.div>
+        <h2>
+            {splitWords("A Glimpse Into ")}
+            <span className="heading-highlight inline-block">
+                {splitWords("Our Journey")}
+            </span>
+        </h2>
+      </div>
 
       {/* --- CONTAINER --- */}
-      {/* Applied Radial Gradient HERE */}
       <motion.div 
         ref={containerRef} 
         className="w-full h-[700px] md:h-[1060px] overflow-hidden relative md:cursor-grab md:active:cursor-grabbing"
@@ -111,7 +146,6 @@ const Portfolio = () => {
         transition={{ duration: 1, delay: 0.3 }}
         viewport={{ once: true }}
       >
-        {/* Top/Bottom Fade Overlays */}
         <div className="absolute top-0 left-0 w-full h-24 md:h-32 bg-gradient-to-b from-[#000000] to-transparent z-30 pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-full h-24 md:h-32 bg-gradient-to-t from-[#000000] to-transparent z-30 pointer-events-none"></div>
 
@@ -123,14 +157,12 @@ const Portfolio = () => {
             return (
               <div key={physicalIndex} className={`w-full overflow-hidden ${visibilityClass}`}>
                 <div className={`track-type-${typeIndex} flex w-fit gap-[15px] will-change-transform`}>
-                  {/* Original Set */}
                   {[...portfolioImages, ...portfolioImages].map((img, imgIndex) => (
                     <div key={`orig-${physicalIndex}-${imgIndex}`} className="relative h-[320px] w-[320px] flex-shrink-0 rounded-xl overflow-hidden select-none group">
                       <Image src={img} alt="Portfolio" fill draggable={false} className="object-cover transition-transform duration-500 pointer-events-none group-hover:scale-110" />
                       <div className="absolute inset-0 bg-black/40 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none"></div>
                     </div>
                   ))}
-                  {/* Duplicate Set for Loop */}
                   {[...portfolioImages, ...portfolioImages].map((img, imgIndex) => (
                       <div key={`dup-${physicalIndex}-${imgIndex}`} className="relative h-[320px] w-[320px] flex-shrink-0 rounded-xl overflow-hidden select-none group">
                       <Image src={img} alt="Portfolio" fill draggable={false} className="object-cover transition-transform duration-500 pointer-events-none group-hover:scale-110" />
@@ -145,7 +177,7 @@ const Portfolio = () => {
       </motion.div>
 
       <motion.div 
-        className="portfolio-section-btn flex justify-center mt-12"
+        className="portfolio-section-btn flex justify-center mt-20"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}

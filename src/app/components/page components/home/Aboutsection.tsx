@@ -9,30 +9,40 @@ import MainButton from "../../common/MainButton";
 gsap.registerPlugin(ScrollTrigger);
 
 const Aboutsection = () => {
-  // 1. TYPING THE REFS
-  // We explicitly tell TypeScript that these refs will hold HTML elements.
   const containerRef = useRef<HTMLElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null); 
   const leftRef = useRef<HTMLDivElement | null>(null);
   
-  // For arrays, we specify it's an array of HTMLDivElement or null
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const dotsRef = useRef<(HTMLDivElement | null)[]>([]);
 
+  // Helper: Split text into spans for animation
+  const splitWords = (text: string) => {
+    return text.split(" ").map((word, index) => (
+      <span key={index} className="word-wrapper inline-block overflow-hidden align-top">
+        <span className="word-span inline-block">{word}&nbsp;</span>
+      </span>
+    ));
+  };
+
   useGSAP(() => {
     const wrapper = document.querySelector("#main-flow");
+    const mm = gsap.matchMedia();
     
-    // 1. BACKGROUND COLOR MANAGEMENT
-    if (wrapper && containerRef.current) {
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top 60%", 
-        end: "bottom 40%", 
-        onEnter: () => gsap.to(wrapper, { backgroundColor: "#000000", duration: 1, overwrite: 'auto' }),
-        onEnterBack: () => gsap.to(wrapper, { backgroundColor: "#000000", duration: 1, overwrite: 'auto' }),
-        onLeaveBack: () => gsap.to(wrapper, { backgroundColor: "#000000", duration: 1, overwrite: 'auto' }) 
-      });
-    }
+    // 1. BACKGROUND COLOR MANAGEMENT (Desktop Only)
+    // On mobile, this code is skipped, so the background stays the default (Black).
+    mm.add("(min-width: 769px)", () => {
+      if (wrapper && containerRef.current) {
+        ScrollTrigger.create({
+          trigger: containerRef.current,
+          start: "top 60%", 
+          end: "bottom 40%", 
+          onEnter: () => gsap.to(wrapper, { backgroundColor: "#000000", duration: 1, overwrite: 'auto' }),
+          onEnterBack: () => gsap.to(wrapper, { backgroundColor: "#000000", duration: 1, overwrite: 'auto' }),
+          onLeaveBack: () => gsap.to(wrapper, { backgroundColor: "#000000", duration: 1, overwrite: 'auto' }) 
+        });
+      }
+    });
 
     // 2. THEME TRANSITION (Exit Animation)
     if (contentRef.current && containerRef.current) {
@@ -50,19 +60,37 @@ const Aboutsection = () => {
         });
     }
 
-    // 3. EXISTING ANIMATIONS
-    // Left Content Fade In
+    // 3. LEFT CONTENT ANIMATION (Word-by-Word + Staggered Fade)
     if (leftRef.current) {
-      gsap.fromTo(leftRef.current,
-        { opacity: 0, x: -40 },
-        {
-          opacity: 1, x: 0, duration: 1, ease: "power3.out",
-          scrollTrigger: { trigger: leftRef.current, start: "top 85%" }
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: leftRef.current,
+          start: "top 80%",
+          toggleActions: "play none none reverse",
         }
-      );
+      });
+
+      tl.from(leftRef.current.querySelector("h3"), {
+        y: 20, opacity: 0, duration: 0.6, ease: "power2.out"
+      })
+      .from(leftRef.current.querySelectorAll(".word-span"), {
+        y: 50,
+        opacity: 0,
+        rotation: 5,
+        duration: 0.8,
+        ease: "power3.out",
+        stagger: 0.05, 
+      }, "-=0.4")
+      .from(leftRef.current.querySelectorAll("p, .about-btn"), {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        stagger: 0.1,
+      }, "-=0.6");
     }
 
-    // Cards Animation
+    // 4. CARDS ANIMATION
     cardsRef.current.forEach((card, i) => {
       if (!card) return;
       gsap.fromTo(card,
@@ -81,7 +109,6 @@ const Aboutsection = () => {
             scrollTrigger: {
               trigger: card, start: "top 75%",
               onEnter: () => {
-                // Now TypeScript knows 'd' is an HTMLDivElement, so classList is allowed
                 dotsRef.current.forEach((d) => d?.classList.remove("active"));
                 dotsRef.current[i]?.classList.add("active");
               },
@@ -96,9 +123,17 @@ const Aboutsection = () => {
     <section className="about-main relative z-10" ref={containerRef}>
       <div ref={contentRef} className="about-container container">
         <div className="about-flex grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20">
+          
           <div className="about-left-content" ref={leftRef}>
             <h3>About Us</h3>
-            <h2>Brand Experiences That Actually Move Metrics.</h2>
+            <h2>
+              {splitWords("Brand")}
+              <span className="heading-highlight inline-block">
+                 {splitWords(" Experiences")}
+              </span>
+              {splitWords(" That Actually Move Metrics.")}
+            </h2>
+
             <p>
               A creative digital agency from Kochi, driven by storytellers,
               designers, and growth strategists. We build unforgettable brand
@@ -115,13 +150,11 @@ const Aboutsection = () => {
               <MainButton label="Study More" />
             </div>
           </div>
+
           <div className="about-right">
             <div className="about-content-cards">
               <div className="about-box-vertical-line"></div>
               <div className="about-cards">
-                {/* We cast the assignment to 'any' here or simply allow TS to infer 
-                   because we defined the ref array type above. 
-                */}
                 <div className="about-card-flex" ref={(el) => { cardsRef.current[0] = el; }}>
                   <div className="about-card-dot active" ref={(el) => { dotsRef.current[0] = el; }}></div>
                   <div className="about-card-one">

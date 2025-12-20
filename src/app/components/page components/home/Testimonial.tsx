@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useRef } from "react"; 
 import { testimonials } from "../../../data/Testimonialdata"; 
@@ -25,13 +25,51 @@ const Testimonial = () => {
   const [swiperRef, setSwiperRef] = useState<any>(null);
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
+  // Ref for the header animation
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  // --- Helper: Split text into spans for animation ---
+  const splitWords = (text: string) => {
+    return text.split(" ").map((word, index) => (
+      <span key={index} className="word-wrapper inline-block overflow-hidden align-top">
+        <span className="word-span inline-block">{word}&nbsp;</span>
+      </span>
+    ));
+  };
 
   useGSAP(() => {
     const wrapper = document.querySelector("#footer-flow");
+    
+    // 1. Background Color Logic
     if(wrapper) {
         gsap.to(wrapper, { backgroundColor: "#000000", duration: 0.1, overwrite: "auto" });
     }
-    // Fade out logic for exit (Keep GSAP)
+
+    // 2. HEADER TEXT ANIMATION (Word-by-Word)
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: headerRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+        }
+    });
+
+    // A. Animate "Stories of Satisfaction"
+    tl.from(headerRef.current?.querySelector("h3") || null, {
+        y: 20, opacity: 0, duration: 0.6, ease: "power2.out"
+    })
+    // B. Animate Main Heading Words
+    .from(headerRef.current?.querySelectorAll(".word-span") || [], {
+        y: 50,
+        opacity: 0,
+        rotation: 5,
+        duration: 0.8,
+        stagger: 0.05,
+        ease: "power3.out"
+    }, "-=0.4");
+
+
+    // 3. EXIT ANIMATION (Fade out)
     if (contentRef.current) {
         gsap.to(contentRef.current, {
             opacity: 0,
@@ -52,16 +90,18 @@ const Testimonial = () => {
     <section className="testimonial-section text-white py-20 relative z-10" ref={sectionRef}>
       <div ref={contentRef} className="container testimonial-container relative z-20"> 
         
-        <motion.div 
-            className="testimonial-header mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-        >
+        {/* Changed to standard div with ref for GSAP */}
+        <div ref={headerRef} className="testimonial-header mb-12">
              <h3 className="text-xl opacity-80 mb-2">Stories of Satisfaction</h3>
-            <h2 className="text-4xl font-bold">Discover why clients love working with us.</h2>
-        </motion.div>
+             <h2 className="text-4xl font-bold">
+                {splitWords("Discover why ")}
+                <span className="heading-highlight inline-block">
+                    {splitWords("clients love")}
+                </span> 
+                <br />
+                {splitWords("working with us.")}
+             </h2>
+        </div>
 
         <motion.div 
             className="testimonial-wrapper"

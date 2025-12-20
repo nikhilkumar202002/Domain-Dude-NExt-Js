@@ -18,8 +18,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
-// 1. Import Variants type
-import { motion, Variants } from "framer-motion"; 
+import { motion } from "framer-motion"; 
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -28,37 +27,68 @@ gsap.registerPlugin(ScrollTrigger);
 const Servicesection = () => {
   const [swiperRef, setSwiperRef] = useState<any>(null);
   const sectionRef = useRef(null);
+  const headerRef = useRef<HTMLDivElement>(null);
 
   const [disablePrev, setDisablePrev] = useState(true);
   const [disableNext, setDisableNext] = useState(false);
 
- /* Inside Servicesection.tsx useGSAP */
-useGSAP(() => {
+  // Helper: Split text into spans for animation
+  const splitWords = (text: string) => {
+    return text.split(" ").map((word, index) => (
+      <span key={index} className="word-wrapper inline-block overflow-hidden align-top">
+        <span className="word-span inline-block">{word}&nbsp;</span>
+      </span>
+    ));
+  };
+
+  useGSAP(() => {
     const wrapper = document.querySelector("#main-flow");
     const mm = gsap.matchMedia();
 
-    // Only run the "Return to Black" logic on Desktop
-    // On mobile, it never turned white, so we don't need to turn it back
+    // 1. WHITE -> BLACK Transition (Desktop Only)
+    // On mobile, this logic is skipped, so it stays Black.
     mm.add("(min-width: 769px)", () => {
         if (wrapper) {
             gsap.fromTo(wrapper, 
-              { backgroundColor: "#ffffff" },
+              { backgroundColor: "#ffffff", color: "#000000" }, 
               {
                 backgroundColor: "#000000",
                 color: "#ffffff",
-                overwrite: "auto",
-                immediateRender: false,
+                ease: "none",
+                immediateRender: false, 
                 scrollTrigger: {
                   trigger: sectionRef.current,
-                  start: "top 85%",
-                  end: "top 55%",
-                  scrub: true,
+                  start: "top 75%",
+                  end: "top 25%",
+                  scrub: 0.5,
                 },
               }
             );
         }
     });
-}, { scope: sectionRef });
+
+    // 2. HEADER TEXT ANIMATION (Word-by-Word)
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: headerRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+        }
+    });
+
+    tl.from(headerRef.current?.querySelector("h3") || null, {
+        y: 20, opacity: 0, duration: 0.6, ease: "power2.out"
+    })
+    .from(headerRef.current?.querySelectorAll(".word-span") || [], {
+        y: 50,
+        opacity: 0,
+        rotation: 5,
+        duration: 0.8,
+        stagger: 0.05,
+        ease: "power3.out"
+    }, "-=0.4");
+
+  }, { scope: sectionRef });
 
   const services = [
     { id: 1, title: "Web Development", desc: "Build powerful, responsive, and high-performance websites tailored to your business needs.", icon: <LuGlobeLock /> },
@@ -69,32 +99,25 @@ useGSAP(() => {
     { id: 6, title: "Brand Strategy", desc: "Define your unique brand identity with strategic planning and creative positioning.", icon: <MdOutlineCampaign /> },
   ];
 
-  // 2. Add type annotation here
-  const fadeInUp: Variants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-  };
-
   return (
     <section className="service-section text-white relative z-10" ref={sectionRef}>
       <div className="service-container container relative z-20">
         
-        <motion.div 
-          className="service-section-header mb-12"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-55% 0px 0px 0px" }}
-          variants={fadeInUp}
-        >
+        <div ref={headerRef} className="service-section-header mb-12">
           <h3>What we do?</h3>
-          <h2>Creative and Performance, Aligned to Your Business Goals</h2>
-        </motion.div>
+          <h2>
+             {splitWords("Creative and Performance, Aligned to Your ")}
+             <span className="heading-highlight inline-block">
+                {splitWords("Business Goals")}
+             </span>
+          </h2>
+        </div>
 
         <motion.div 
             className="service-section-card-wrapper group relative"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-55% 0px 0px 0px" }}
+            viewport={{ once: true, margin: "-10% 0px 0px 0px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <button
