@@ -1,0 +1,267 @@
+/* ServiceDetail.module.css */
+
+/* --- Banner Section --- */
+.banner {
+    width: 100%;
+    height: 100vh !important;
+    position: relative; 
+    overflow: hidden;
+    background-color: black; 
+}
+
+.container {
+    height: 100%;
+    position: relative; 
+    z-index: 10;
+}
+
+/* Bubbles */
+.bubble {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(150px);
+    opacity: 0; 
+    mix-blend-mode: screen; 
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.bubble1 { background: radial-gradient(circle, #0055ff 0%, transparent 70%); }
+.bubble2 { background: radial-gradient(circle, #00aaff 0%, transparent 70%); }
+.bubble3 { background: radial-gradient(circle, #97e5ff 0%, transparent 70%); }
+
+.noise {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://www.transparenttextures.com/patterns/noise.png");
+    opacity: 0.15;
+    mix-blend-mode: overlay;
+    z-index: 1;
+}
+
+/* Banner Content */
+.content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header h1 {
+    font-size: 55px;
+    color: white;
+    font-family: var(--font-neue);
+    font-weight: 300;
+    text-align: center;
+    text-transform: capitalize;
+    line-height: 65px;
+    width: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0;
+}
+
+.wordWrapper {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.wordSpan {
+    display: inline-block;
+    transform-origin: left bottom;
+}
+
+.header p {
+    font-size: 15px;
+    font-family: var(--font-neue);
+    color: #B7B7B7;
+    font-weight: 400;
+    width: 50%;
+    text-align: center;
+    padding-top: 20px;
+}
+
+/* CTA Button */
+.cta {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+
+@keyframes bounceGlow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
+
+.cta span {
+    color: #0055ff; /* Use var(--primary) if available */
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
+    filter: drop-shadow(0 0 5px #0055ff); 
+    animation: bounceGlow 2s ease-in-out infinite;
+}
+
+.cta h4 {
+    font-size: 14px;
+    font-family: var(--font-neue);
+    font-weight: 400;
+    color: white;
+}
+
+/* --- Content / Accordion Section (Renamed from webdev-) --- */
+.sectionContent {
+    padding: 150px 0px;
+}
+
+.sectionHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 100px;
+}
+
+.sectionHeader h2 {
+    font-size: 45px;
+    font-family: var(--font-neue);
+    font-weight: 400;
+    color: white;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.sectionHeader p {
+    font-size: 22px;
+    color: var(--text);
+    font-weight: 300;
+    text-align: center;
+    width: 75%;
+    padding-top: 20px;
+}
+
+.highlight {
+    color: var(--primary); /* or #0055ff */
+    font-style: italic;
+}
+
+/* Accordion List */
+.accordion {
+    display: flex;
+    flex-direction: column;
+}
+
+.accordionItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 200px;
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); 
+    transition: all 0.3s ease;
+}
+
+.accordionItem:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.accordionItem:first-child {
+    padding-top: 0;
+}
+
+/* Accordion Columns */
+.colFirst h2, 
+.colMiddle h2 {
+    font-size: 22px;
+    color: white;
+    font-weight: 400;
+}
+
+.colMiddle p {
+    font-size: 16px;
+    color: var(--text);
+    font-weight: 300;
+    padding-top: 15px;
+}
+
+/* Image Animation */
+@keyframes floatInfinite {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+.colLast img {
+    animation: floatInfinite 6s ease-in-out infinite;
+    will-change: transform;
+}
+
+/* Stagger animation for variety */
+.accordionItem:nth-child(even) .colLast img {
+    animation-delay: 3s;
+}
+
+/* --- Mobile Responsive --- */
+@media (max-width: 900px) {
+    .accordionItem {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    
+    .colLast {
+        width: 100%;
+    }
+    
+    .colLast img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        width: 100%;
+        font-size: 32px;
+        line-height: 1.2;
+    }
+    .header p {
+        width: 90%;
+        font-size: 14px;
+    }
+    .sectionHeader h2 {
+        font-size: 32px;
+    }
+    .sectionHeader p {
+        width: 90%;
+        font-size: 16px;
+    }
+    .banner {
+        height: auto;
+        padding: 80px 0;
+    }
+}

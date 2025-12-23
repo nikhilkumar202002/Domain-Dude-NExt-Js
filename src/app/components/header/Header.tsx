@@ -23,7 +23,7 @@ const servicesData = [
   {
     id: 1,
     title: "Web Development",
-    href: "/services/web-development",
+    href: "/our-services/web-development",
     keyPoints: [
       "Custom Frontend (React/Next.js)",
       "Backend API Integration",
@@ -35,7 +35,7 @@ const servicesData = [
   {
     id: 2,
     title: "Digital Marketing",
-    href: "/services/digital-marketing",
+    href: "/our-services/digital-marketing",
     keyPoints: [
       "Social Media Marketing (SMM)",
       "Google Ads (PPC)",
@@ -47,7 +47,7 @@ const servicesData = [
   {
     id: 3,
     title: "UI/UX Designing",
-    href: "/services/ui-ux-design",
+    href: "/our-services/ui-ux-design",
     keyPoints: [
       "User Research & Personas",
       "Wireframing & Prototyping",
@@ -83,7 +83,7 @@ const servicesData = [
   {
     id: 6,
     title: "Brand Strategy",
-    href: "/services/branding",
+    href: "/our-services/branding-visual",
     keyPoints: [
       "Brand Identity & Logo",
       "Brand Voice & Messaging",
