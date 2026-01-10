@@ -9,9 +9,9 @@ gsap.registerPlugin(ScrollTrigger);
 const logos = [
   "/Client Logo/pantryindia-white.png",
   "/Client Logo/rysa-clinic.png",
-  "/Client Logo/pantryindia-white.png",
-  "/Client Logo/rysa-clinic.png",
-  "/Client Logo/pantryindia-white.png",
+  "/Client Logo/gulfcargo.png",
+  "/Client Logo/simqo.png",
+  "/Client Logo/mitv-news.png",
   "/Client Logo/rysa-clinic.png",
 ];
 

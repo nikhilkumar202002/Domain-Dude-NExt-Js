@@ -3,6 +3,7 @@
 import Logo from "../../../assets/Domine Dude white.svg";
 import Image from "next/image";
 import { FaInstagram, FaFacebookF, FaLinkedinIn, FaPinterest } from "react-icons/fa";
+import { FaBehance } from "react-icons/fa6";
 import { AiOutlineCopyright } from "react-icons/ai";
 import MainButton from "../common/MainButton";
 import "./Footer.css";
@@ -55,7 +56,9 @@ const Footer = () => {
             {/* --- TOP SECTION --- */}
             <motion.div className="footer-top" variants={fadeUpVariants}>
                 <div className="footer-logo-bottom">
+                    <a href="/">
                     <Image src={Logo} alt="Domain Dude Logo" width={0} height={0} />
+                    </a>
                 </div>
                 <div className="footer-top-cta">
                     <h2>Need more clarity? Let our team help you.</h2>
@@ -72,12 +75,12 @@ const Footer = () => {
                 <motion.div className="footer-col" variants={fadeUpVariants}>
                     <h4>Quick Links</h4>
                     <div className="footer-col-items">
-                        <a href="#">Home</a>
-                        <a href="#">About Us</a>
-                        <a href="#">Services</a>    
-                        <a href="#">Portfolio</a>
+                        <a href="/">Home</a>
+                        <a href="/about">About Us</a>
+                        <a href="/our-services">Services</a>    
+                        <a href="/works">Portfolio</a>
                         <a href="#">Blogs</a>
-                        <a href="#">Contact</a>
+                        <a href="/contact-us">Contact</a>
                     </div>
                 </motion.div>
       
@@ -125,11 +128,11 @@ const Footer = () => {
                     <motion.div className="footer-contact-item" variants={fadeUpVariants}>
                         <h2>Email</h2>
                         <div className="footer-contact-inside">
-                            <p><a href="">info@domaindude.com</a></p>
+                            <p><a href="mailto:info@domaindude.com">info@domaindude.com</a></p>
                             <span>(for sales enquiry)</span>
                         </div>
                         <div className="footer-contact-inside">
-                            <p><a href="">info@padamonline.com</a></p>
+                            <p><a href="mailto:info@padamonline.com">info@padamonline.com</a></p>
                             <span>(for creatives)</span>
                         </div>
                     </motion.div>
@@ -137,11 +140,11 @@ const Footer = () => {
                     <motion.div className="footer-contact-item" variants={fadeUpVariants}>
                         <h2>Phone</h2>
                         <div className="footer-contact-inside">
-                            <p><a href="">+91 77360 16507</a></p>
+                            <p><a href="tel:917736016507">+91 77360 16507</a></p>
                             <span>(for sales enquiry)</span>
                         </div>
                         <div className="footer-contact-inside">
-                            <p><a href="">+91 90480 06320</a></p>
+                            <p><a href="tel:919048006320">+91 90480 06320</a></p>
                             <span>(for creatives)</span>
                         </div>
                     </motion.div>
@@ -149,7 +152,7 @@ const Footer = () => {
                     <motion.div className="footer-contact-item" variants={fadeUpVariants}>
                         <h2>Address</h2>
                         <div className="footer-contact-inside">
-                            <p><a href="">House Number 74, Deepam Rd, Ponnurunni, Vyttila, Ernakulam, Kerala 682019</a></p>
+                            <p><a href="">Vyttila, Ernakulam, Kochi - 682017</a></p>
                         </div>
                     </motion.div>
                     
@@ -160,16 +163,18 @@ const Footer = () => {
             <div className="footer-copyright">
                 <motion.div className="footer-copyright-flex" variants={fadeUpVariants}>
                     <div className="footer-copyright-left">
-                        <p className="flex items-center justify-center md:justify-start gap-2 text-center md:text-left">
-                            <AiOutlineCopyright/>2025 Domain Dude. All Rights Reserved.
-                        </p>
+                      <p className="flex items-center justify-center md:justify-start gap-2 text-center md:text-left">
+                                <AiOutlineCopyright />
+                                {new Date().getFullYear()} Domain Dude. All Rights Reserved.
+                                </p>
+
                     </div>
                     <div className="footer-copyright-righr">
                         <div className="footer-copyright-social">
-                            <a href=""><FaInstagram/></a>
-                            <a href=""><FaFacebookF/></a>
-                            <a href=""><FaLinkedinIn/></a>
-                            <a href=""><FaPinterest/></a>
+                            <a href="https://www.instagram.com/domain.dude_?igsh=NzlraHBoMHZzYWJn"><FaInstagram/></a>
+                            <a href="https://www.facebook.com/profile.php?id=61573770105887"><FaFacebookF/></a>
+                            <a href="https://www.linkedin.com/company/domain-dude/"><FaLinkedinIn/></a>
+                            <a href="https://www.behance.net/domaindude"><FaBehance/></a>
                         </div>
                     </div>
                 </motion.div>

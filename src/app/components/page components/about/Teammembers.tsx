@@ -12,6 +12,10 @@ import Jasmin from "../../../../../public/Teams/jasmin.jpg";
 import Devan from "../../../../../public/Teams/devan.jpg";
 import Jose from "../../../../../public/Teams/jose.jpg";
 import Jinson from "../../../../../public/Teams/jinson.jpg";
+import Vinitha from "../../../../../public/Teams/vinitha.jpg";
+import Jithin from "../../../../../public/Teams/jithin.jpg";
+
+
 import "./About.css";
 
 // Register ScrollTrigger
@@ -76,11 +80,35 @@ const Teammembers = () => {
 
           <div className="team-members-wrapper grid grid-cols-1 md:grid-cols-4 gap-5 md:gap-5 items-center">
             {/* Card 1 */}
+               <div className="team-members-card">
+              <Image src={Vinitha} alt="vinith p t" width={0} height={0} />
+              <div className="team-members-details">
+                <h3>Vinitha P T</h3>
+                <h5>CEO, Senior Web Developer</h5>
+              </div>
+            </div>
+
             <div className="team-members-card">
               <Image src={Devan} alt="Deven Subramaniyan" width={0} height={0} />
               <div className="team-members-details">
                 <h3>Deven Subramaniyan</h3>
                 <h5>Managing Director</h5>
+              </div>
+            </div>
+
+               <div className="team-members-card">
+              <Image src={Jinson} alt="Jinson K Sebastian" width={0} height={0} />
+              <div className="team-members-details">
+                <h3>Jinson K Sebastian</h3>
+                <h5>Sr. Backend Developer, Cyber Security, Ethical Hacker</h5>
+              </div>
+            </div>
+
+                <div className="team-members-card">
+              <Image src={Jasmin} alt="Jasmin H" width={0} height={0} />
+              <div className="team-members-details">
+                <h3>Jasmin H</h3>
+                <h5>Sr. Shopify Developer, Wordpress Developer</h5>
               </div>
             </div>
 
@@ -93,25 +121,16 @@ const Teammembers = () => {
               </div>
             </div>
 
-            {/* Card 3 */}
-            <div className="team-members-card">
-              <Image src={Jasmin} alt="Jasmin H" width={0} height={0} />
-              <div className="team-members-details">
-                <h3>Jasmin H</h3>
-                <h5>Sr. Shopify Developer, Wordpress Developer</h5>
-              </div>
-            </div>
-
-            {/* Card 4 */}
-            <div className="team-members-card">
-              <Image src={Jinson} alt="Jinson K Sebastian" width={0} height={0} />
-              <div className="team-members-details">
-                <h3>Jinson K Sebastian</h3>
-                <h5>Sr. Backend Developer, Cyber Security, Ethical Hacker</h5>
-              </div>
-            </div>
 
             {/* Card 5 */}
+              <div className="team-members-card">
+              <Image src={Jithin} alt="Jithin Shal" width={0} height={0} />
+              <div className="team-members-details">
+                <h3>Jithin Shal</h3>
+                <h5>Sr. Web Developer</h5>
+              </div>
+            </div>
+
             <div className="team-members-card">
               <Image src={Prajitha} alt="Prajitha Prakash" width={0} height={0} />
               <div className="team-members-details">
@@ -129,23 +148,6 @@ const Teammembers = () => {
               </div>
             </div>
 
-            {/* Card 7 (Duplicate Nikhil as per your code) */}
-            <div className="team-members-card">
-              <Image src={Nikhil} alt="Nikhil Kumar S" width={0} height={0} />
-              <div className="team-members-details">
-                <h3>Nikhil Kumar S</h3>
-                <h5>Team Lead, UI/UX Designer, Web Developer</h5>
-              </div>
-            </div>
-
-            {/* Card 8 (Duplicate Nikhil as per your code) */}
-            <div className="team-members-card">
-              <Image src={Nikhil} alt="Nikhil Kumar S" width={0} height={0} />
-              <div className="team-members-details">
-                <h3>Nikhil Kumar S</h3>
-                <h5>Team Lead, UI/UX Designer, Web Developer</h5>
-              </div>
-            </div>
           </div>
         </div>
       </section>
