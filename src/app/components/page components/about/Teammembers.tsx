@@ -13,7 +13,6 @@ import Devan from "../../../../../public/Teams/devan.jpg";
 import Jose from "../../../../../public/Teams/jose.jpg";
 import Jinson from "../../../../../public/Teams/jinson.jpg";
 import Vinitha from "../../../../../public/Teams/vinitha.jpg";
-import Jithin from "../../../../../public/Teams/jithin.jpg";
 
 
 import "./About.css";
@@ -118,16 +117,6 @@ const Teammembers = () => {
               <div className="team-members-details">
                 <h3>Nikhil Kumar S</h3>
                 <h5>Team Lead, UI/UX Designer, Web Developer</h5>
-              </div>
-            </div>
-
-
-            {/* Card 5 */}
-              <div className="team-members-card">
-              <Image src={Jithin} alt="Jithin Shal" width={0} height={0} />
-              <div className="team-members-details">
-                <h3>Jithin Shal</h3>
-                <h5>Sr. Web Developer</h5>
               </div>
             </div>
 

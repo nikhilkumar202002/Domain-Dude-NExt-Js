@@ -121,12 +121,12 @@ const Aboutsection = () => {
   return (
     <section className="about-main relative z-10" ref={containerRef}>
       <div ref={contentRef} className="about-container">
-        <div className="about-flex">
-          <div className="about-left-content" ref={labelRef}>
-            <h3>About Us</h3>
-          </div>
+        <div className="about-section-label" ref={labelRef}>
+          <span>About Us</span>
+        </div>
 
-          <div className="about-right-content" ref={bodyRef}>
+        <div className="about-content-box" ref={bodyRef}>
+          <div className="about-upper">
             <h2>
               {splitWords("Brand")}
               <span className="heading-highlight inline-block">
@@ -134,7 +134,17 @@ const Aboutsection = () => {
               </span>
               {splitWords(" That Actually Move Metrics.")}
             </h2>
+          </div>
 
+          <div className="about-divider-row">
+            <div className="about-horizontal-line" aria-hidden="true" />
+            <div className="about-btn">
+              <MainButton label="Study More" />
+            </div>
+          </div>
+
+          <div className="about-lower">
+            <span className="about-pointer" aria-hidden="true">↳</span>
             <p>
               A creative digital agency from Kochi, driven by storytellers,
               designers, and growth strategists. We build unforgettable brand
@@ -147,10 +157,6 @@ const Aboutsection = () => {
               goals. We move fast, stay curious, and partner with brands that
               are ready to think beyond the usual.
             </p>
-
-            <div className="about-btn">
-              <MainButton label="Study More" />
-            </div>
           </div>
         </div>
       </div>
