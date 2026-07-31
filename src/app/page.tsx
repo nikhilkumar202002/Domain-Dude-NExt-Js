@@ -14,7 +14,7 @@ const Page = () => {
   return (
     <SmoothScrolling>
       <Banner />
-      <Clientslider/>
+      {/* <Clientslider/> */}
       
       {/* FLOW 1: About (Black) -> Tools (White) -> Service (Black) -> Portfolio (Black) */}
       <div id="main-flow" className="theme-transition-wrapper bg-black relative transition-colors duration-500 ease-linear">

@@ -7,6 +7,18 @@
   position: relative; /* Keep relative for the ::after element */
   z-index: 50;
   pointer-events: auto;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.navbar.is-scrolled {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.949);
+  border: 1px solid #171717;
+  border-radius: 3rem;
 }
 
 /* The gradient shadow logic */
@@ -24,10 +36,32 @@
   border-radius: inherit; /* CRITICAL: Inherits the radius from the parent motion.div */
 }
 
+.navbar.is-scrolled::after {
+  opacity: 0;
+}
+
 .navbar-container {
   width: 100%;
-  /* Ensure height is handled by the flex parent */
+  padding: 16px 17px;
 }
+
+.navbar-container.is-scrolled {
+  padding-inline: 20px;
+}
+
+.navbar-logo-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .navbar-container {
+    padding: 30px;
+  }
+
+}
+
 .navbar-items{
     display: flex;
     gap: 20px;
@@ -55,23 +89,23 @@
 /* Hover state */
 .navbar-item a:hover {
   color: var(--secondary);
-  text-shadow: 0 0 6px rgba(0, 84, 255, 0.6); /* soft glow around text */
+  text-shadow: none;
 }
 
 .navbar-item a:hover::after {
   width: 100%;
-  box-shadow: 0 0 8px rgba(0, 84, 255, 0.6); /* glowing underline */
+  box-shadow: none;
 }
 
 /* Active state (for current page) */
 .navbar-item a.active {
   color: var(--secondary);
-  text-shadow: 0 0 6px rgba(0, 84, 255, 0.6);
+  text-shadow: none;
 }
 
 .navbar-item a.active::after {
   width: 100%;
-  box-shadow: 0 0 8px rgba(0, 84, 255, 0.6);
+  box-shadow: none;
 }
 
 /* Responsive */
@@ -108,7 +142,12 @@
 /* Rotate the arrow on hover */
 .navbar-item a:hover .navbar-arrow {
   transform: rotate(45deg);
-  box-shadow: 0 0 8px rgba(0, 84, 255, 0.6);
+  box-shadow: none;
+}
+
+.navbar-btn .main-btn,
+.navbar-btn .main-btn:hover {
+  box-shadow: none;
 }
 /* ==================================== */
 /* ✅ Fullscreen Mobile Drawer Design */
@@ -122,6 +161,41 @@
 }
 
 @media (max-width: 900px) {
+  /* Mobile header sizing */
+  .navbar {
+    transition:
+      width 0.35s ease,
+      margin-top 0.35s ease,
+      border-radius 0.35s ease;
+  }
+
+  .navbar .logo {
+    width: 110px !important;
+    flex: 0 0 110px;
+    transition:
+      width 0.35s ease,
+      flex-basis 0.35s ease;
+  }
+
+  .navbar.is-scrolled {
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    margin-top: 10px;
+  }
+
+  .navbar-container.is-scrolled {
+    padding: 10px;
+  }
+
+  .navbar.is-scrolled .logo {
+    width: 96px !important;
+    flex-basis: 96px;
+  }
+
+  .navbar-logo-image {
+    width: 100%;
+  }
+
   .desktop-menu {
     display: none !important;
   }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Logo from "../../../assets/Domine Dude white.svg";
@@ -17,6 +17,7 @@ import {
 import { FaInstagram, FaLinkedinIn, FaXTwitter, FaFacebookF } from "react-icons/fa6";
 import "./Header.css";
 import MainButton from "../common/MainButton";
+import gsap from "gsap";
 
 // --- DATASET: Services & Key Points ---
 const servicesData = [
@@ -99,6 +100,9 @@ const Header = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navbarRef = useRef<HTMLElement>(null);
+  const navbarContainerRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLDivElement>(null);
   
   // Mega Menu States
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
@@ -106,11 +110,39 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      const shouldStick = window.scrollY > 50;
+
+      setIsScrolled((currentlySticky) => {
+        if (currentlySticky === shouldStick) return currentlySticky;
+
+        const desktop = window.innerWidth > 992;
+        if (desktop) {
+          const containerGutters = window.innerWidth > 1024 ? 192 : 96;
+
+          gsap.to(navbarRef.current, {
+            marginTop: shouldStick ? 20 : 0,
+            width: shouldStick ? `calc(100% - ${containerGutters}px)` : "100%",
+            maxWidth: shouldStick ? 1248 : "100%",
+            duration: 1.5,
+            ease: "power4.out",
+            overwrite: true,
+          });
+          gsap.to(navbarContainerRef.current, {
+            padding: shouldStick ? "15px" : window.innerWidth > 1120 ? "30px" : "30px 20px",
+            duration: 1.5,
+            ease: "power4.out",
+            overwrite: true,
+          });
+          gsap.to(logoRef.current, {
+            width: shouldStick ? 105 : 140,
+            duration: 1.5,
+            ease: "power4.out",
+            overwrite: true,
+          });
+        }
+
+        return shouldStick;
+      });
     };
 
     handleScroll();
@@ -124,28 +156,6 @@ const Header = () => {
   // Helper for "What we do" (Matches parent page OR any child service page)
   const isServicesActive = 
     pathname === "/our-services" || pathname.startsWith("/services");
-
-  const navbarStyleVariants: Variants = {
-    top: {
-      backgroundColor: "rgba(0, 0, 0, 0)",
-      backdropFilter: "blur(0px)",
-      borderRadius: "0px 0px 0px 0px",
-      border: "1px solid transparent",
-      paddingTop: "0px",
-      paddingBottom: "0px",
-      boxShadow: "0px 0px 0px rgba(0,0,0,0)",
-    },
-    scrolled: {
-      backgroundColor: "black",
-      borderRadius: "0px 30px 0px 0px",
-      border: "1px solid rgba(255, 255, 255, 0.1)",
-      paddingTop: "10px",
-      paddingBottom: "10px",
-      paddingRight: "0px",
-      paddingLeft: "0px",
-      boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
-    },
-  };
 
   const megaMenuVariants: Variants = {
     hidden: { opacity: 0, y: 10, scale: 0.98, display: "none" },
@@ -183,36 +193,30 @@ const Header = () => {
     <>
       <nav className="fixed top-0 left-0 w-full z-[100] flex justify-center pointer-events-none">
         <motion.section
-          className="navbar pointer-events-auto"
-          layout 
+          ref={navbarRef}
+          className={`navbar pointer-events-auto ${isScrolled ? "is-scrolled" : ""}`}
           style={{
-            width: isScrolled ? "90%" : "100%",
-            maxWidth: isScrolled ? "1280px" : "100%",
-            marginTop: isScrolled ? 15 : 0,
+            width: "100%",
+            maxWidth: "100%",
             marginLeft: "auto",
             marginRight: "auto",
           }}
-          variants={navbarStyleVariants}
-          initial="top"
-          animate={isScrolled ? "scrolled" : "top"}
-          transition={{
-            layout: { duration: 0.5, ease: [0.25, 1, 0.5, 1] },
-            default: { duration: 0.5, ease: "easeInOut" }
-          }}
         >
           <motion.div 
-            className={`navbar-container h-full flex flex-col justify-center ${
-                isScrolled ? "px-[25px]" : "px-[17px] md:px-15"
-            }`}
-            layout="position"
+            ref={navbarContainerRef}
+            className={`navbar-container h-full flex flex-col justify-center ${isScrolled ? "is-scrolled" : ""}`}
           >
-            <div className="navbar-flex flex items-center justify-between py-3">
+            <div className="navbar-flex flex items-center justify-between">
               
-              <div className="logo">
+              <motion.div
+                ref={logoRef}
+                className="logo"
+                style={{ width: 140 }}
+              >
                 <Link href="/">
-                  <Image src={Logo} alt="Domain Dude" width={140} height={0} />
+                  <Image className="navbar-logo-image" src={Logo} alt="Domain Dude" width={140} height={0} />
                 </Link>
-              </div>
+              </motion.div>
 
               <div className="navbar-items desktop-menu">
                 <div className="navbar-item">

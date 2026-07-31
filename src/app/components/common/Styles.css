@@ -20,14 +20,13 @@
   color: #fff;
   padding: 10px 20px;
   border: 1px solid transparent;
-  box-shadow: 0 8px 20px 0px rgba(0, 84, 255, 0.5);
+  /* box-shadow: 0 8px 20px 0px rgba(0, 84, 255, 0.5); */
 }
 
 /* --- HOVER EFFECTS --- */
 
 /* 1. The Glow Effect */
 .main-btn:hover {
-  box-shadow: 0 0 25px rgba(0, 84, 255, 0.6); /* Soft Blue Glow */
   transform: translateY(-2px); /* Subtle lift */
 }
 
@@ -66,7 +65,6 @@
   height: 100%;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   color: #fff; /* Ensure text color matches */
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Extra glow on the new text */
 }
 
 /* Hover state for text */

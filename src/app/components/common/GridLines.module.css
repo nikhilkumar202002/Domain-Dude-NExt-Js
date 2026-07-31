@@ -1,0 +1,33 @@
+.gridLines {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--grid-max-width);
+  margin-inline: auto;
+  padding-inline: 96px;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.line {
+  width: 1px;
+  height: 100%;
+  flex: 0 0 1px;
+  background: var(--grid-line-color);
+  opacity: var(--grid-line-opacity);
+}
+
+@media (max-width: 1024px) {
+  .gridLines {
+    padding-inline: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .gridLines {
+    padding-inline: 17px;
+  }
+}
