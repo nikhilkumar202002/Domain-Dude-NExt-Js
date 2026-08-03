@@ -1,23 +1,14 @@
 "use client";
 
-import { useState, useRef } from "react";
-import {
-  LuGlobeLock,
-  LuMonitorSmartphone,
-  LuChevronLeft,
-  LuChevronRight,
-} from "react-icons/lu";
-import { GoArrowUpRight } from "react-icons/go";
-import { FiFigma, FiDatabase } from "react-icons/fi";
-import { MdOutlineVideoSettings, MdOutlineCampaign } from "react-icons/md";
-import Image from "next/image";
-import Abtractcardone from "../../../../assets/Images/Abstract-card-one.svg";
+import { useRef } from "react";
+import { LuArrowUpRight } from "react-icons/lu";
+import Link from "next/link";
 import MainButton from "../../common/MainButton";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation } from "swiper/modules";
+import { FreeMode, Mousewheel } from "swiper/modules";
 import { motion } from "framer-motion"; 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -25,12 +16,8 @@ import "swiper/css/navigation";
 gsap.registerPlugin(ScrollTrigger);
 
 const Servicesection = () => {
-  const [swiperRef, setSwiperRef] = useState<any>(null);
   const sectionRef = useRef(null);
   const headerRef = useRef<HTMLDivElement>(null);
-
-  const [disablePrev, setDisablePrev] = useState(true);
-  const [disableNext, setDisableNext] = useState(false);
 
   // Helper: Split text into spans for animation
   const splitWords = (text: string) => {
@@ -91,17 +78,17 @@ const Servicesection = () => {
   }, { scope: sectionRef });
 
   const services = [
-    { id: 1, title: "Web Development", desc: "Build powerful, responsive, and high-performance websites tailored to your business needs.", icon: <LuGlobeLock /> },
-    { id: 2, title: "Digital Marketing", desc: "Boost your online presence with targeted marketing strategies that drive real engagement.", icon: <MdOutlineVideoSettings /> },
-    { id: 3, title: "UI/UX Designing", desc: "Deliver engaging experiences with intuitive interfaces designed for maximum user satisfaction.", icon: <FiFigma /> },
-    { id: 4, title: "App Development", desc: "Create scalable and feature-rich mobile applications for both Android and iOS platforms.", icon: <LuMonitorSmartphone /> },
-    { id: 5, title: "SEO Optimization", desc: "Rank higher on search engines with advanced SEO techniques tailored to your industry.", icon: <FiDatabase /> },
-    { id: 6, title: "Brand Strategy", desc: "Define your unique brand identity with strategic planning and creative positioning.", icon: <MdOutlineCampaign /> },
+    { id: 1, title: "Web Development", desc: "Build powerful, responsive websites that convert visitors into customers.", href: "/our-services/web-development" },
+    { id: 2, title: "Digital Marketing", desc: "Grow your online presence with campaigns built to drive meaningful results.", href: "/our-services/digital-marketing" },
+    { id: 3, title: "UI/UX Designing", desc: "Create intuitive digital experiences that feel effortless and keep users engaged.", href: "/our-services/ui-ux-design" },
+    { id: 4, title: "App Development", desc: "Build scalable, feature-rich mobile products for Android and iOS platforms.", href: "/our-services/web-development" },
+    { id: 5, title: "SEO Optimization", desc: "Improve search visibility with focused strategies tailored to your industry.", href: "/our-services/digital-marketing" },
+    { id: 6, title: "Brand Strategy", desc: "Shape a distinctive brand through clear strategy and creative positioning.", href: "/our-services/branding-visual" },
   ];
 
   return (
     <section className="service-section text-white relative z-10" ref={sectionRef}>
-      <div className="service-container container relative z-20">
+      <div className="service-container relative z-20">
         
         <div ref={headerRef} className="service-section-header mb-12">
           <h3>What we do?</h3>
@@ -120,70 +107,42 @@ const Servicesection = () => {
             viewport={{ once: true, margin: "-10% 0px 0px 0px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <button
-            onClick={() => swiperRef?.slidePrev()}
-            disabled={disablePrev}
-            className={`custom-swiper-btn prev-btn absolute left-0 z-10 top-1/2 ${disablePrev ? "opacity-30 cursor-not-allowed" : "opacity-100 hover:bg-white/20"}`}
-          >
-            <LuChevronLeft />
-          </button>
-
-          <button
-            onClick={() => swiperRef?.slideNext()}
-            disabled={disableNext}
-            className={`custom-swiper-btn next-btn absolute right-0 z-10 top-1/2 ${disableNext ? "opacity-30 cursor-not-allowed" : "opacity-100 hover:bg-white/20"}`}
-          >
-            <LuChevronRight />
-          </button>
-
           <Swiper
-            modules={[Navigation, Autoplay]}
-            onSwiper={(swiper) => {
-              setSwiperRef(swiper);
-              const updateStates = () => {
-                setDisablePrev(swiper.isBeginning);
-                setDisableNext(swiper.isEnd);
-              };
-              updateStates();
-              swiper.on("slideChange", updateStates);
+            modules={[FreeMode, Mousewheel]}
+            spaceBetween={16}
+            slidesPerView="auto"
+            centeredSlides
+            initialSlide={2}
+            speed={600}
+            grabCursor
+            freeMode={{
+              enabled: true,
+              momentum: true,
+              momentumRatio: 0.6,
+              momentumVelocityRatio: 0.7,
+              sticky: true,
             }}
-            spaceBetween={20}
-            slidesPerView={1}
-            loop={false}
-            breakpoints={{
-              640: { slidesPerView: 1 },
-              768: { slidesPerView: 2 },
-              1200: { slidesPerView: 3 },
+            mousewheel={{
+              forceToAxis: true,
+              releaseOnEdges: true,
+              sensitivity: 0.7,
             }}
             className="service-swiper"
           >
-            {services.map((service, index) => (
+            {services.map((service) => (
               <SwiperSlide key={service.id}>
-                <div
-                  className="service-section-card p-6 border border-zinc-800 bg-zinc-900/50 rounded-xl hover:border-white transition-all duration-300 h-full"
-                  onMouseMove={(e) => {
-                    const glow = e.currentTarget.querySelector(".service-glow") as HTMLElement;
-                    if(glow){
-                        const rect = e.currentTarget.getBoundingClientRect();
-                        glow.style.left = `${e.clientX - rect.left}px`;
-                        glow.style.top = `${e.clientY - rect.top}px`;
-                    }
-                  }}
-                >
-                  <div className="service-glow"></div>
-                  <div className={`${index % 2 === 0 ? "service-section-card-abtract" : "service-section-card-abtract-two"}`}>
-                    <Image src={Abtractcardone} alt="Abstract" width={380} height={0} />
+                <Link href={service.href} className="service-section-card">
+                  <div className="service-card-top">
+                    <span className="service-card-number">
+                      {String(service.id).padStart(2, "0")}
+                    </span>
+                    <LuArrowUpRight className="service-card-arrow" aria-hidden="true" />
                   </div>
-
-                  <div className="service-section-card-content relative z-10">
-                    <div className="service-section-card-icon">{service.icon}</div>
-                    <div className="service-section-card-body">
-                      <h3>{service.title}</h3>
-                      <p>{service.desc}</p>
-                      <a href="#" className="flex items-center gap-2">Read More <span><GoArrowUpRight /></span></a>
-                    </div>
+                  <div className="service-section-card-body">
+                    <h3>{service.title}</h3>
+                    <p>{service.desc}</p>
                   </div>
-                </div>
+                </Link>
               </SwiperSlide>
             ))}
           </Swiper>
