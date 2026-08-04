@@ -8,6 +8,7 @@ import Star from "../../../../assets/Icons/star.svg";
 import "./Home.css";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperInstance } from "swiper";
 import { Autoplay, Navigation } from "swiper/modules"; 
 import { motion } from "framer-motion";
 
@@ -22,7 +23,7 @@ import "swiper/css/autoplay";
 gsap.registerPlugin(ScrollTrigger);
 
 const Testimonial = () => {
-  const [swiperRef, setSwiperRef] = useState<any>(null);
+  const [swiperRef, setSwiperRef] = useState<SwiperInstance | null>(null);
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
   // Ref for the header animation
@@ -87,11 +88,11 @@ const Testimonial = () => {
   }, { scope: sectionRef });
 
   return (
-    <section className="testimonial-section text-white py-20 relative z-10" ref={sectionRef}>
-      <div ref={contentRef} className="container testimonial-container relative z-20"> 
+    <section id="testimonials" className="testimonial-section text-white py-20 relative z-10" ref={sectionRef}>
+      <div ref={contentRef} className="testimonial-container relative z-20"> 
         
         {/* Changed to standard div with ref for GSAP */}
-        <div ref={headerRef} className="testimonial-header mb-12">
+        <div ref={headerRef} className="container testimonial-header mb-12">
              <h3 className="text-xl opacity-80 mb-2">Stories of Satisfaction</h3>
              <h2 className="text-4xl font-bold">
                 {splitWords("Discover why ")}
@@ -104,7 +105,7 @@ const Testimonial = () => {
         </div>
 
         <motion.div 
-            className="testimonial-wrapper"
+            className="container testimonial-wrapper"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -142,7 +143,7 @@ const Testimonial = () => {
             </Swiper>
         </motion.div>      
         
-        <div className="testimonial-footer-flex flex justify-between items-center mt-10">
+        <div className="container testimonial-footer-flex flex justify-between items-center mt-10">
             <div className="testimonial-footer-arrow flex gap-4">
                 <button className="left-arrow bg-white/10 hover:bg-white/20 p-3 rounded-full text-white" onClick={() => swiperRef?.slidePrev()}>
                     <IoIosArrowBack size={24}/>

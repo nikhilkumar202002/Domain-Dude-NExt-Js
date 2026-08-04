@@ -2,7 +2,8 @@
 
 import Logo from "../../../assets/Domine Dude white.svg";
 import Image from "next/image";
-import { FaInstagram, FaFacebookF, FaLinkedinIn, FaPinterest } from "react-icons/fa";
+import Link from "next/link";
+import { FaInstagram, FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { FaBehance } from "react-icons/fa6";
 import { AiOutlineCopyright } from "react-icons/ai";
 import MainButton from "../common/MainButton";
@@ -56,14 +57,14 @@ const Footer = () => {
             {/* --- TOP SECTION --- */}
             <motion.div className="footer-top" variants={fadeUpVariants}>
                 <div className="footer-logo-bottom">
-                    <a href="/">
+                    <Link href="/">
                     <Image src={Logo} alt="Domain Dude Logo" width={0} height={0} />
-                    </a>
+                    </Link>
                 </div>
                 <div className="footer-top-cta">
                     <h2>Need more clarity? Let our team help you.</h2>
                     <div className="footer-top-btn">
-                        <MainButton label="We are Here to Assist" />
+                        <MainButton label="We are Here to Assist" href="/contact-us" />
                     </div>
                 </div>
             </motion.div>
@@ -75,12 +76,12 @@ const Footer = () => {
                 <motion.div className="footer-col" variants={fadeUpVariants}>
                     <h4>Quick Links</h4>
                     <div className="footer-col-items">
-                        <a href="/">Home</a>
-                        <a href="/about">About Us</a>
-                        <a href="/our-services">Services</a>    
-                        <a href="/works">Portfolio</a>
-                        <a href="#">Blogs</a>
-                        <a href="/contact-us">Contact</a>
+                        <Link href="/">Home</Link>
+                        <Link href="/about">About Us</Link>
+                        <Link href="/our-services">Services</Link>
+                        <Link href="/works">Portfolio</Link>
+                        <Link href="/#testimonials">Testimonials</Link>
+                        <Link href="/contact-us">Contact</Link>
                     </div>
                 </motion.div>
       
@@ -88,12 +89,12 @@ const Footer = () => {
                 <motion.div className="footer-col footer-col-second" variants={fadeUpVariants}>
                     <h4>Services</h4>
                     <div className="footer-col-items">
-                        <a href="#">Branding & Identity</a>
-                        <a href="#">UI/UX Design</a>
-                        <a href="#">Website Development</a>    
-                        <a href="#">Digital Marketing</a>
-                        <a href="#">Social Media Management</a>
-                        <a href="#">Growth Strategy</a>
+                        <Link href="/our-services/branding-visual">Branding &amp; Identity</Link>
+                        <Link href="/our-services/ui-ux-design">UI/UX Design</Link>
+                        <Link href="/our-services/web-development">Website Development</Link>
+                        <Link href="/our-services/digital-marketing">Digital Marketing</Link>
+                        <Link href="/our-services/video-production">Video Production</Link>
+                        <Link href="/our-services">View All Services</Link>
                     </div>
                 </motion.div>
 
@@ -101,12 +102,12 @@ const Footer = () => {
                 <motion.div className="footer-col" variants={fadeUpVariants}>
                     <h4>Resources</h4>
                     <div className="footer-col-items">
-                        <a href="#">Case Studies</a>
-                        <a href="#">Our Process</a>
-                        <a href="#">Client Testimonials</a>    
-                        <a href="#">FAQs</a>
-                        <a href="#">Privacy Policy</a>
-                        <a href="#">Terms & Conditions</a>
+                        <Link href="/works">Case Studies</Link>
+                        <Link href="/about#our-process">Our Process</Link>
+                        <Link href="/#testimonials">Client Testimonials</Link>
+                        <Link href="/#faq">FAQs</Link>
+                        <Link href="/about">About Domain Dude</Link>
+                        <Link href="/contact-us">Start a Project</Link>
                     </div>
                 </motion.div>
 
@@ -114,9 +115,9 @@ const Footer = () => {
                 <motion.div className="footer-col" variants={fadeUpVariants}>
                     <h4>Get in Touch</h4>
                     <div className="footer-col-items">
-                        <a href="#">Contact Us</a>
-                        <a href="#">Our Process</a>
-                        <a href="#">Book a Free Consultation</a>    
+                        <Link href="/contact-us">Contact Us</Link>
+                        <Link href="/about#our-process">Our Process</Link>
+                        <Link href="/contact-us">Book a Free Consultation</Link>
                     </div>
                 </motion.div>
             </motion.div> 
@@ -152,7 +153,7 @@ const Footer = () => {
                     <motion.div className="footer-contact-item" variants={fadeUpVariants}>
                         <h2>Address</h2>
                         <div className="footer-contact-inside">
-                            <p><a href="">Vyttila, Ernakulam, Kochi - 682017</a></p>
+                            <p><a href="https://www.google.com/maps/search/?api=1&query=Vyttila%2C%20Ernakulam%2C%20Kochi%20682017" target="_blank" rel="noopener noreferrer">Vyttila, Ernakulam, Kochi - 682017</a></p>
                         </div>
                     </motion.div>
                     
@@ -171,10 +172,10 @@ const Footer = () => {
                     </div>
                     <div className="footer-copyright-righr">
                         <div className="footer-copyright-social">
-                            <a href="https://www.instagram.com/domain.dude_?igsh=NzlraHBoMHZzYWJn"><FaInstagram/></a>
-                            <a href="https://www.facebook.com/profile.php?id=61573770105887"><FaFacebookF/></a>
-                            <a href="https://www.linkedin.com/company/domain-dude/"><FaLinkedinIn/></a>
-                            <a href="https://www.behance.net/domaindude"><FaBehance/></a>
+                            <a href="https://www.instagram.com/domain.dude_?igsh=NzlraHBoMHZzYWJn" target="_blank" rel="noopener noreferrer" aria-label="Domain Dude on Instagram"><FaInstagram/></a>
+                            <a href="https://www.facebook.com/profile.php?id=61573770105887" target="_blank" rel="noopener noreferrer" aria-label="Domain Dude on Facebook"><FaFacebookF/></a>
+                            <a href="https://www.linkedin.com/company/domain-dude/" target="_blank" rel="noopener noreferrer" aria-label="Domain Dude on LinkedIn"><FaLinkedinIn/></a>
+                            <a href="https://www.behance.net/domaindude" target="_blank" rel="noopener noreferrer" aria-label="Domain Dude on Behance"><FaBehance/></a>
                         </div>
                     </div>
                 </motion.div>

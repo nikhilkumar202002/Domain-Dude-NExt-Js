@@ -70,7 +70,7 @@ const Howwework = () => {
 
   return (
     // 2. Attach ref to the section
-    <section className="second-section" ref={sectionRef}>
+      <section id="our-process" className="second-section" ref={sectionRef}>
       <div className="second-container container">
         <div className="second-inner">
           <div className="second-header">

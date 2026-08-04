@@ -20,17 +20,10 @@
   color: #fff;
   padding: 10px 20px;
   border: 1px solid transparent;
-  /* box-shadow: 0 8px 20px 0px rgba(0, 84, 255, 0.5); */
 }
-
-/* --- HOVER EFFECTS --- */
-
-/* 1. The Glow Effect */
 .main-btn:hover {
   transform: translateY(-2px); /* Subtle lift */
 }
-
-/* 2. Arrow Animation (Moves Up-Right) */
 .main-btn .arrow-icon {
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -74,6 +67,103 @@
 
 .main-btn:hover .label::after {
   transform: translateY(-100%); /* New text slides up into view */
+}
+
+.client-list-section {
+  position: relative;
+  z-index: 2;
+  padding: 0 0 clamp(72px, 9vw, 130px);
+  color: #111;
+  background: #fff;
+}
+
+.container.client-list-heading {
+  width: 100%;
+  max-width: none;
+}
+
+.client-list-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(32px, 5vw, 64px);
+}
+
+.client-list-heading p,
+.client-list-heading h2 {
+  margin: 0;
+}
+
+.client-list-heading p {
+  color: #707070;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.client-list-heading h2 {
+  color: var(--primary);
+  font-size: clamp(42px, 6vw, 84px);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+.client-logo-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-top: 1px solid #dedede;
+  border-left: 1px solid #dedede;
+}
+
+.client-logo-card {
+  display: grid;
+  min-height: 190px;
+  place-items: center;
+  padding: 32px;
+  background: #fff;
+  border-right: 1px solid #dedede;
+  border-bottom: 1px solid #dedede;
+}
+
+.client-logo-card img {
+  width: min(100%, 170px);
+  height: 76px;
+  object-fit: contain;
+  filter: grayscale(1);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.client-logo-card:hover img {
+  filter: grayscale(0);
+  transform: scale(1.05);
+}
+
+@media (max-width: 900px) {
+  .client-logo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .client-logo-card {
+    min-height: 150px;
+  }
+}
+
+@media (max-width: 560px) {
+  .client-list-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .client-logo-card {
+    min-height: 120px;
+    padding: 20px;
+  }
+
+  .client-logo-card img {
+    height: 58px;
+  }
 }
 
 

@@ -78,7 +78,7 @@ const Servicesection = () => {
 
   return (
     <section className="service-section text-white relative z-10" ref={sectionRef}>
-      <div className="service-showcase">
+      <div className="container service-showcase">
         <div ref={headerRef} className="service-showcase-header">
           <div className="service-showcase-heading">
             <h3>What we do?</h3>

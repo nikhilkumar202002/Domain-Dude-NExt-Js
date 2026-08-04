@@ -1029,6 +1029,10 @@
 
 /* Testimonial Section */
 
+.testimonial-container {
+  width: 100%;
+}
+
 .testimonial-wrapper {
   width: 100%;
   margin-top: 40px;
@@ -1203,7 +1207,7 @@
 
 .testimonial-section {
   position: relative;
-  padding: 100px 0px;
+  padding: 0;
   overflow: hidden;
 }
 
@@ -1362,7 +1366,7 @@
   }
 
   .testimonial-section {
-    padding: 50px 0px;
+    padding: 0;
   }
 
   .testimonial-card {
@@ -1389,9 +1393,8 @@
 /* Service accordion showcase */
 .service-showcase {
   width: 100%;
-  max-width: 1480px;
+  max-width: none;
   margin: 0 auto;
-  padding: 0;
   background: transparent;
   border: 0;
 }
@@ -1576,7 +1579,6 @@
 @media (max-width: 1100px) {
   .service-showcase {
     width: 100%;
-    padding: 0;
   }
 
   .service-showcase-header {
@@ -1614,7 +1616,6 @@
 @media (max-width: 720px) {
   .service-showcase {
     width: 100%;
-    padding: 0;
   }
 
   .service-showcase-heading h2 {
@@ -1674,6 +1675,12 @@
 
   .service-accordion-copy p {
     font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .testimonial-section {
+    padding: 50px 0;
   }
 }
 
@@ -1746,7 +1753,7 @@
 
 .portfolio-editorial-copy > h2 {
   margin: 0;
-  color: #fff;
+  color: var(--primary);
   font-size: clamp(48px, 5.4vw, 88px);
   font-weight: 400;
   line-height: 0.92;
@@ -1877,7 +1884,7 @@
   grid-template-columns: minmax(320px, 0.72fr) minmax(0, 1.28fr);
   gap: 100px;
   width: 100%;
-  margin-top: clamp(70px, 8vw, 130px);
+  margin-top: clamp(40px, 8vw, 50px);
 }
 
 .portfolio-editorial-button > * {
@@ -1946,6 +1953,7 @@
 
   .portfolio-editorial-mobile-copy h2 {
     margin: 0;
+    color: var(--primary);
     font-size: clamp(30px, 10vw, 48px);
     font-weight: 400;
     line-height: 1;
@@ -1986,6 +1994,11 @@
   width: 100%;
   padding: 150px 0px;
   /* padding: 150px 0px; */
+}
+
+.container.tools-container {
+  width: 100%;
+  max-width: none;
 }
 
 .tools-header-left {

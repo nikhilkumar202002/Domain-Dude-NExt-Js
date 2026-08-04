@@ -76,7 +76,7 @@ const Faq = () => {
     }, { scope: faqSectionRef });
 
     return (
-        <section ref={faqSectionRef} className="faq-section py-20 relative z-10 bg-white md:bg-transparent"> 
+        <section id="faq" ref={faqSectionRef} className="faq-section py-20 relative z-10 bg-white md:bg-transparent"> 
             
             <div className="container faq-container mx-auto px-6 relative z-20 text-black md:text-inherit">
                 

@@ -1,7 +1,7 @@
 'use client'
 
 import Banner from "./components/page components/home/Banner"
-import Clientslider from "./components/common/Clientslider"
+import ClientList from "./components/common/ClientList"
 import Aboutsection from "./components/page components/home/Aboutsection"
 import Servicesection from "./components/page components/home/Servicesection"
 import Portfolio from "./components/page components/home/Portfolio"
@@ -14,12 +14,13 @@ const Page = () => {
   return (
     <SmoothScrolling>
       <Banner />
-      {/* <Clientslider/> */}
       
       {/* FLOW 1: About (Black) -> Tools (White) -> Service (Black) -> Portfolio (Black) */}
       <div id="main-flow" className="theme-transition-wrapper bg-black relative transition-colors duration-500 ease-linear">
           <Aboutsection/>
           <Toolssection/>
+      <ClientList />
+
           <Servicesection/>
           <Portfolio/>
 
