@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { LuArrowUpRight } from "react-icons/lu";
 import { portfolioData } from "../../../data/PortfolioData";
 import MainButton from "../../common/MainButton";
 import "./Home.css";
@@ -64,9 +63,7 @@ const Portfolio = () => {
             <p className="portfolio-editorial-label">Our Work</p>
 
             <div className="portfolio-editorial-copy" key={active.id}>
-              <span className="portfolio-editorial-count">
-                {String(activeProject + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
-              </span>
+        
               <h2>{active.title}</h2>
               <p>{active.description}</p>
 
@@ -78,9 +75,9 @@ const Portfolio = () => {
                 </div>
               </div>
 
-              <Link href="/works" className="portfolio-editorial-link">
-                View Case Study <LuArrowUpRight aria-hidden="true" />
-              </Link>
+              <div className="portfolio-editorial-case-study-btn">
+                <MainButton label="View Case Study" href="/works" />
+              </div>
             </div>
           </div>
         </div>
@@ -107,6 +104,9 @@ const Portfolio = () => {
                 <h2>{project.title}</h2>
                 <p>{project.description}</p>
                 <small>{project.tags.join(" · ")}</small>
+                <div className="portfolio-editorial-mobile-cta">
+                  <MainButton label="View Case Study" href="/works" />
+                </div>
               </div>
             </article>
           ))}
