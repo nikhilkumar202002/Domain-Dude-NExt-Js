@@ -28,6 +28,7 @@ const Testimonial = () => {
   const contentRef = useRef(null);
   // Ref for the header animation
   const headerRef = useRef<HTMLDivElement>(null);
+  const shouldLoop = testimonials.length > 4;
 
   // --- Helper: Split text into spans for animation ---
   const splitWords = (text: string) => {
@@ -107,7 +108,8 @@ const Testimonial = () => {
                 modules={[Autoplay, Navigation]}
                 spaceBetween={20}
                 slidesPerView={1}
-                loop={true} 
+                loop={shouldLoop}
+                rewind={!shouldLoop}
                 speed={800}
                 autoplay={{ delay: 4000, disableOnInteraction: false }}
                 breakpoints={{

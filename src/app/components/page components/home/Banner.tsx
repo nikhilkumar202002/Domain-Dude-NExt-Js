@@ -19,31 +19,43 @@ const Banner = () => {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      // --- 🌟 NEW: Word-by-Word Animation Sequence ---
+      const titleWords = bannerRef.current?.querySelectorAll(".banner-content .word-span");
+      const introText = bannerRef.current?.querySelector(".banner-content > p");
+      const bannerCounter = bannerRef.current?.querySelector(".banner-counter");
+      const bannerButton = bannerRef.current?.querySelector(".banner-btn");
+
+      if (!titleWords || titleWords.length === 0) {
+        return;
+      }
+
       const tl = gsap.timeline({ delay: 0.3 });
 
-      // 1. Animate the Title Words
-      tl.from(".banner-animation-disabled", {
-        y: 50, // Move up from 50px down
+      tl.from(titleWords, {
+        y: 50,
         opacity: 0,
-        rotation: 5, // Slight rotation for style
+        rotation: 5,
         duration: 0.8,
         ease: "power3.out",
-        stagger: 0.04, // Delay between each word
+        stagger: 0.04,
       });
 
-      // 2. Animate the Paragraph, Counter, and Button (fade up after title)
-      tl.from(
-        ".banner-animation-disabled",
-        {
-          y: 30,
-          opacity: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          stagger: 0.1,
-        },
-        "-=0.4",
-      ); // Start this slightly before the word animation finishes
+      const introElements = [introText, bannerCounter, bannerButton].filter(
+        Boolean,
+      ) as Element[];
+
+      if (introElements.length > 0) {
+        tl.from(
+          introElements,
+          {
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            stagger: 0.1,
+          },
+          "-=0.4",
+        );
+      }
     }, bannerRef);
 
     return () => ctx.revert();
