@@ -23,30 +23,6 @@ const Toolssection = () => {
   };
 
   useGSAP(() => {
-    const wrapper = document.querySelector("#main-flow");
-    const mm = gsap.matchMedia();
-
-    // 1. BLACK -> WHITE Background Transition (Desktop Only)
-    mm.add("(min-width: 769px)", () => {
-        if (wrapper) {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: containerRef.current,
-                    start: "top 75%",
-                    end: "top 25%",   
-                    scrub: 0.5,
-                }
-            });
-            
-            // Background to White, Text to Black
-            tl.to(wrapper, { backgroundColor: "#ffffff", ease: "none" })
-              .to(".tools-header-left h2, .tools-header-left p, .tools-header-left h4, .tools-header-card h3, .tools-header-card p", 
-                  { color: "#000000", ease: "none" }, 
-              "<");
-        }
-    });
-
-    // 2. ENTRANCE ANIMATION (Replaced generic fade with detailed sequence)
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: contentRef.current,

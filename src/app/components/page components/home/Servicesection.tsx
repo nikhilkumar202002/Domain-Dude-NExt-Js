@@ -33,26 +33,6 @@ const Servicesection = () => {
     ));
 
   useGSAP(() => {
-    const wrapper = document.querySelector("#main-flow");
-    const mm = gsap.matchMedia();
-
-    mm.add("(min-width: 769px)", () => {
-      if (wrapper) {
-        gsap.fromTo(wrapper, { backgroundColor: "#ffffff", color: "#000000" }, {
-          backgroundColor: "#000000",
-          color: "#ffffff",
-          ease: "none",
-          immediateRender: false,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-            end: "top 25%",
-            scrub: 0.5,
-          },
-        });
-      }
-    });
-
     const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: headerRef.current,

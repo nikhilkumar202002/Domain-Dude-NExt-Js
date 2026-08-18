@@ -31,26 +31,6 @@ const Faq = () => {
     };
 
     useGSAP(() => {
-        const wrapper = document.querySelector("#footer-flow");
-        const mm = gsap.matchMedia();
-
-        // 1. DESKTOP LOGIC: Animate Background Black -> White
-        mm.add("(min-width: 769px)", () => {
-            if (wrapper && faqSectionRef.current) {
-                const tl = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: faqSectionRef.current,
-                        start: "top 85%",
-                        end: "top 55%",    
-                        scrub: true,         
-                    }
-                });
-                tl.to(wrapper, { backgroundColor: "#ffffff", ease: "none", duration: 1 })
-                  .to(".faq-header h2, .faq-header p", { color: "#000000", ease: "none", duration: 1 }, "<");
-            }
-        });
-
-        // 2. HEADER TEXT ANIMATION (Word-by-Word)
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: headerRef.current,
@@ -76,7 +56,7 @@ const Faq = () => {
     }, { scope: faqSectionRef });
 
     return (
-        <section id="faq" ref={faqSectionRef} className="faq-section py-20 relative z-10 bg-white md:bg-transparent"> 
+        <section id="faq" ref={faqSectionRef} className="faq-section py-20 relative z-10 bg-white"> 
             
             <div className="container faq-container mx-auto px-6 relative z-20 text-black md:text-inherit">
                 

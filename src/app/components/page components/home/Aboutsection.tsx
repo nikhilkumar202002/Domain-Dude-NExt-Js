@@ -26,37 +26,6 @@ const Aboutsection = () => {
 
   useGSAP(
     () => {
-      const wrapper = document.querySelector("#main-flow");
-      const mm = gsap.matchMedia();
-
-      mm.add("(min-width: 769px)", () => {
-        if (!wrapper || !containerRef.current) return;
-
-        ScrollTrigger.create({
-          trigger: containerRef.current,
-          start: "top 60%",
-          end: "bottom 40%",
-          onEnter: () =>
-            gsap.to(wrapper, {
-              backgroundColor: "#000000",
-              duration: 1,
-              overwrite: "auto",
-            }),
-          onEnterBack: () =>
-            gsap.to(wrapper, {
-              backgroundColor: "#000000",
-              duration: 1,
-              overwrite: "auto",
-            }),
-          onLeaveBack: () =>
-            gsap.to(wrapper, {
-              backgroundColor: "#000000",
-              duration: 1,
-              overwrite: "auto",
-            }),
-        });
-      });
-
       if (contentRef.current && containerRef.current) {
         gsap.to(contentRef.current, {
           opacity: 0,
@@ -113,7 +82,6 @@ const Aboutsection = () => {
           );
       }
 
-      return () => mm.revert();
     },
     { scope: containerRef },
   );

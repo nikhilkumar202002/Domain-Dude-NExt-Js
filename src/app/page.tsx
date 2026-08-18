@@ -16,7 +16,7 @@ const Page = () => {
       <Banner />
       
       {/* FLOW 1: About (Black) -> Tools (White) -> Service (Black) -> Portfolio (Black) */}
-      <div id="main-flow" className="theme-transition-wrapper bg-black relative transition-colors duration-500 ease-linear">
+      <div id="main-flow" className="theme-transition-wrapper bg-black relative">
           <Aboutsection/>
           <Toolssection/>
       <ClientList />
@@ -27,7 +27,7 @@ const Page = () => {
       </div>
    
       {/* FLOW 2: Testimonial (Black) -> Faq (White) */}
-      <div id="footer-flow" className="theme-transition-wrapper bg-black relative transition-colors duration-500 ease-linear">
+      <div id="footer-flow" className="theme-transition-wrapper bg-black relative">
         <Testimonial/>
         <Faq/>
       </div>

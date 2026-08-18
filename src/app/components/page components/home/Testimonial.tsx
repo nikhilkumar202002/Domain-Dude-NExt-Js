@@ -39,14 +39,6 @@ const Testimonial = () => {
   };
 
   useGSAP(() => {
-    const wrapper = document.querySelector("#footer-flow");
-    
-    // 1. Background Color Logic
-    if(wrapper) {
-        gsap.to(wrapper, { backgroundColor: "#000000", duration: 0.1, overwrite: "auto" });
-    }
-
-    // 2. HEADER TEXT ANIMATION (Word-by-Word)
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: headerRef.current,
@@ -70,7 +62,6 @@ const Testimonial = () => {
     }, "-=0.4");
 
 
-    // 3. EXIT ANIMATION (Fade out)
     if (contentRef.current) {
         gsap.to(contentRef.current, {
             opacity: 0,
