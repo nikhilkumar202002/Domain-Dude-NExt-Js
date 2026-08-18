@@ -1692,7 +1692,7 @@
   padding: clamp(90px, 10vw, 170px) 95px;
   overflow: clip;
   color: #fff;
-  background: #000;
+  background: transparent;
   font-family: var(--font-neue);
 }
 
@@ -1822,40 +1822,43 @@
   width: 100%;
   height: min(78vh, 850px);
   overflow: hidden;
-  background: #111;
+  background: transparent;
   border-radius: 20px;
+  --portfolio-cursor-x: 50%;
+  --portfolio-cursor-y: 50%;
 }
 
 .portfolio-editorial-image img {
   object-fit: cover;
   transform: scale(1.035);
-  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .portfolio-editorial-image:hover img {
   transform: scale(1);
-  filter: brightness(0.72);
 }
 
 .portfolio-editorial-image > span {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: var(--portfolio-cursor-y);
+  left: var(--portfolio-cursor-x);
   z-index: 2;
   padding: 13px 18px;
-  color: #000;
-  background: #fff;
+  color: #fff;
+  background: var(--primary);
   border-radius: 999px;
   font-size: 12px;
   text-transform: uppercase;
   opacity: 0;
-  transform: translate(-50%, -40%);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translate(-50%, -50%) scale(0.95);
+  transition: opacity 0.3s ease, transform 0.28s ease, top 0.08s linear, left 0.08s linear;
+  pointer-events: none;
+  box-shadow: 0 12px 30px rgba(0, 84, 255, 0.22);
 }
 
 .portfolio-editorial-image:hover > span {
   opacity: 1;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .portfolio-editorial-mobile-copy {

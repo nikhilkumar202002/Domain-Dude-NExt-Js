@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { portfolioData } from "../../../data/PortfolioData";
@@ -13,6 +13,17 @@ const Portfolio = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const visualRefs = useRef<Array<HTMLElement | null>>([]);
   const [activeProject, setActiveProject] = useState(0);
+
+  const updateCursorPosition = (event: MouseEvent<HTMLAnchorElement>) => {
+    const target = event.currentTarget;
+    const rect = target.getBoundingClientRect();
+
+    const x = ((event.clientX - rect.left) / rect.width) * 100;
+    const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+    target.style.setProperty("--portfolio-cursor-x", `${x}%`);
+    target.style.setProperty("--portfolio-cursor-y", `${y}%`);
+  };
 
   useEffect(() => {
     let frame = 0;
@@ -89,7 +100,12 @@ const Portfolio = () => {
               ref={(element) => { visualRefs.current[index] = element; }}
               className={`portfolio-editorial-project ${activeProject === index ? "is-active" : ""}`}
             >
-              <Link href="/works" className="portfolio-editorial-image">
+              <Link
+                href="/works"
+                className="portfolio-editorial-image"
+                onMouseMove={updateCursorPosition}
+                onMouseEnter={updateCursorPosition}
+              >
                 <Image
                   src={project.image}
                   alt={`${project.title} project`}
