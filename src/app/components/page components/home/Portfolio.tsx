@@ -18,11 +18,11 @@ const Portfolio = () => {
     const target = event.currentTarget;
     const rect = target.getBoundingClientRect();
 
-    const x = ((event.clientX - rect.left) / rect.width) * 100;
-    const y = ((event.clientY - rect.top) / rect.height) * 100;
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
 
-    target.style.setProperty("--portfolio-cursor-x", `${x}%`);
-    target.style.setProperty("--portfolio-cursor-y", `${y}%`);
+    target.style.setProperty("--portfolio-cursor-x", `${x}px`);
+    target.style.setProperty("--portfolio-cursor-y", `${y}px`);
   };
 
   useEffect(() => {
@@ -112,7 +112,7 @@ const Portfolio = () => {
                   fill
                   sizes="(max-width: 768px) 100vw, 58vw"
                 />
-                <span>View Case Study</span>
+                <span>View</span>
               </Link>
 
               <div className="portfolio-editorial-mobile-copy">
