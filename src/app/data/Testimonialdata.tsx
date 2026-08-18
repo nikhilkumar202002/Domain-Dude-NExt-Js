@@ -4,55 +4,36 @@ export interface TestimonialItem {
   content: string;
   name: string;
   role: string;
+  rating?: number;
 }
 
 export const testimonials: TestimonialItem[] = [
   {
-    id: 1,
-    content: "Domain Dude transformed our online presence completely. Their creative strategies didn't just boost our traffic; they increased our customer engagement metrics by over 200% in just three months.",
-    name: "John Doe",
-    role: "CEO, TechStream Solutions",
+    id: 9,
+    content: "We hired Domain Dude to create a billing and tracking website plus a mobile app. The solution is easy to use, works well across desktop and mobile, and has improved our operational workflow. The team was professional, communicative, and supportive throughout the project.",
+    name: "Gulf Cargo",
+    role: "2 reviews · 2 photos",
+    rating: 5,
   },
   {
-    id: 2,
-    content: "Working with this team was a game-changer for our brand. They understood our vision immediately and delivered a sleek, high-performance website that perfectly captures our company's innovative spirit.",
-    name: "Sarah Jenkins",
-    role: "Founder, Creative Hive",
+    id: 10,
+    content: "Excellent service! Professional website development, effective SEO, and great digital marketing support. Highly recommended for growing your business online.",
+    name: "Prajitha Prakash",
+    role: "3 reviews",
+    rating: 5,
   },
   {
-    id: 3,
-    content: "The level of technical expertise and support we received was outstanding. They navigated complex backend requirements with ease, resulting in a seamless platform that our users absolutely love using daily.",
-    name: "Michael Chen",
-    role: "CTO, FinFlow App",
+    id: 11,
+    content: "Good service and a very professional experience overall. The team communicated clearly, delivered the work on time, and made the entire process smooth from start to finish. I would definitely recommend Domain Dude to anyone looking for reliable digital work.",
+    name: "Ebin Jacob",
+    role: "4 reviews",
+    rating: 5,
   },
   {
-    id: 4,
-    content: "I was impressed by their attention to detail and commitment to deadlines. They took our vague ideas and turned them into a concrete, revenue-generating digital asset that exceeded our expectations.",
-    name: "Emily Carter",
-    role: "Marketing Director, ShopSphere",
-  },
-  {
-    id: 5,
-    content: "From the initial design concepts to the final launch, the process was smooth and transparent. Their ability to blend aesthetics with functionality is unmatched in the industry right now.",
-    name: "David Ross",
-    role: "Owner, Ross Architecture",
-  },
-  {
-    id: 6,
-    content: "We needed a complete rebrand and a site overhaul, and Domain Dude delivered. The new user interface has significantly reduced our bounce rate and improved our overall sales conversions.",
-    name: "Jessica Alba",
-    role: "VP of Operations, GreenLeaf",
-  },
-  {
-    id: 7,
-    content: "Their SEO strategies are incredibly effective. Within weeks of launching the new site, we saw a noticeable spike in organic search traffic and higher rankings for our key search terms.",
-    name: "Robert Fox",
-    role: "Manager, Urban Logistics",
-  },
-  {
-    id: 8,
-    content: "Professional, responsive, and incredibly talented. They provided valuable insights throughout the development process that saved us time and money while ensuring a premium quality product.",
-    name: "Amanda Lee",
-    role: "Co-Founder, BrightStart",
+    id: 12,
+    content: "God service and a very positive experience overall. The team was responsive, easy to communicate with, and delivered exactly what was needed with a professional finish. I would happily recommend Domain Dude to others looking for dependable digital support.",
+    name: "Sreejith Sahadevan",
+    role: "",
+    rating: 5,
   },
 ];

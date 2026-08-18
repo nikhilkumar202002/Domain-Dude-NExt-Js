@@ -121,12 +121,24 @@ const Testimonial = () => {
                 {testimonials.map((item) => (
                     <SwiperSlide key={item.id} className="!h-auto !flex">
                         <div className="testimonial-card bg-zinc-900/50 border border-zinc-800 p-6 rounded-2xl h-full flex flex-col">
-                            <div className="testimonial-card-content mb-6 flex-grow"> 
-                                <p className="text-gray-300 leading-relaxed">{item.content}</p>
+                            <div className="testimonial-card-content mb-6 flex-grow">
+                                <div
+                                    className="testimonial-card-stars flex gap-1 mb-4"
+                                    aria-label={`${item.rating ?? 5} out of 5 stars`}
+                                >
+                                    {[...Array(item.rating ?? 5)].map((_, i) => (
+                                        <span key={i}>
+                                            <Image width={14} height={14} alt="" src={Star} />
+                                        </span>
+                                    ))}
+                                </div>
+                                <p className="text-gray-300 leading-relaxed whitespace-pre-line">{item.content}</p>
                             </div>
                             <div className="testimonial-card-footer mt-auto">
                                 <h4 className="font-bold text-white text-lg">{item.name}</h4>
-                                <p className="text-sm text-gray-400">{item.role}</p>
+                                {item.role.trim() ? (
+                                    <p className="text-sm text-gray-400">{item.role}</p>
+                                ) : null}
                             </div>
                         </div>
                     </SwiperSlide>
