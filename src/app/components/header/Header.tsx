@@ -176,7 +176,28 @@ const Header = () => {
                 className="logo"
               >
                 <Link href="/">
-                  <Image className="navbar-logo-image" src={Logo} alt="Domain Dude" width={100} height={0} />
+                  <div className="navbar-logo-wrapper">
+                    <Image
+                      className={`navbar-logo-image transition-opacity duration-300 ${
+                        isScrolled ? "opacity-0 absolute inset-0 pointer-events-none" : "opacity-100"
+                      }`}
+                      src={LogoWhite}
+                      alt="Domain Dude"
+                      width={150}
+                      height={48}
+                      priority
+                    />
+                    <Image
+                      className={`navbar-logo-image transition-opacity duration-300 ${
+                        isScrolled ? "opacity-100" : "opacity-0 absolute inset-0 pointer-events-none"
+                      }`}
+                      src={LogoBlack}
+                      alt="Domain Dude"
+                      width={150}
+                      height={48}
+                      priority
+                    />
+                  </div>
                 </Link>
               </motion.div>
 
@@ -290,7 +311,7 @@ const Header = () => {
               >
                   {/* Drawer Header */}
                   <div className="drawer-header">
-                    <Image src={Logo} alt="Domain Dude" width={150} height={0} />
+                    <Image src={LogoWhite} alt="Domain Dude" width={150} height={48} />
                     <motion.div
                       whileTap={{ scale: 0.9 }}
                       onClick={() => setIsMenuOpen(false)}
