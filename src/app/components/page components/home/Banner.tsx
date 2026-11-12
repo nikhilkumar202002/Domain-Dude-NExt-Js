@@ -3,17 +3,14 @@
 import { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Image from "next/image";
 import MainButton from "../../common/MainButton";
+import FlowAnimation from "./FlowAnimation";
 import "./Home.css";
 
 gsap.registerPlugin(ScrollTrigger);
-const beamCount = 24;
 
 const Banner = () => {
   const bannerRef = useRef<HTMLDivElement | null>(null);
-  const beamRefs = useRef<HTMLDivElement[]>([]);
-  const glowRef = useRef<HTMLDivElement | null>(null);
 
   const splitWords = (text: string) => {
     return text.split(" ").map((word, index) => (
@@ -70,17 +67,17 @@ const Banner = () => {
   return (
     <>
       <section className="banner" ref={bannerRef}>
-        <Image
-          className="banner-video"
-          src="/Banners/hero-banner.jpeg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          aria-hidden="true"
-        />
-        <div className="banner-video-overlay" aria-hidden="true" />
         <div className="noise"></div>
+        {/* Dynamic SaaS Gateway Flow Animation */}
+        <FlowAnimation
+          numPaths={80}
+          speed={1}
+          lineColor="rgba(255, 255, 255, 0.22)"
+          particleColor="rgba(255, 255, 255, 0.95)"
+          accentParticleColor="rgba(0, 215, 255, 0.95)"
+          glowColor="rgba(0, 200, 255, 0.7)"
+          opacity={0.88}
+        />
         <div className="banner-container">
           <div className="banner-content">
             <h1>
