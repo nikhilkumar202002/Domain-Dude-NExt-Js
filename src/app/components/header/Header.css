@@ -26,21 +26,27 @@
   color: #000000 !important;
 }
 
-.navbar.is-scrolled .navbar-item a:hover,
-.navbar.is-scrolled .navbar-item a.active {
+.navbar.is-scrolled .navbar-item a:hover {
   color: var(--primary, #0054FF) !important;
 }
 
-.navbar.is-scrolled .navbar-arrow {
-  color: #000000;
-}
-
-.navbar.is-scrolled .navbar-item a:hover .navbar-arrow {
-  color: var(--primary, #0054FF);
-}
-
-.navbar.is-scrolled .mobile-menu-icon {
+.navbar.is-scrolled .navbar-item a.active {
   color: #000000 !important;
+}
+
+.navbar.is-scrolled .two-line-menu .line {
+  background-color: #000000;
+}
+
+.navbar.is-scrolled .navbar-icon-btn {
+  color: #000000;
+  background: transparent;
+  border: none;
+}
+
+.navbar.is-scrolled .navbar-icon-btn:hover {
+  color: var(--primary, #0054FF);
+  background: transparent;
 }
 
 /* The gradient shadow logic */
@@ -64,45 +70,51 @@
 
 .navbar-container {
   width: 100%;
-  padding: 16px 17px;
+  padding: 15px 17px;
 }
 
 .navbar-container.is-scrolled {
-  padding-inline: 20px;
+  padding: 15px 20px;
 }
 
 .navbar-logo-wrapper {
   position: relative;
   display: block;
-  width: 150px;
+  width: 148px;
   height: auto;
 }
 
 .navbar-logo-image {
   display: block;
-  width: 150px;
+  width: 148px;
   height: auto;
 }
 
 @media (min-width: 768px) {
   .navbar-container {
-    padding: 30px;
+    padding: 15px 30px;
   }
 
+  .navbar-container.is-scrolled {
+    padding: 15px 30px;
+  }
 }
 
-.navbar-items{
-    display: flex;
-    gap: 20px;
+.navbar-items {
+  display: flex;
+  gap: 50px;
 }
-.navbar-item a{
-    position: relative;
-    color: #fff;
-    font-size: 17px;
-    font-family: var(--font-neue);
-    transition: color 0.3s ease;
-    padding-bottom: 4px;
+
+.navbar-item a {
+  position: relative;
+  color: #fff;
+  font-size: 18px;
+  font-family: var(--font-neue);
+  font-weight: 300 !important;
+  transition: color 0.3s ease;
+  padding-bottom: 4px;
 }
+
 /* Hover underline animation */
 .navbar-item a::after {
   content: "";
@@ -126,52 +138,102 @@
   box-shadow: none;
 }
 
-/* Active state (for current page) */
+/* Active state - no primary color */
 .navbar-item a.active {
-  color: var(--primary);
+  color: inherit;
   text-shadow: none;
 }
 
 .navbar-item a.active::after {
-  width: 100%;
-  box-shadow: none;
+  display: none;
+}
+
+/* Right Side: Call, WhatsApp, 2-line Menu */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: 20px;
+  transition: color 0.3s ease, transform 0.3s ease;
+  text-decoration: none;
+}
+
+.navbar-icon-btn:hover {
+  color: var(--primary, #0054FF);
+  transform: scale(1.12);
+}
+
+.two-line-menu {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 6px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px 6px;
+  transition: transform 0.3s ease;
+}
+
+.two-line-menu:hover {
+  transform: scale(1.05);
+}
+
+.two-line-menu .line {
+  display: block;
+  height: 2px;
+  background-color: #ffffff;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+}
+
+.two-line-menu .line-1 {
+  width: 24px;
+}
+
+.two-line-menu .line-2 {
+  width: 16px;
+}
+
+.two-line-menu:hover .line-2 {
+  width: 24px;
 }
 
 /* Responsive */
+@media (max-width: 1280px) and (min-width: 901px) {
+  .navbar-items {
+    gap: 30px;
+  }
+}
+
 @media (max-width: 768px) {
   .navbar-items {
-    gap: 24px;
+    gap: 20px;
   }
   .navbar-item a {
     font-size: 15px;
   }
-}
-
-/* Enable flex layout inside the link */
-.navbar-item a.with-arrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* Arrow container (gradient circle) */
-.navbar-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  width: 20px;
-  height: 20px;
-  background: var(--primary);
-  border-radius: 50%;
-  color: #fff; /* white arrow */
-  transition: transform 0.4s ease, box-shadow 0.3s ease;
-}
-
-/* Rotate the arrow on hover */
-.navbar-item a:hover .navbar-arrow {
-  transform: rotate(45deg);
-  box-shadow: none;
+  .navbar-right {
+    gap: 8px;
+  }
+  .navbar-icon-btn,
+  .two-line-menu {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 .navbar-btn .main-btn,

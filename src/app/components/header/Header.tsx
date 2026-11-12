@@ -1,101 +1,28 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import LogoWhite from "../../../assets/Domine Dude white.svg";
 import LogoBlack from "../../../assets/Domine-Dude_black.png";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  FiArrowUpRight,
-  FiMenu,
+  FiPhone,
   FiX,
   FiChevronRight,
   FiCheckCircle,
 } from "react-icons/fi";
-import { FaInstagram, FaLinkedinIn, FaXTwitter, FaFacebookF } from "react-icons/fa6";
+import {
+  FaInstagram,
+  FaLinkedinIn,
+  FaXTwitter,
+  FaFacebookF,
+  FaWhatsapp,
+} from "react-icons/fa6";
 import "./Header.css";
-import MainButton from "../common/MainButton";
-
-const servicesData = [
-  {
-    id: 1,
-    title: "Web Development",
-    href: "/our-services/web-development",
-    keyPoints: [
-      "Custom website development services",
-      "Responsive web design for businesses",
-      "SEO-friendly website development",
-      "React and Next.js web development",
-      "WordPress business website development",
-    ],
-  },
-  {
-    id: 2,
-    title: "UI/UX Designing",
-    href: "/our-services/ui-ux-design",
-    keyPoints: [
-      "Professional UI UX design services",
-      "User experience design for websites",
-      "Mobile app UI UX design",
-      "Conversion-focused interface design",
-      "Product and web app UX design",
-    ],
-  },
-  {
-    id: 3,
-    title: "Digital Marketing",
-    href: "/our-services/digital-marketing",
-    keyPoints: [
-      "Digital marketing services for brands",
-      "Social media marketing and management",
-      "Google Ads PPC campaign management",
-      "Performance marketing for lead generation",
-      "Content marketing and email campaigns",
-    ],
-  },
-  {
-    id: 4,
-    title: "Branding",
-    href: "/our-services/branding-visual",
-    keyPoints: [
-      "Brand identity and logo design",
-      "Brand strategy and positioning",
-      "Rebranding services for businesses",
-      "Visual identity design for brands",
-      "Brand voice and messaging development",
-    ],
-  },
-  {
-    id: 5,
-    title: "Video Production",
-    href: "/our-services/video-production",
-    keyPoints: [
-      "Video production services for brands",
-      "Social media reels and ad videos",
-      "Product explainer video production",
-      "Corporate and brand film production",
-      "Motion graphics and animation videos",
-    ],
-  },
-  {
-    id: 6,
-    title: "Graphics Designing",
-    href: "/our-services/graphics-designing",
-    keyPoints: [
-      "Graphic design services for businesses",
-      "Social media creative design",
-      "Marketing poster and banner design",
-      "Branding and print design services",
-      "Pitch deck and presentation design",
-    ],
-  },
-];
-
+import { navItems, servicesData, socialLinks } from "../../data/NavigationMenu";
 
 const Header = () => {
-  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   
@@ -116,10 +43,6 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const isActive = (path: string) => (pathname === path ? "active" : "");
-  const isServicesActive = 
-    pathname === "/our-services" || pathname.startsWith("/services");
 
   const megaMenuVariants: Variants = {
     hidden: { opacity: 0, y: 10, scale: 0.98, display: "none" },
@@ -183,8 +106,8 @@ const Header = () => {
                       }`}
                       src={LogoWhite}
                       alt="Domain Dude"
-                      width={150}
-                      height={48}
+                      width={148}
+                      height={47}
                       priority
                     />
                     <Image
@@ -193,8 +116,8 @@ const Header = () => {
                       }`}
                       src={LogoBlack}
                       alt="Domain Dude"
-                      width={150}
-                      height={48}
+                      width={148}
+                      height={47}
                       priority
                     />
                   </div>
@@ -202,101 +125,126 @@ const Header = () => {
               </motion.div>
 
               <div className="navbar-items desktop-menu">
-                <div className="navbar-item">
-                    <Link href="/" className={isActive("/")}>Home</Link>
-                </div>
-                <div className="navbar-item">
-                    <Link href="/about" className={isActive("/about")}>About</Link>
-                </div>
-                
-                {/* Mega Menu Item */}
-                <div 
-                  className="navbar-item relative" 
-                  onMouseEnter={() => setMegaMenuOpen(true)}
-                  onMouseLeave={() => setMegaMenuOpen(false)}
-                >
-                  <Link 
-                    href="/our-services" 
-                    className={`with-arrow ${megaMenuOpen || isServicesActive ? "active" : ""}`} 
-                    style={{ cursor: "default" }}
-                  >
-                    What we do
-                    <span className={`navbar-arrow transition-transform duration-300 ${megaMenuOpen ? "rotate-45" : ""}`}>
-                      <FiArrowUpRight />
-                    </span>
-                  </Link>
-
-                  <AnimatePresence>
-                    {megaMenuOpen && (
-                      <motion.div 
-                        className="mega-menu-container"
-                        variants={megaMenuVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="exit"
+                {navItems.map((item) => {
+                  if (item.hasDropdown) {
+                    return (
+                      <div
+                        key={item.id}
+                        className="navbar-item relative"
+                        onMouseEnter={() => setMegaMenuOpen(true)}
+                        onMouseLeave={() => setMegaMenuOpen(false)}
                       >
-                         <div className="mega-menu-list">
-                            <h4>Our Services</h4>
-                            <ul>
-                                {servicesData.map((service, index) => (
-                                    <li key={service.id} onMouseEnter={() => setActiveServiceIndex(index)}>
-                                        <Link 
-                                            href={service.href}
-                                            className={index === activeServiceIndex ? "active-service" : ""}
-                                        >
-                                            <FiChevronRight className="icon"/> 
-                                            {service.title}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                         </div>
+                        <Link
+                          href={item.href}
+                          style={{ cursor: "default" }}
+                        >
+                          {item.name}
+                        </Link>
 
-                         <div className="mega-menu-details">
-                            <div className="details-header">
-                                <h4>{servicesData[activeServiceIndex].title}</h4>
-                                <span className="details-tag">Key Highlights</span>
-                            </div>
-                            <ul className="details-grid">
-                                {servicesData[activeServiceIndex].keyPoints.map((point, i) => (
-                                    <motion.li 
-                                        key={i}
-                                        initial={{ opacity: 0, x: 10 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: i * 0.05 }}
+                        <AnimatePresence>
+                          {megaMenuOpen && (
+                            <motion.div
+                              className="mega-menu-container"
+                              variants={megaMenuVariants}
+                              initial="hidden"
+                              animate="visible"
+                              exit="exit"
+                            >
+                              <div className="mega-menu-list">
+                                <h4>Our Services</h4>
+                                <ul>
+                                  {servicesData.map((service, index) => (
+                                    <li
+                                      key={service.id}
+                                      onMouseEnter={() =>
+                                        setActiveServiceIndex(index)
+                                      }
                                     >
-                                        <FiCheckCircle className="details-icon"/> 
-                                        {point}
+                                      <Link
+                                        href={service.href}
+                                        className={
+                                          index === activeServiceIndex
+                                            ? "active-service"
+                                            : ""
+                                        }
+                                      >
+                                        <FiChevronRight className="icon" />
+                                        {service.title}
+                                      </Link>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+
+                              <div className="mega-menu-details">
+                                <div className="details-header">
+                                  <h4>{servicesData[activeServiceIndex].title}</h4>
+                                  <span className="details-tag">
+                                    Key Highlights
+                                  </span>
+                                </div>
+                                <ul className="details-grid">
+                                  {servicesData[
+                                    activeServiceIndex
+                                  ].keyPoints.map((point, i) => (
+                                    <motion.li
+                                      key={i}
+                                      initial={{ opacity: 0, x: 10 }}
+                                      animate={{ opacity: 1, x: 0 }}
+                                      transition={{ delay: i * 0.05 }}
+                                    >
+                                      <FiCheckCircle className="details-icon" />
+                                      {point}
                                     </motion.li>
-                                ))}
-                            </ul>
-                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
+                                  ))}
+                                </ul>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  }
 
-                <div className="navbar-item">
-                    <Link href="/works" className={isActive("/works")}>Works</Link>
-                </div>
-                <div className="navbar-item">
-                    <Link href="/contact-us" className={isActive("/contact-us")}>Contact</Link>
-                </div>
+                  return (
+                    <div key={item.id} className="navbar-item">
+                      <Link href={item.href}>
+                        {item.name}
+                      </Link>
+                    </div>
+                  );
+                })}
               </div>
 
-              <div className="navbar-btn desktop-menu">
-                <MainButton label="Lets Talk" />
-              </div>
-
-              {!isMenuOpen && (
-                <motion.div
-                  whileTap={{ scale: 0.9 }}
-                  className="mobile-menu-icon"
-                  onClick={() => setIsMenuOpen(true)}
+              <div className="navbar-right">
+                <a
+                  href="tel:919048006320"
+                  className="navbar-icon-btn"
+                  aria-label="Call Us"
                 >
-                  <FiMenu size={28} />
-                </motion.div>
-              )}
+                  <FiPhone size={20} />
+                </a>
+
+                <a
+                  href="https://wa.me/919048006320?text=Hi%20Domain%20Dude%2C%20I%27d%20like%20to%20discuss%20a%20new%20project."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="navbar-icon-btn"
+                  aria-label="WhatsApp Us"
+                >
+                  <FaWhatsapp size={21} />
+                </a>
+
+                <button
+                  type="button"
+                  className="two-line-menu"
+                  onClick={() => setIsMenuOpen(true)}
+                  aria-label="Open menu"
+                >
+                  <span className="line line-1"></span>
+                  <span className="line line-2"></span>
+                </button>
+              </div>
             </div>
           </motion.div>
 
@@ -323,34 +271,43 @@ const Header = () => {
 
                   {/* Drawer Links (Centered) */}
                   <motion.div className="drawer-links" variants={drawerVariants}>
-                      {[
-                        { name: "Home", href: "/" },
-                        { name: "About", href: "/about" },
-                        { name: "Services", href: "/our-services" },
-                        { name: "Portfolio", href: "/works" },
-                        { name: "Industry", href: "#" },
-                        { name: "Contact", href: "/contact-us" },
-                      ].map((item) => (
-                        <Link key={item.name} href={item.href} legacyBehavior>
-                          <motion.a
-                            variants={linkVariants}
-                            whileHover={{ x: 6, color: "var(--primary)" }}
-                            onClick={() => setIsMenuOpen(false)} // Close on click
-                          >
-                            {item.name}
-                          </motion.a>
-                        </Link>
-                      ))}
+                    {navItems.map((item) => (
+                      <Link key={item.id} href={item.href} legacyBehavior>
+                        <motion.a
+                          variants={linkVariants}
+                          whileHover={{ x: 6, color: "var(--primary)" }}
+                          onClick={() => setIsMenuOpen(false)} // Close on click
+                        >
+                          {item.name}
+                        </motion.a>
+                      </Link>
+                    ))}
                   </motion.div>
 
                   {/* Drawer Footer (Social Icons) */}
                   <div className="drawer-footer">
-                      <div className="social-links">
-                          <Link href="#" target="_blank"><FaInstagram size={20} /></Link>
-                          <Link href="#" target="_blank"><FaLinkedinIn size={20} /></Link>
-                          <Link href="#" target="_blank"><FaXTwitter size={20} /></Link>
-                          <Link href="#" target="_blank"><FaFacebookF size={20} /></Link>
-                      </div>
+                    <div className="social-links">
+                      {socialLinks.map((social) => {
+                        const Icon =
+                          social.platform === "instagram"
+                            ? FaInstagram
+                            : social.platform === "linkedin"
+                            ? FaLinkedinIn
+                            : social.platform === "twitter"
+                            ? FaXTwitter
+                            : FaFacebookF;
+                        return (
+                          <Link
+                            key={social.id}
+                            href={social.href}
+                            target="_blank"
+                            aria-label={social.name}
+                          >
+                            <Icon size={20} />
+                          </Link>
+                        );
+                      })}
+                    </div>
                   </div>
 
               </motion.div>
