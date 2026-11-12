@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, Variants } from "framer-motion";
-import Logo from "../../../assets/Domine Dude white.svg";
+import LogoWhite from "../../../assets/Domine Dude white.svg";
+import LogoBlack from "../../../assets/Domine-Dude_black.png";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -13,12 +14,10 @@ import {
   FiChevronRight,
   FiCheckCircle,
 } from "react-icons/fi";
-// Import Social Icons
 import { FaInstagram, FaLinkedinIn, FaXTwitter, FaFacebookF } from "react-icons/fa6";
 import "./Header.css";
 import MainButton from "../common/MainButton";
 
-// --- DATASET: Services & Key Points ---
 const servicesData = [
   {
     id: 1,
@@ -118,10 +117,7 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Helper function for simple exact match links
   const isActive = (path: string) => (pathname === path ? "active" : "");
-
-  // Helper for "What we do" (Matches parent page OR any child service page)
   const isServicesActive = 
     pathname === "/our-services" || pathname.startsWith("/services");
 
@@ -309,8 +305,9 @@ const Header = () => {
                       {[
                         { name: "Home", href: "/" },
                         { name: "About", href: "/about" },
-                        { name: "What we do", href: "/our-services" },
-                        { name: "Works", href: "/works" },
+                        { name: "Services", href: "/our-services" },
+                        { name: "Portfolio", href: "/works" },
+                        { name: "Industry", href: "#" },
                         { name: "Contact", href: "/contact-us" },
                       ].map((item) => (
                         <Link key={item.name} href={item.href} legacyBehavior>

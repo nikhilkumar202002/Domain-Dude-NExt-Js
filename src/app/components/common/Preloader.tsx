@@ -32,20 +32,19 @@ const Preloader: React.FC = () => {
     if (!word1 || !word2 || !word3) return;
 
     const ctx = gsap.context(() => {
+      // Immediately enforce hidden state for GSAP
+      gsap.set([word1, word2, word3], {
+        y: "125%",
+        opacity: 0,
+      });
+
       const tl = gsap.timeline({
-        delay: 0.1,
         onComplete: () => {
           setIsComplete(true);
         },
       });
 
-      // 1. Initial setup - hide words below their masks
-      tl.set([word1, word2, word3], {
-        y: "125%",
-        opacity: 0,
-      });
-
-      // 2. Word 1 ("Design.") appears (Black)
+      // 1. Word 1 ("Design.") appears (Black)
       tl.to(
         word1,
         {
@@ -54,7 +53,7 @@ const Preloader: React.FC = () => {
           duration: 0.8,
           ease: "power3.out",
         },
-        0.2,
+        0.15,
       );
 
       // 3. Word 2 ("Develop.") appears (Primary Blue)
@@ -127,21 +126,30 @@ const Preloader: React.FC = () => {
       <div className="preloader-track">
         {/* Word 1: Black */}
         <div className="preloader-mask">
-          <span className="preloader-word word-1 word-black">
+          <span
+            className="preloader-word word-1 word-black"
+            style={{ opacity: 0, transform: "translateY(125%)" }}
+          >
             Design.
           </span>
         </div>
 
         {/* Word 2: Primary Blue */}
         <div className="preloader-mask">
-          <span className="preloader-word word-2 word-primary">
+          <span
+            className="preloader-word word-2 word-primary"
+            style={{ opacity: 0, transform: "translateY(125%)" }}
+          >
             Develop.
           </span>
         </div>
 
         {/* Word 3: Black */}
         <div className="preloader-mask">
-          <span className="preloader-word word-3 word-black">
+          <span
+            className="preloader-word word-3 word-black"
+            style={{ opacity: 0, transform: "translateY(125%)" }}
+          >
             Deliver.
           </span>
         </div>

@@ -31,10 +31,6 @@
   color: var(--primary, #0054FF) !important;
 }
 
-.navbar.is-scrolled .navbar-logo-image {
-  filter: brightness(0);
-}
-
 .navbar.is-scrolled .navbar-arrow {
   color: #000000;
 }
@@ -73,6 +69,13 @@
 
 .navbar-container.is-scrolled {
   padding-inline: 20px;
+}
+
+.navbar-logo-wrapper {
+  position: relative;
+  display: block;
+  width: 150px;
+  height: auto;
 }
 
 .navbar-logo-image {
@@ -216,6 +219,10 @@
   .navbar.is-scrolled .logo {
     width: 96px !important;
     flex-basis: 96px;
+  }
+
+  .navbar-logo-wrapper {
+    width: 100%;
   }
 
   .navbar-logo-image {
