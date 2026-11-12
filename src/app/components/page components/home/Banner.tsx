@@ -15,7 +15,6 @@ const Banner = () => {
   const beamRefs = useRef<HTMLDivElement[]>([]);
   const glowRef = useRef<HTMLDivElement | null>(null);
 
-  // Helper function to split text into words wrapped in spans
   const splitWords = (text: string) => {
     return text.split(" ").map((word, index) => (
       <span key={index} className="word-wrapper">
