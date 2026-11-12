@@ -68,7 +68,7 @@ const Banner = () => {
     <>
       <section className="banner" ref={bannerRef}>
         <div className="noise"></div>
-        {/* Dynamic SaaS Gateway Flow Animation */}
+
         <FlowAnimation
           numPaths={80}
           speed={1}
@@ -81,12 +81,10 @@ const Banner = () => {
         <div className="banner-container">
           <div className="banner-content">
             <h1>
-              {/* Apply splitWords to the main text */}
               {splitWords(
                 "Leading Website Development & Digital Marketing Agency",
               )}
 
-              {/* Apply splitWords to the highlight text separately so it keeps the class */}
               <span className="banner-content-highlight block sm:inline">
                 {splitWords("In Kochi.")}
               </span>
