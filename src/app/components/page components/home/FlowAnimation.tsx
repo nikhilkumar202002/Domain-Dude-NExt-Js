@@ -28,13 +28,6 @@ interface PathData {
   particles: Particle[];
 }
 
-interface Explosion {
-  x: number;
-  y: number;
-  radius: number;
-  life: number;
-}
-
 export const FlowAnimation: React.FC<FlowAnimationProps> = ({
   numPaths = 80,
   speed = 1,
@@ -61,7 +54,6 @@ export const FlowAnimation: React.FC<FlowAnimationProps> = ({
     let height = 0;
     let animationFrameId: number;
     let paths: PathData[] = [];
-    let explosions: Explosion[] = [];
     const mouse = { x: -1000, y: -1000, active: false };
 
     const buildPaths = () => {
@@ -109,22 +101,6 @@ export const FlowAnimation: React.FC<FlowAnimationProps> = ({
       buildPaths();
     };
 
-    const handlePointerDown = (e: MouseEvent | TouchEvent) => {
-      if (!interactive) return;
-      const rect = canvas.getBoundingClientRect();
-      const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
-      const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
-
-      explosions.push({
-        x,
-        y,
-        radius: 0,
-        life: 1,
-      });
-    };
-
     const handlePointerMove = (e: MouseEvent) => {
       if (!interactive) return;
       const rect = canvas.getBoundingClientRect();
@@ -139,9 +115,8 @@ export const FlowAnimation: React.FC<FlowAnimationProps> = ({
       mouse.y = -1000;
     };
 
-    // Attach listeners to container or parent section so clicks trigger shockwaves reliably
+    // Attach mouse movement listeners to container or parent section for subtle hover response
     const parentSection = container.closest("section") || container;
-    parentSection.addEventListener("click", handlePointerDown as EventListener);
     parentSection.addEventListener("mousemove", handlePointerMove as EventListener);
     parentSection.addEventListener("mouseleave", handlePointerLeave);
 
@@ -175,22 +150,6 @@ export const FlowAnimation: React.FC<FlowAnimationProps> = ({
 
       const centerX = width * 0.5;
       const centerY = height * 0.5;
-
-      // Update shockwave explosions
-      explosions.forEach((exp) => {
-        exp.radius += 11;
-        exp.life -= 0.016;
-      });
-      explosions = explosions.filter((exp) => exp.life > 0);
-
-      // Render shockwave ripple rings
-      explosions.forEach((exp) => {
-        ctx.beginPath();
-        ctx.arc(exp.x, exp.y, exp.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(0, 215, 255, ${Math.max(0, exp.life * 0.45)})`;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-      });
 
       // Render central gateway subtle convergence glow
       const pulse = Math.sin(Date.now() * 0.0025) * 0.15 + 0.85;
@@ -249,18 +208,6 @@ export const FlowAnimation: React.FC<FlowAnimationProps> = ({
           let dxTotal = 0;
           let dyTotal = 0;
 
-          // Shockwave displacement
-          explosions.forEach((exp) => {
-            const dx = pos.x - exp.x;
-            const dy = pos.y - exp.y;
-            const dist = Math.hypot(dx, dy);
-            if (dist < exp.radius + 110 && dist > exp.radius - 110 && dist > 0.01) {
-              const force = (1 - Math.abs(dist - exp.radius) / 110) * exp.life;
-              dxTotal += (dx / dist) * force * 70;
-              dyTotal += (dy / dist) * force * 70;
-            }
-          });
-
           // Mouse proximity interaction
           if (mouse.active) {
             const mdx = pos.x - mouse.x;
@@ -306,7 +253,6 @@ export const FlowAnimation: React.FC<FlowAnimationProps> = ({
       cancelAnimationFrame(animationFrameId);
       resizeObserver.disconnect();
       window.removeEventListener("resize", resize);
-      parentSection.removeEventListener("click", handlePointerDown as EventListener);
       parentSection.removeEventListener("mousemove", handlePointerMove as EventListener);
       parentSection.removeEventListener("mouseleave", handlePointerLeave);
     };

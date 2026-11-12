@@ -9,6 +9,7 @@ import "./globals.css";
 import favicon from "../assets/fav-icon.png";
 import Stickybuttons from "./components/common/Stickybuttons";
 import Preloader from "./components/common/Preloader";
+import { PreloaderProvider } from "./context/PreloaderContext";
 
 const neueMontreal = localFont({
   src: [
@@ -86,12 +87,14 @@ gtag('js', new Date());
 gtag('config', 'G-4EK17VYTF5');`}
         </Script>
 
-        <Preloader />
-        <Header />
-        {children}
-        <Footer />
+        <PreloaderProvider>
+          <Preloader />
+          <Header />
+          {children}
+          <Footer />
 
-        <Stickybuttons/>
+          <Stickybuttons/>
+        </PreloaderProvider>
       </body>
     </html>
   );

@@ -27,3 +27,4 @@ export const PreloaderProvider: React.FC<{ children: React.ReactNode }> = ({
 };
 
 export const usePreloader = () => useContext(PreloaderContext);
+

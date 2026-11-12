@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Logo from "../../../assets/Domine Dude white.svg";
@@ -98,10 +98,25 @@ const servicesData = [
 const Header = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   
   // Mega Menu States
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Helper function for simple exact match links
   const isActive = (path: string) => (pathname === path ? "active" : "");
@@ -144,9 +159,17 @@ const Header = () => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-[100] flex justify-center pointer-events-none">
+      <nav
+        className={`fixed top-0 left-0 w-full z-[100] flex justify-center transition-all duration-300 ${
+          isScrolled
+            ? "bg-white shadow-[0_4px_24px_rgba(0,0,0,0.08)] pointer-events-auto"
+            : "bg-transparent pointer-events-none"
+        }`}
+      >
         <motion.section
-          className="navbar container pointer-events-auto"
+          className={`navbar container pointer-events-auto ${
+            isScrolled ? "is-scrolled" : ""
+          }`}
         >
           <motion.div 
             className="navbar-container h-full flex flex-col justify-center"

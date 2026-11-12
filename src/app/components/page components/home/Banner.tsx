@@ -5,12 +5,14 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import MainButton from "../../common/MainButton";
 import FlowAnimation from "./FlowAnimation";
+import { usePreloader } from "../../../context/PreloaderContext";
 import "./Home.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Banner = () => {
   const bannerRef = useRef<HTMLDivElement | null>(null);
+  const { isPreloaderComplete } = usePreloader();
 
   const splitWords = (text: string) => {
     return text.split(" ").map((word, index) => (
@@ -21,48 +23,55 @@ const Banner = () => {
   };
 
   useLayoutEffect(() => {
+    const titleWords = bannerRef.current?.querySelectorAll(".banner-content .word-span");
+    const introText = bannerRef.current?.querySelector(".banner-content > p");
+    const bannerButton = bannerRef.current?.querySelector(".banner-btn");
+
+    if (!titleWords || titleWords.length === 0) {
+      return;
+    }
+
+    // Keep hidden until preloader is complete
+    if (!isPreloaderComplete) {
+      gsap.set(titleWords, { y: 50, opacity: 0, rotation: 5 });
+      if (introText) gsap.set(introText, { y: 30, opacity: 0 });
+      if (bannerButton) gsap.set(bannerButton, { y: 30, opacity: 0 });
+      return;
+    }
+
     const ctx = gsap.context(() => {
-      const titleWords = bannerRef.current?.querySelectorAll(".banner-content .word-span");
-      const introText = bannerRef.current?.querySelector(".banner-content > p");
-      const bannerCounter = bannerRef.current?.querySelector(".banner-counter");
-      const bannerButton = bannerRef.current?.querySelector(".banner-btn");
+      const tl = gsap.timeline({ delay: 0.1 });
 
-      if (!titleWords || titleWords.length === 0) {
-        return;
-      }
-
-      const tl = gsap.timeline({ delay: 0.3 });
-
-      tl.from(titleWords, {
-        y: 50,
-        opacity: 0,
-        rotation: 5,
-        duration: 0.8,
+      tl.to(titleWords, {
+        y: 0,
+        opacity: 1,
+        rotation: 0,
+        duration: 0.85,
         ease: "power3.out",
         stagger: 0.04,
       });
 
-      const introElements = [introText, bannerCounter, bannerButton].filter(
+      const introElements = [introText, bannerButton].filter(
         Boolean,
       ) as Element[];
 
       if (introElements.length > 0) {
-        tl.from(
+        tl.to(
           introElements,
           {
-            y: 30,
-            opacity: 0,
+            y: 0,
+            opacity: 1,
             duration: 0.8,
             ease: "power3.out",
-            stagger: 0.1,
+            stagger: 0.12,
           },
-          "-=0.4",
+          "-=0.45",
         );
       }
     }, bannerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isPreloaderComplete]);
 
   return (
     <>

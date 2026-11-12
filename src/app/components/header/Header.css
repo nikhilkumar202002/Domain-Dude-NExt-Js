@@ -16,9 +16,35 @@
 .navbar.is-scrolled {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  background: transparent;
+  background: #ffffff !important;
   border-color: transparent;
   border-radius: 0;
+  transition: background 0.3s ease;
+}
+
+.navbar.is-scrolled .navbar-item a {
+  color: #000000 !important;
+}
+
+.navbar.is-scrolled .navbar-item a:hover,
+.navbar.is-scrolled .navbar-item a.active {
+  color: var(--primary, #0054FF) !important;
+}
+
+.navbar.is-scrolled .navbar-logo-image {
+  filter: brightness(0);
+}
+
+.navbar.is-scrolled .navbar-arrow {
+  color: #000000;
+}
+
+.navbar.is-scrolled .navbar-item a:hover .navbar-arrow {
+  color: var(--primary, #0054FF);
+}
+
+.navbar.is-scrolled .mobile-menu-icon {
+  color: #000000 !important;
 }
 
 /* The gradient shadow logic */
@@ -178,9 +204,9 @@
   }
 
   .navbar.is-scrolled {
-    width: calc(100% - 24px) !important;
-    max-width: calc(100% - 24px) !important;
-    margin-top: 10px;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 0;
   }
 
   .navbar-container.is-scrolled {

@@ -2,10 +2,12 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import { usePreloader } from "../../context/PreloaderContext";
 import "./Preloader.css";
 
 const Preloader: React.FC = () => {
   const [isComplete, setIsComplete] = useState(false);
+  const { setIsPreloaderComplete } = usePreloader();
   const overlayRef = useRef<HTMLDivElement | null>(null);
 
   // Lock body scroll while preloader is active
@@ -99,6 +101,12 @@ const Preloader: React.FC = () => {
           yPercent: -100,
           duration: 0.95,
           ease: "power4.inOut",
+          onStart: () => {
+            setIsPreloaderComplete(true);
+            if (typeof window !== "undefined") {
+              window.dispatchEvent(new CustomEvent("preloaderComplete"));
+            }
+          },
         },
         2.8,
       );
