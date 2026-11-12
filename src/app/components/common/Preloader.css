@@ -19,12 +19,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 clamp(8px, 1.8vw, 32px);
+  padding: 0 clamp(16px, 2.5vw, 48px);
   margin: 0;
   gap: 0;
   white-space: nowrap;
   box-sizing: border-box;
-  overflow: hidden;
 }
 
 .preloader-mask {
@@ -32,22 +31,23 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.18em 0;
+  padding: 0.25em 0.15em;
   margin: 0;
-  line-height: 1.1;
+  line-height: 1.15;
 }
 
 .preloader-word {
   display: inline-block;
   font-family: var(--font-neue, 'Neue Montreal'), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-weight: 700;
-  font-size: clamp(26px, 9.4vw, 180px);
-  line-height: 1.1;
+  font-size: clamp(24px, 8.8vw, 160px);
+  line-height: 1.15;
   letter-spacing: -0.04em;
   text-transform: none;
   user-select: none;
   margin: 0;
-  padding: 0;
+  padding-right: 0.15em;
+  padding-left: 0.04em;
   -webkit-text-fill-color: currentColor !important;
   will-change: transform, opacity;
 }
