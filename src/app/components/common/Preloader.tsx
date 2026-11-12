@@ -1,16 +1,14 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import "./Preloader.css";
 
 const Preloader: React.FC = () => {
   const [isComplete, setIsComplete] = useState(false);
   const overlayRef = useRef<HTMLDivElement | null>(null);
-  const wordsRef = useRef<(HTMLSpanElement | null)[]>([]);
-  const progressRef = useRef<HTMLDivElement | null>(null);
 
-  // Lock scroll while preloader is active
+  // Lock body scroll while preloader is active
   useEffect(() => {
     if (!isComplete) {
       const originalOverflow = document.body.style.overflow;
@@ -21,103 +19,90 @@ const Preloader: React.FC = () => {
     }
   }, [isComplete]);
 
-  useLayoutEffect(() => {
-    if (!overlayRef.current) return;
+  useEffect(() => {
+    const overlay = overlayRef.current;
+    if (!overlay) return;
+
+    const word1 = overlay.querySelector<HTMLElement>(".word-1");
+    const word2 = overlay.querySelector<HTMLElement>(".word-2");
+    const word3 = overlay.querySelector<HTMLElement>(".word-3");
+
+    if (!word1 || !word2 || !word3) return;
 
     const ctx = gsap.context(() => {
-      const words = wordsRef.current.filter(Boolean) as HTMLSpanElement[];
-
       const tl = gsap.timeline({
+        delay: 0.1,
         onComplete: () => {
           setIsComplete(true);
         },
       });
 
-      // Initial positions
-      tl.set(overlayRef.current, { yPercent: 0 });
-      tl.set(words, { yPercent: 125, opacity: 0 });
-      if (progressRef.current) {
-        tl.set(progressRef.current, { scaleX: 0 });
-      }
+      // 1. Initial setup - hide words below their masks
+      tl.set([word1, word2, word3], {
+        y: "125%",
+        opacity: 0,
+      });
 
-      // Word 1: "Design." appears (Black)
-      if (words[0]) {
-        tl.to(
-          words[0],
-          {
-            yPercent: 0,
-            opacity: 1,
-            duration: 0.75,
-            ease: "power4.out",
-          },
-          0.25,
-        );
-      }
-
-      // Word 2: "Develop." appears (Primary Color)
-      if (words[1]) {
-        tl.to(
-          words[1],
-          {
-            yPercent: 0,
-            opacity: 1,
-            duration: 0.75,
-            ease: "power4.out",
-          },
-          0.75,
-        );
-      }
-
-      // Word 3: "Deliver." appears (Black)
-      if (words[2]) {
-        tl.to(
-          words[2],
-          {
-            yPercent: 0,
-            opacity: 1,
-            duration: 0.75,
-            ease: "power4.out",
-          },
-          1.25,
-        );
-      }
-
-      // Progress bar fills in sync across the bottom
-      if (progressRef.current) {
-        tl.to(
-          progressRef.current,
-          {
-            scaleX: 1,
-            duration: 1.8,
-            ease: "power2.inOut",
-          },
-          0.25,
-        );
-      }
-
-      // Words slight parallax lift
+      // 2. Word 1 ("Design.") appears (Black)
       tl.to(
-        words,
+        word1,
         {
-          yPercent: -40,
-          opacity: 0.8,
-          duration: 0.7,
+          y: "0%",
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        0.2,
+      );
+
+      // 3. Word 2 ("Develop.") appears (Primary Blue)
+      tl.to(
+        word2,
+        {
+          y: "0%",
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        0.85,
+      );
+
+      // 4. Word 3 ("Deliver.") appears (Black)
+      tl.to(
+        word3,
+        {
+          y: "0%",
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        1.5,
+      );
+
+      // 5. Hold all 3 words in view spanning the full screen edge-to-edge
+
+      // 6. Smooth exit: Words parallax up, white curtain lifts upward
+      tl.to(
+        [word1, word2, word3],
+        {
+          y: "-35%",
+          opacity: 0.85,
+          duration: 0.75,
           ease: "power3.in",
         },
-        2.1,
+        2.7,
       );
 
-      // Smooth curtain exit upwards
       tl.to(
-        overlayRef.current,
+        overlay,
         {
           yPercent: -100,
-          duration: 0.9,
+          duration: 0.95,
           ease: "power4.inOut",
         },
-        2.2,
+        2.8,
       );
-    }, overlayRef);
+    }, overlay);
 
     return () => ctx.revert();
   }, []);
@@ -132,46 +117,26 @@ const Preloader: React.FC = () => {
       role="status"
     >
       <div className="preloader-track">
-        {/* First word: Black */}
+        {/* Word 1: Black */}
         <div className="preloader-mask">
-          <span
-            ref={(el) => {
-              wordsRef.current[0] = el;
-            }}
-            className="preloader-word word-black"
-          >
+          <span className="preloader-word word-1 word-black">
             Design.
           </span>
         </div>
 
-        {/* Middle word: Primary Color */}
+        {/* Word 2: Primary Blue */}
         <div className="preloader-mask">
-          <span
-            ref={(el) => {
-              wordsRef.current[1] = el;
-            }}
-            className="preloader-word word-primary"
-          >
+          <span className="preloader-word word-2 word-primary">
             Develop.
           </span>
         </div>
 
-        {/* Third word: Black */}
+        {/* Word 3: Black */}
         <div className="preloader-mask">
-          <span
-            ref={(el) => {
-              wordsRef.current[2] = el;
-            }}
-            className="preloader-word word-black"
-          >
+          <span className="preloader-word word-3 word-black">
             Deliver.
           </span>
         </div>
-      </div>
-
-      {/* Subtle bottom progress bar */}
-      <div className="preloader-progress-track">
-        <div ref={progressRef} className="preloader-progress-fill" />
       </div>
     </div>
   );
