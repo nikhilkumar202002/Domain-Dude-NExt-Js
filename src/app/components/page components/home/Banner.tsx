@@ -97,7 +97,7 @@ const Banner = () => {
               that help brands grow online and attract more customers.
             </p>
 
-            <div className="banner-counter">
+            {/* <div className="banner-counter">
               <h3>Trusted by 100+ Brands Worldwide</h3>
               <div className="banner-counters">
                 <div className="banner-counters-item">
@@ -115,7 +115,7 @@ const Banner = () => {
                   <p>360° Digital Solutions</p>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="banner-btn">
               <MainButton label="Let’s Build Something" />

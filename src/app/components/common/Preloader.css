@@ -1,0 +1,75 @@
+.preloader-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background-color: #ffffff !important;
+  z-index: 9999999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.preloader-track {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 clamp(20px, 4.5vw, 80px);
+  white-space: nowrap;
+  box-sizing: border-box;
+  gap: clamp(12px, 2vw, 40px);
+}
+
+.preloader-mask {
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.18em 0.05em;
+  line-height: 1.15;
+}
+
+.preloader-word {
+  display: inline-block;
+  font-family: var(--font-neue, 'Neue Montreal'), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 700;
+  font-size: clamp(24px, 5.8vw, 108px);
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+  text-transform: none;
+  user-select: none;
+  -webkit-text-fill-color: currentColor !important;
+  will-change: transform, opacity;
+}
+
+.preloader-word.word-black {
+  color: #000000 !important;
+}
+
+.preloader-word.word-primary {
+  color: #0054FF !important;
+}
+
+.preloader-progress-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.preloader-progress-fill {
+  width: 100%;
+  height: 100%;
+  background-color: #0054FF !important;
+  transform-origin: left center;
+  transform: scaleX(0);
+  will-change: transform;
+}
