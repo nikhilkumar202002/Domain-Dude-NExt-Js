@@ -2,11 +2,18 @@
 
 import { useLayoutEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Image from "next/image";
 import MainButton from "../../common/MainButton";
 import "./Home.css";
 
+gsap.registerPlugin(ScrollTrigger);
+const beamCount = 24;
+
 const Banner = () => {
   const bannerRef = useRef<HTMLDivElement | null>(null);
+  const beamRefs = useRef<HTMLDivElement[]>([]);
+  const glowRef = useRef<HTMLDivElement | null>(null);
 
   // Helper function to split text into words wrapped in spans
   const splitWords = (text: string) => {
@@ -64,17 +71,15 @@ const Banner = () => {
   return (
     <>
       <section className="banner" ref={bannerRef}>
-        <video
+        <Image
           className="banner-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
+          src="/Banners/hero-banner.jpeg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
           aria-hidden="true"
-        >
-          <source src="/videos/banner-video.mp4" type="video/mp4" />
-        </video>
+        />
         <div className="banner-video-overlay" aria-hidden="true" />
         <div className="noise"></div>
         <div className="banner-container">

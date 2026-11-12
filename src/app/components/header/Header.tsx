@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Logo from "../../../assets/Domine Dude white.svg";
@@ -17,7 +17,6 @@ import {
 import { FaInstagram, FaLinkedinIn, FaXTwitter, FaFacebookF } from "react-icons/fa6";
 import "./Header.css";
 import MainButton from "../common/MainButton";
-import gsap from "gsap";
 
 // --- DATASET: Services & Key Points ---
 const servicesData = [
@@ -99,56 +98,10 @@ const servicesData = [
 const Header = () => {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const navbarRef = useRef<HTMLElement>(null);
-  const navbarContainerRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
   
   // Mega Menu States
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const shouldStick = window.scrollY > 50;
-
-      setIsScrolled((currentlySticky) => {
-        if (currentlySticky === shouldStick) return currentlySticky;
-
-        const desktop = window.innerWidth > 992;
-        if (desktop) {
-          const containerGutters = window.innerWidth > 1024 ? 192 : 96;
-
-          gsap.to(navbarRef.current, {
-            marginTop: shouldStick ? 20 : 0,
-            width: shouldStick ? `calc(100% - ${containerGutters}px)` : "100%",
-            maxWidth: shouldStick ? 1248 : "100%",
-            duration: 1.5,
-            ease: "power4.out",
-            overwrite: true,
-          });
-          gsap.to(navbarContainerRef.current, {
-            padding: shouldStick ? "15px" : window.innerWidth > 1120 ? "30px" : "30px 20px",
-            duration: 1.5,
-            ease: "power4.out",
-            overwrite: true,
-          });
-          gsap.to(logoRef.current, {
-            width: shouldStick ? 105 : 140,
-            duration: 1.5,
-            ease: "power4.out",
-            overwrite: true,
-          });
-        }
-
-        return shouldStick;
-      });
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Helper function for simple exact match links
   const isActive = (path: string) => (pathname === path ? "active" : "");
@@ -193,28 +146,18 @@ const Header = () => {
     <>
       <nav className="fixed top-0 left-0 w-full z-[100] flex justify-center pointer-events-none">
         <motion.section
-          ref={navbarRef}
-          className={`navbar pointer-events-auto ${isScrolled ? "is-scrolled" : ""}`}
-          style={{
-            width: "100%",
-            maxWidth: "100%",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
+          className="navbar container pointer-events-auto"
         >
           <motion.div 
-            ref={navbarContainerRef}
-            className={`navbar-container h-full flex flex-col justify-center ${isScrolled ? "is-scrolled" : ""}`}
+            className="navbar-container h-full flex flex-col justify-center"
           >
             <div className="navbar-flex flex items-center justify-between">
               
               <motion.div
-                ref={logoRef}
                 className="logo"
-                style={{ width: 140 }}
               >
                 <Link href="/">
-                  <Image className="navbar-logo-image" src={Logo} alt="Domain Dude" width={140} height={0} />
+                  <Image className="navbar-logo-image" src={Logo} alt="Domain Dude" width={100} height={0} />
                 </Link>
               </motion.div>
 
@@ -350,7 +293,7 @@ const Header = () => {
                         <Link key={item.name} href={item.href} legacyBehavior>
                           <motion.a
                             variants={linkVariants}
-                            whileHover={{ x: 6, color: "var(--secondary)" }}
+                            whileHover={{ x: 6, color: "var(--primary)" }}
                             onClick={() => setIsMenuOpen(false)} // Close on click
                           >
                             {item.name}

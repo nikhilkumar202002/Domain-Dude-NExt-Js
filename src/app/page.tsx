@@ -8,28 +8,24 @@ import Portfolio from "./components/page components/home/Portfolio"
 import Testimonial from "./components/page components/home/Testimonial"
 import Toolssection from "./components/page components/home/Toolssection"
 import Faq from "./components/page components/home/Faq"
-import SmoothScrolling from "./components/common/SmoothScrolling" 
+import SmoothScrolling from "./components/common/SmoothScrolling"
 
 const Page = () => {
   return (
     <SmoothScrolling>
       <Banner />
-      
-      {/* FLOW 1: About (Black) -> Tools (White) -> Service (Black) -> Portfolio (Black) */}
+
       <div id="main-flow" className="theme-transition-wrapper bg-black relative">
-          <Aboutsection/>
-          <Toolssection/>
-      <ClientList />
-
-          <Servicesection/>
-          <Portfolio/>
-
+        <Aboutsection />
+        <Portfolio />
+        <Toolssection />
+        <ClientList />
+        <Servicesection />
       </div>
-   
-      {/* FLOW 2: Testimonial (Black) -> Faq (White) */}
+
       <div id="footer-flow" className="theme-transition-wrapper bg-black relative">
-        <Testimonial/>
-        <Faq/>
+        <Testimonial />
+        <Faq />
       </div>
     </SmoothScrolling>
   )

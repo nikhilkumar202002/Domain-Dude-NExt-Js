@@ -4,128 +4,76 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import MainButton from "../../common/MainButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const aboutText =
+  "A creative digital agency from Kochi, driven by storytellers, designers, and growth strategists. We build unforgettable brand experiences, craft visuals that inspire, and create strategies that spark real growth. Our approach blends creativity with data-driven insights, ensuring every idea delivers impact. We do not just help brands grow we help them become brands people remember.";
+
 const Aboutsection = () => {
-  const containerRef = useRef<HTMLElement | null>(null);
-  const contentRef = useRef<HTMLDivElement | null>(null);
-  const labelRef = useRef<HTMLDivElement | null>(null);
-  const bodyRef = useRef<HTMLDivElement | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const wordsRef = useRef<HTMLSpanElement[]>([]);
+  const iconRefs = useRef<SVGSVGElement[]>([]);
 
-  const splitWords = (text: string) =>
-    text.split(" ").map((word, index) => (
-      <span
-        key={index}
-        className="word-wrapper inline-block overflow-hidden align-top"
-      >
-        <span className="word-span inline-block">{word}&nbsp;</span>
-      </span>
-    ));
+  useGSAP(() => {
+    const words = wordsRef.current;
 
-  useGSAP(
-    () => {
-      if (contentRef.current && containerRef.current) {
-        gsap.to(contentRef.current, {
-          opacity: 0,
-          y: -50,
-          scale: 0.98,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "bottom 60%",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
-      }
+    gsap.fromTo(
+      words,
+      { color: "#3a3a3a" },
+      {
+        color: "#f5f5f5",
+        ease: "none",
+        stagger: 0.035,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 72%",
+          end: "bottom 42%",
+          scrub: 1,
+        },
+      },
+    );
 
-      if (labelRef.current && bodyRef.current) {
-        const timeline = gsap.timeline({
-          scrollTrigger: {
-            trigger: contentRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        });
-
-        timeline
-          .from(labelRef.current, {
-            y: 20,
-            opacity: 0,
-            duration: 0.6,
-            ease: "power2.out",
-          })
-          .from(
-            bodyRef.current.querySelectorAll(".word-span"),
-            {
-              y: 50,
-              opacity: 0,
-              rotation: 5,
-              duration: 0.8,
-              ease: "power3.out",
-              stagger: 0.05,
-            },
-            "-=0.4",
-          )
-          .from(
-            bodyRef.current.querySelectorAll("p, .about-btn"),
-            {
-              y: 30,
-              opacity: 0,
-              duration: 0.8,
-              ease: "power3.out",
-              stagger: 0.1,
-            },
-            "-=0.6",
-          );
-      }
-
-    },
-    { scope: containerRef },
-  );
+    gsap.to(iconRefs.current, {
+      rotate: 360,
+      ease: "none",
+      stagger: 0.15,
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1,
+      },
+    });
+  }, { scope: sectionRef });
 
   return (
-    <section className="about-main relative z-10" ref={containerRef}>
-      <div ref={contentRef} className="about-container">
-        <div className="about-section-label" ref={labelRef}>
-          <span>About Us</span>
-        </div>
-
-        <div className="about-content-box" ref={bodyRef}>
-          <div className="about-upper">
-            <h2>
-              {splitWords("Brand")}
-              <span className="heading-highlight inline-block">
-                {splitWords(" Experiences")}
+    <section className="about-scroll-section" ref={sectionRef}>
+      <div className="about-scroll-container">
+        <div className="about-scroll-copy" aria-label={aboutText}>
+          {aboutText.split(" ").map((word, index) => (
+            <span key={`${word}-${index}`}>
+              <span
+                ref={(element) => {
+                  if (element) wordsRef.current[index] = element;
+                }}
+              >
+                {word}{" "}
               </span>
-              {splitWords(" That Actually Move Metrics.")}
-            </h2>
-          </div>
-
-          <div className="about-divider-row">
-            <div className="about-horizontal-line" aria-hidden="true" />
-            <div className="about-btn">
-              <MainButton label="Study More" />
-            </div>
-          </div>
-
-          <div className="about-lower">
-            <span className="about-pointer" aria-hidden="true">↳</span>
-            <p>
-              A creative digital agency from Kochi, driven by storytellers,
-              designers, and growth strategists. We build unforgettable brand
-              experiences, craft visuals that inspire, and create strategies
-              that spark real growth. Our approach blends creativity with
-              data-driven insights, ensuring every idea delivers impact. We
-              don’t just help brands grow — we help them become brands people
-              remember. From web experiences and content to campaigns and
-              performance marketing, we align everything to clear business
-              goals. We move fast, stay curious, and partner with brands that
-              are ready to think beyond the usual.
-            </p>
-          </div>
+              {(index === 14 || index === 45) && (
+                <svg
+                  ref={(element) => {
+                    if (element) iconRefs.current.push(element);
+                  }}
+                  className="about-scroll-icon"
+                  viewBox="0 0 50 50"
+                  aria-hidden="true"
+                >
+                  <path d="M25 3v44M3 25h44M9.5 9.5l31 31M40.5 9.5l-31 31" />
+                </svg>
+              )}
+            </span>
+          ))}
         </div>
       </div>
     </section>

@@ -1,8 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Link from "next/link";
-import { LuArrowUpRight } from "react-icons/lu";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -23,7 +22,6 @@ const services = [
 const Servicesection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
-  const [activeService, setActiveService] = useState(1);
 
   const splitWords = (text: string) =>
     text.split(" ").map((word, index) => (
@@ -78,58 +76,34 @@ const Servicesection = () => {
         </div>
 
         <motion.div
-          className="service-accordion"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-10% 0px 0px 0px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="service-grid"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
         >
           {services.map((service) => {
-            const isActive = activeService === service.id;
-
             return (
-              <article
+              <motion.div
                 key={service.id}
-                className={`service-accordion-card ${isActive ? "is-active" : ""}`}
-                onClick={() => setActiveService(service.id)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    setActiveService(service.id);
-                  }
-                }}
-                role="button"
-                tabIndex={0}
-                aria-expanded={isActive}
+                className="service-grid-card"
+                variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                whileHover={{ y: -6 }}
               >
-                <span className="service-accordion-number">
-                  {String(service.id).padStart(2, "0")}
-                  {isActive ? "." : ""}
-                </span>
-
-                <div className="service-accordion-active-content" aria-hidden={!isActive}>
+                <Link href={service.href} className="service-grid-card-link">
+                  <span className="service-grid-number">{String(service.id).padStart(2, "0")}</span>
                   <h3>{service.title}</h3>
-                  <div className="service-accordion-copy">
-                    <p>{service.desc}</p>
-                    <Link
-                      href={service.href}
-                      tabIndex={isActive ? 0 : -1}
-                      onClick={(event) => event.stopPropagation()}
-                    >
-                      Read More <LuArrowUpRight aria-hidden="true" />
-                    </Link>
-                  </div>
-                </div>
-                <h3 className="service-accordion-vertical-title" aria-hidden={isActive}>
-                  {service.title}
-                </h3>
-              </article>
+                  <p>{service.desc}</p>
+                  <span className="service-grid-link">Explore service ↗</span>
+                </Link>
+              </motion.div>
             );
           })}
         </motion.div>
 
         <div className="service-section-btn flex justify-center mt-12">
-          <MainButton label="Explore Our Services" />
+          <MainButton label="View All Projects" href="/projects" />
         </div>
       </div>
     </section>

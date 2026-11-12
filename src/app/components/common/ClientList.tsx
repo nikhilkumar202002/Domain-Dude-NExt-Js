@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import "./Styles.css";
 import advertoLogo from "../../../assets/client-logos/ADVERTO.png";
 import arjunAssociatesLogo from "../../../assets/client-logos/ARJUN-ASSOCITES.png";
@@ -82,27 +83,43 @@ const clients = [
 
 const ClientList = () => {
   return (
-    <section className="client-list-section" aria-labelledby="client-list-title">
-      <div className="container client-list-heading">
+    <motion.section
+      className="client-list-section"
+      aria-labelledby="client-list-title"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
+    >
+      <motion.div
+        className="container client-list-heading"
+        variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
         <h2 id="client-list-title">Our Clients</h2>
         <p>Trusted by ambitious brands</p>
-      </div>
+      </motion.div>
 
       <div className="container">
         <div className="client-logo-grid">
           {clients.map((client) => (
-            <div className="client-logo-card" key={client.name}>
+            <motion.div
+              className="client-logo-card"
+              key={client.name}
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
               <Image
                 src={client.logo}
                 alt={`${client.name} logo`}
                 width={180}
                 height={90}
               />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
