@@ -535,7 +535,7 @@
   color: #a1a1aa !important;
   font-family: var(--font-neue);
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 400 !important;
   text-decoration: none;
   transition: color 0.25s ease;
 }
@@ -566,7 +566,7 @@
   color: #8c8c93 !important;
   font-family: var(--font-neue);
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400 !important;
   line-height: 1.35;
   text-decoration: none;
   transition:

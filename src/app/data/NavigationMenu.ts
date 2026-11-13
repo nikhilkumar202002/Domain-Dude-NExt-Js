@@ -36,7 +36,6 @@ export const navItems: NavItem[] = [
   { id: "services", name: "Services", href: "/our-services", hasDropdown: true },
   { id: "works", name: "Works", href: "/works" },
   { id: "industry", name: "Industry", href: "/industry" },
-  { id: "insights", name: "Insights", href: "/insights" },
   { id: "contact", name: "Contact", href: "/contact-us" },
 ];
 
