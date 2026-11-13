@@ -170,7 +170,16 @@ const Footer = () => {
                                 </p>
 
                     </div>
-                    <div className="footer-copyright-righr">
+                    <div className="footer-copyright-center">
+                      <Link href="/privacy-policy" className="footer-legal-link">
+                        Privacy Policy
+                      </Link>
+                      <span className="footer-legal-divider" aria-hidden="true">•</span>
+                      <Link href="/terms-and-conditions" className="footer-legal-link">
+                        Terms and Conditions
+                      </Link>
+                    </div>
+                    <div className="footer-copyright-right">
                         <div className="footer-copyright-social">
                             <a href="https://www.instagram.com/domain.dude_?igsh=NzlraHBoMHZzYWJn" target="_blank" rel="noopener noreferrer" aria-label="Domain Dude on Instagram"><FaInstagram/></a>
                             <a href="https://www.facebook.com/profile.php?id=61573770105887" target="_blank" rel="noopener noreferrer" aria-label="Domain Dude on Facebook"><FaFacebookF/></a>
