@@ -172,15 +172,13 @@ const Header = () => {
                                   {/* Left Brand Intro */}
                                   <div className="mega-menu-left">
                                     <h3 className="mega-menu-headline">
-                                      Building
+                                      We Build.
                                       <br />
-                                      Strong
+                                      We Innovate.
                                       <br />
-                                      Capabilities to
+                                      We Elevate
                                       <br />
-                                      Empower Your
-                                      <br />
-                                      Brand
+                                      Your Brand.
                                     </h3>
                                     <Link
                                       href="/our-services"

@@ -1,0 +1,144 @@
+.counter-section {
+  width: 100%;
+  padding: 80px 0;
+  position: relative;
+  background-color: var(--counter-bg, transparent);
+  color: var(--counter-text, #ffffff);
+  box-sizing: border-box;
+}
+
+.counter-container {
+  width: 100%;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 40px);
+  box-sizing: border-box;
+}
+
+.counter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 4 cards with lines in between columns only */
+.counter-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 40px clamp(20px, 2.5vw, 48px);
+  background-color: var(--counter-card-bg, transparent);
+  border-right: 1px solid var(--counter-line, rgba(255, 255, 255, 0.12));
+  box-sizing: border-box;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* NO line after the last column */
+.counter-card:last-child {
+  border-right: none !important;
+}
+
+.counter-value-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  margin-bottom: 18px;
+  line-height: 1;
+}
+
+.counter-number {
+  font-family: var(--font-neue), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: clamp(44px, 4.2vw, 68px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--counter-text, #ffffff);
+  line-height: 1;
+}
+
+.counter-prefix {
+  font-family: var(--font-neue), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: clamp(32px, 3vw, 48px);
+  font-weight: 600;
+  color: var(--counter-accent, #0054ff);
+  line-height: 1;
+  margin-right: 2px;
+}
+
+.counter-suffix {
+  font-family: var(--font-neue), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: clamp(32px, 3vw, 48px);
+  font-weight: 600;
+  color: var(--counter-accent, #0054ff);
+  line-height: 1;
+  margin-left: 2px;
+}
+
+.counter-title {
+  font-family: var(--font-neue), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: clamp(18px, 1.3vw, 22px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--counter-text, #ffffff);
+  margin: 0 0 10px 0;
+  line-height: 1.25;
+}
+
+.counter-description {
+  font-family: var(--font-neue), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--counter-muted, #8c8c93);
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* Tablet: 2x2 grid */
+@media (max-width: 1024px) and (min-width: 641px) {
+  .counter-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .counter-card {
+    padding: 36px 30px;
+  }
+
+  /* Lines in between columns: odd children get right border, even get none */
+  .counter-card:nth-child(odd) {
+    border-right: 1px solid var(--counter-line, rgba(255, 255, 255, 0.12));
+  }
+
+  .counter-card:nth-child(even) {
+    border-right: none !important;
+  }
+
+  /* Horizontal divider between row 1 and row 2 */
+  .counter-card:nth-child(1),
+  .counter-card:nth-child(2) {
+    border-bottom: 1px solid var(--counter-line, rgba(255, 255, 255, 0.12));
+  }
+}
+
+/* Mobile: Single column with row dividers only */
+@media (max-width: 640px) {
+  .counter-section {
+    padding: 50px 0;
+  }
+
+  .counter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .counter-card {
+    padding: 30px 16px;
+    border-right: none !important;
+    border-bottom: 1px solid var(--counter-line, rgba(255, 255, 255, 0.12));
+  }
+
+  .counter-card:last-child {
+    border-bottom: none !important;
+  }
+}

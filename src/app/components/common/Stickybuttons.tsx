@@ -1,28 +1,58 @@
-'use client'
+'use client';
 
-import { IoLogoWhatsapp } from "react-icons/io5";
-import { IoMailUnreadOutline } from "react-icons/io5";
-import { LuPhoneCall } from "react-icons/lu";
+import React, { useEffect, useState } from "react";
+import "./Stickybuttons.css";
 
-import "./Styles.css";
+const Stickybuttons: React.FC = () => {
+  const [mounted, setMounted] = useState(false);
+  const [currentDate, setCurrentDate] = useState<Date | null>(null);
 
-const Stickybuttons = () => {
+  useEffect(() => {
+    setMounted(true);
+    setCurrentDate(new Date());
+
+    const timer = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  if (!mounted || !currentDate) {
+    return null;
+  }
+
+  // Format date: e.g. "Fri, Nov 13, 2026"
+  const formattedDate = currentDate.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  // Format time: e.g. "12:06:29 PM"
+  const formattedTime = currentDate.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  });
+
   return (
-    <>
-        <div className="sticky-buttons">
-            <div className="sticky-button-item">
-                <a href="tel:919048006320"><LuPhoneCall /></a>
-            </div>
-                 <div className="sticky-button-item">
-                <a href="mailto:info@domaindude"><IoMailUnreadOutline /></a>
-            </div>
+    <aside
+      className="sticky-datetime-container"
+      aria-label="Current date and time"
+    >
+      <div className="sticky-datetime-pill">
+        <span className="datetime-live-indicator" aria-hidden="true">
+          <span className="datetime-live-dot" />
+        </span>
+        <span className="datetime-date">{formattedDate}</span>
+        <span className="datetime-divider" aria-hidden="true">•</span>
+        <span className="datetime-time">{formattedTime}</span>
+      </div>
+    </aside>
+  );
+};
 
-                 <div className="sticky-button-item">
-                <a href="https://wa.me/919048006320?text=Hi%20Domain%20Dude%2C%20I%27d%20like%20to%20discuss%20a%20new%20project.%20Can%20you%20help%20me%20with%20my%20brand%20and%20website%3F"><IoLogoWhatsapp /></a>
-            </div>
-        </div>
-    </>
-  )
-}
-
-export default Stickybuttons
+export default Stickybuttons;
