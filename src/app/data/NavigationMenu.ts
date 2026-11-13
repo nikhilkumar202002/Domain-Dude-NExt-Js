@@ -19,6 +19,17 @@ export interface SocialLink {
   platform: "instagram" | "linkedin" | "twitter" | "facebook";
 }
 
+export interface MegaMenuCategory {
+  title: string;
+  href: string;
+  items: string[];
+}
+
+export interface MegaMenuColumn {
+  id: string;
+  categories: MegaMenuCategory[];
+}
+
 export const navItems: NavItem[] = [
   { id: "home", name: "Home", href: "/" },
   { id: "about", name: "About", href: "/about" },
@@ -100,6 +111,92 @@ export const servicesData: ServiceItem[] = [
       "Marketing poster and banner design",
       "Branding and print design services",
       "Pitch deck and presentation design",
+    ],
+  },
+];
+
+export const megaMenuColumns: MegaMenuColumn[] = [
+  {
+    id: "col-1",
+    categories: [
+      {
+        title: "Branding",
+        href: "/our-services/branding-visual",
+        items: [
+          "Brand Consulting",
+          "Logo Design",
+          "Visual Identity Systems",
+          "Rebranding Solutions",
+          "Brand Guidelines & Voice",
+        ],
+      },
+      {
+        title: "Experience Design",
+        href: "/our-services/ui-ux-design",
+        items: [
+          "UI/UX Design",
+          "Website Design",
+          "Mobile App UI/UX",
+          "Wireframing & Prototyping",
+          "Conversion-Focused Interfaces",
+        ],
+      },
+    ],
+  },
+  {
+    id: "col-2",
+    categories: [
+      {
+        title: "Technology",
+        href: "/our-services/web-development",
+        items: [
+          "Custom Web Development",
+          "Responsive Web Design",
+          "SEO-Friendly Architecture",
+          "React & Next.js Websites",
+          "WordPress Development",
+          "E-commerce Solutions",
+        ],
+      },
+      {
+        title: "Video Production",
+        href: "/our-services/video-production",
+        items: [
+          "Corporate & Brand Films",
+          "Social Media Reels & Shorts",
+          "Product Explainer Videos",
+          "Motion Graphics & Animation",
+          "Script-to-Screen Production",
+        ],
+      },
+    ],
+  },
+  {
+    id: "col-3",
+    categories: [
+      {
+        title: "Digital Marketing",
+        href: "/our-services/digital-marketing",
+        items: [
+          "Search Engine Optimization (SEO)",
+          "Generative Engine Optimization",
+          "Social Media Management",
+          "Performance Marketing",
+          "Content Marketing Strategy",
+          "Marketing Automation & Analytics",
+        ],
+      },
+      {
+        title: "Graphics Designing",
+        href: "/our-services/graphics-designing",
+        items: [
+          "Graphic Design Services",
+          "Social Media Creatives",
+          "Marketing Banners & Posters",
+          "Brand Collateral & Print",
+          "Pitch Decks & Presentations",
+        ],
+      },
     ],
   },
 ];
