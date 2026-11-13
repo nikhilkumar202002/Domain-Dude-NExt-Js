@@ -532,20 +532,22 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #a1a1aa !important;
+  color: #ffffff !important;
   font-family: var(--font-neue);
   font-size: 20px;
   font-weight: 400 !important;
   text-decoration: none;
-  transition: color 0.25s ease;
+  transition: color 0.25s ease, opacity 0.25s ease;
 }
 
 .mega-menu-category-title:hover {
   color: #ffffff !important;
+  opacity: 0.85;
 }
 
 .mega-menu-category-title .category-arrow {
   font-size: 16px;
+  color: #ffffff;
   transition: transform 0.25s ease;
 }
 

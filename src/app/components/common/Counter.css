@@ -1,6 +1,6 @@
 .counter-section {
   width: 100%;
-  padding: 80px 0;
+  padding: 0 0 clamp(60px, 8vw, 100px) 0;
   position: relative;
   background-color: var(--counter-bg, transparent);
   color: var(--counter-text, #ffffff);
@@ -9,9 +9,6 @@
 
 .counter-container {
   width: 100%;
-  max-width: 1380px;
-  margin: 0 auto;
-  padding: 0 clamp(16px, 3vw, 40px);
   box-sizing: border-box;
 }
 
@@ -30,15 +27,21 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 40px clamp(20px, 2.5vw, 48px);
+  padding: 32px clamp(20px, 2.5vw, 44px);
   background-color: var(--counter-card-bg, transparent);
   border-right: 1px solid var(--counter-line, rgba(255, 255, 255, 0.12));
   box-sizing: border-box;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-/* NO line after the last column */
+/* First column flush with container left edge */
+.counter-card:first-child {
+  padding-left: 0;
+}
+
+/* Last column flush with container right edge and NO right border */
 .counter-card:last-child {
+  padding-right: 0;
   border-right: none !important;
 }
 
@@ -53,7 +56,7 @@
 .counter-number {
   font-family: var(--font-neue), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: clamp(44px, 4.2vw, 68px);
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: -0.04em;
   color: var(--counter-text, #ffffff);
   line-height: 1;
@@ -62,7 +65,7 @@
 .counter-prefix {
   font-family: var(--font-neue), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: clamp(32px, 3vw, 48px);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--counter-accent, #0054ff);
   line-height: 1;
   margin-right: 2px;
@@ -71,7 +74,7 @@
 .counter-suffix {
   font-family: var(--font-neue), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: clamp(32px, 3vw, 48px);
-  font-weight: 400;
+  font-weight: 500;
   color: var(--counter-accent, #0054ff);
   line-height: 1;
   margin-left: 2px;
@@ -83,7 +86,6 @@
   font-weight: 500;
   letter-spacing: -0.02em;
   color: var(--counter-text, #ffffff);
-  /* margin: 0 0 10px 0; */
   line-height: 1.25;
 }
 
@@ -103,15 +105,16 @@
   }
 
   .counter-card {
-    padding: 36px 30px;
+    padding: 30px 24px;
   }
 
-  /* Lines in between columns: odd children get right border, even get none */
   .counter-card:nth-child(odd) {
+    padding-left: 0;
     border-right: 1px solid var(--counter-line, rgba(255, 255, 255, 0.12));
   }
 
   .counter-card:nth-child(even) {
+    padding-right: 0;
     border-right: none !important;
   }
 
@@ -125,7 +128,7 @@
 /* Mobile: Single column with row dividers only */
 @media (max-width: 640px) {
   .counter-section {
-    padding: 50px 0;
+    padding: 0 0 50px 0;
   }
 
   .counter-grid {
@@ -133,7 +136,7 @@
   }
 
   .counter-card {
-    padding: 30px 16px;
+    padding: 26px 0;
     border-right: none !important;
     border-bottom: 1px solid var(--counter-line, rgba(255, 255, 255, 0.12));
   }

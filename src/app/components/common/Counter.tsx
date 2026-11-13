@@ -159,7 +159,7 @@ const Counter: React.FC<CounterProps> = ({
       style={styleVariables as React.CSSProperties}
       aria-label="Key Performance Indicators and Metrics"
     >
-      <div className="counter-container">
+      <div className="counter-container container">
         <div className="counter-grid">
           {items.map((item, index) => (
             <div key={item.id ?? index} className="counter-card">
