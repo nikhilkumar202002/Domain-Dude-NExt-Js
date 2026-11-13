@@ -56,18 +56,23 @@
   flex-direction: column;
   align-items: center;
   padding: 80px 0px;
+  width: 100%;
+  overflow: hidden;
 }
 
 .footer-top-tagline h2 {
-  font-size: 100px;
+  font-size: clamp(26px, 5.8vw, 96px);
   font-weight: 400;
   color: white;
   font-family: var(--font-neue);
   margin-bottom: 20px;
+  white-space: nowrap;
+  text-align: center;
+  letter-spacing: -0.02em;
 }
 
-.footer-top-tagline h2 span {
-  color: var(--primary);
+.footer-top-tagline .footer-tagline-dot {
+  color: var(--primary, #0054ff);
 }
 
 /* Logo */
@@ -344,7 +349,8 @@
     padding: 40px 0px;
   }
   .footer-top-tagline h2 {
-    font-size: 35px;
+    font-size: clamp(24px, 5.5vw, 50px);
+    white-space: nowrap;
   }
 }
 

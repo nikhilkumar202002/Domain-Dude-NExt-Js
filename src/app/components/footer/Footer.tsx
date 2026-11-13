@@ -197,7 +197,7 @@ const Footer = () => {
                     whileInView="visible"
                     viewport={{ once: true }}
                 >
-                    <h2><span>D</span>esign. <span>D</span>evelop. <span>D</span>eliver.</h2>
+                    <h2>Design. Develop. Deliver<span className="footer-tagline-dot">.</span></h2>
                 </motion.div>
             </div>          
         </motion.div>
