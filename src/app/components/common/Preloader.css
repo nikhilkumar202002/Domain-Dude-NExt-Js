@@ -42,7 +42,6 @@
   font-weight: 700;
   font-size: clamp(24px, 8.8vw, 160px);
   line-height: 1.15;
-  letter-spacing: -0.04em;
   text-transform: none;
   user-select: none;
   margin: 0;

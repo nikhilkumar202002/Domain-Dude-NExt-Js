@@ -21,6 +21,28 @@
   padding: 10px 20px;
   border: 1px solid transparent;
 }
+
+/* Sizes */
+.main-btn.sm {
+  padding: 8px 16px;
+  font-size: 15px;
+}
+
+.main-btn.md {
+  padding: 10px 20px;
+  font-size: 17px;
+}
+
+.main-btn.lg {
+  padding: 16px 36px;
+  font-size: 19px;
+  border-radius: 40px 40px 40px 0px;
+  gap: 10px;
+}
+
+.main-btn.lg .arrow-icon {
+  font-size: 21px;
+}
 .main-btn:hover {
   transform: translateY(-2px); /* Subtle lift */
 }
@@ -98,7 +120,6 @@
 .client-list-heading p {
   color: #707070;
   font-size: 13px;
-  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
@@ -107,7 +128,6 @@
   font-size: clamp(42px, 6vw, 84px);
   font-weight: 400;
   line-height: 0.9;
-  letter-spacing: -0.05em;
 }
 
 .client-logo-grid {
