@@ -33,89 +33,70 @@ const Aboutsection = () => {
       const words = headingRef.current?.querySelectorAll(".heading-word");
       const bubble2 = card1Ref.current?.querySelector(".whatsapp-bubble-bottom");
 
-      // Initial card states
-      gsap.set(card1Ref.current, {
+      // Initial state: Heading words
+      if (words?.length) {
+        gsap.set(words, { autoAlpha: 0, y: 24 });
+      }
+
+      // Initial states: All 4 cards centered and hidden
+      gsap.set([card1Ref.current, card2Ref.current, card3Ref.current, card4Ref.current], {
         autoAlpha: 0,
-        scale: 0.4,
-        y: 35,
-        rotation: -6,
-        transformOrigin: "100% 100%",
+        scale: 0.88,
+        y: 40,
+        rotation: 0,
       });
 
       if (bubble2) {
-        gsap.set(bubble2, { autoAlpha: 0, scale: 0.85, y: 12 });
-      }
-
-      gsap.set(card2Ref.current, {
-        autoAlpha: 0,
-        y: 60,
-        rotation: 1,
-        transformOrigin: "50% 50%",
-      });
-
-      gsap.set(card3Ref.current, {
-        autoAlpha: 0,
-        y: 90,
-        scale: 0.94,
-        rotation: 3,
-        transformOrigin: "50% 100%",
-      });
-
-      gsap.set(card4Ref.current, {
-        autoAlpha: 0,
-        scale: 1.35,
-        y: -40,
-        rotation: -14,
-        transformOrigin: "50% 50%",
-      });
-
-      if (words?.length) {
-        gsap.set(words, { autoAlpha: 0, y: 28 });
+        gsap.set(bubble2, { autoAlpha: 0, scale: 0.85, y: 10 });
       }
 
       if (aiThinkingRef.current) gsap.set(aiThinkingRef.current, { autoAlpha: 0 });
       if (aiReplyTextRef.current) gsap.set(aiReplyTextRef.current, { autoAlpha: 0, y: 8 });
       if (aiBottomBarRef.current) gsap.set(aiBottomBarRef.current, { autoAlpha: 0 });
 
+      // Unified Scrub Timeline: Displays one card at a time in the center
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: wrapperRef.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.8,
+          scrub: 0.7,
         },
       });
 
-      // 1. Heading words reveal (0.00 -> 0.18)
+      // 0. Heading reveal
       if (words?.length) {
         tl.to(
           words,
           {
             autoAlpha: 1,
             y: 0,
-            duration: 0.18,
-            stagger: 0.02,
+            duration: 0.08,
+            stagger: 0.015,
             ease: "power2.out",
           },
-          0.02,
+          0.0,
         );
       }
 
-      // 2. Card 1 (WhatsApp) pops in from tail corner (0.16 -> 0.36)
+      // ----------------------------------------------------
+      // BEAT 1: CARD 1 (WhatsApp)
+      // ----------------------------------------------------
+      // Enters
       tl.to(
         card1Ref.current,
         {
           autoAlpha: 1,
           scale: 1,
           y: 0,
-          rotation: -2,
-          duration: 0.18,
-          ease: "back.out(1.7)",
+          rotation: -1,
+          duration: 0.06,
+          ease: "back.out(1.4)",
         },
-        0.16,
+        0.08,
       );
 
-      // WhatsApp second message pops in right after
+      // Second message bubble pops in
       if (bubble2) {
         tl.to(
           bubble2,
@@ -123,71 +104,128 @@ const Aboutsection = () => {
             autoAlpha: 1,
             scale: 1,
             y: 0,
-            duration: 0.14,
-            ease: "back.out(1.6)",
+            duration: 0.05,
+            ease: "back.out(1.4)",
           },
-          0.26,
+          0.14,
         );
       }
 
-      // 3. Card 2 (AI Chat) rises in (0.32 -> 0.52)
+      // Hold for reading
+      tl.to({}, { duration: 0.07 }, 0.19);
+
+      // Exits upwards
+      tl.to(
+        card1Ref.current,
+        {
+          autoAlpha: 0,
+          scale: 0.92,
+          y: -35,
+          duration: 0.05,
+          ease: "power2.in",
+        },
+        0.26,
+      );
+
+      // ----------------------------------------------------
+      // BEAT 2: CARD 2 (AI / Claude Chat)
+      // ----------------------------------------------------
+      // Enters
       tl.to(
         card2Ref.current,
         {
           autoAlpha: 1,
+          scale: 1,
           y: 0,
           rotation: 0,
-          duration: 0.2,
+          duration: 0.06,
           ease: "power3.out",
         },
         0.32,
       );
 
-      // AI Card internal animation sequence:
-      // "Thinking..." shimmers in
+      // Shimmer "Thinking..."
       if (aiThinkingRef.current) {
-        tl.to(aiThinkingRef.current, { autoAlpha: 1, duration: 0.08 }, 0.4);
-        tl.to(aiThinkingRef.current, { autoAlpha: 0, duration: 0.06 }, 0.52);
+        tl.to(aiThinkingRef.current, { autoAlpha: 1, duration: 0.03 }, 0.35);
+        tl.to(aiThinkingRef.current, { autoAlpha: 0, duration: 0.02 }, 0.40);
       }
       // AI reply pops in
       if (aiReplyTextRef.current) {
-        tl.to(aiReplyTextRef.current, { autoAlpha: 1, y: 0, duration: 0.1 }, 0.54);
+        tl.to(aiReplyTextRef.current, { autoAlpha: 1, y: 0, duration: 0.04 }, 0.41);
       }
-      // AI action bar appears
+      // Action icons fade in
       if (aiBottomBarRef.current) {
-        tl.to(aiBottomBarRef.current, { autoAlpha: 1, duration: 0.1 }, 0.56);
+        tl.to(aiBottomBarRef.current, { autoAlpha: 1, duration: 0.03 }, 0.43);
       }
 
-      // 4. Card 3 (VS Code) slides onto the deck (0.52 -> 0.72)
+      // Hold for reading
+      tl.to({}, { duration: 0.07 }, 0.46);
+
+      // Exits upwards
+      tl.to(
+        card2Ref.current,
+        {
+          autoAlpha: 0,
+          scale: 0.92,
+          y: -35,
+          duration: 0.05,
+          ease: "power2.in",
+        },
+        0.53,
+      );
+
+      // ----------------------------------------------------
+      // BEAT 3: CARD 3 (VS Code Image)
+      // ----------------------------------------------------
+      // Enters
       tl.to(
         card3Ref.current,
         {
           autoAlpha: 1,
-          y: 0,
           scale: 1,
-          rotation: 1.5,
-          duration: 0.2,
+          y: 0,
+          rotation: 0,
+          duration: 0.06,
           ease: "power3.out",
         },
-        0.52,
+        0.59,
       );
 
-      // 5. Card 4 (Sticky Note) drops from above and settles (0.68 -> 0.88)
+      // Hold for reading/viewing code
+      tl.to({}, { duration: 0.11 }, 0.65);
+
+      // Exits upwards
+      tl.to(
+        card3Ref.current,
+        {
+          autoAlpha: 0,
+          scale: 0.92,
+          y: -35,
+          duration: 0.05,
+          ease: "power2.in",
+        },
+        0.76,
+      );
+
+      // ----------------------------------------------------
+      // BEAT 4: CARD 4 (Sticky Note Image)
+      // ----------------------------------------------------
+      // Enters
       tl.to(
         card4Ref.current,
         {
           autoAlpha: 1,
           scale: 1,
           y: 0,
-          rotation: -7,
-          duration: 0.2,
-          ease: "back.out(1.5)",
+          rotation: -3,
+          duration: 0.07,
+          ease: "back.out(1.4)",
         },
-        0.68,
+        0.82,
       );
 
-      // 6. Rest hold at the end (0.88 -> 1.0) so all cards are visible together
-      tl.to({}, { duration: 0.12 }, 0.88);
+      // Final hold until unpin
+      tl.to({}, { duration: 0.11 }, 0.89);
     },
     { scope: wrapperRef },
   );
@@ -195,9 +233,7 @@ const Aboutsection = () => {
   return (
     <section className="about-scroll-section" ref={wrapperRef}>
       <div className="about-sticky-container" ref={stickyRef}>
-        {/* Contained within site-wide container padding */}
         <div className="container flex flex-col items-center justify-center">
-          {/* Main Centered Heading */}
           <h2 className="about-incroy-heading" ref={headingRef}>
             <span className="block">
               {headingLine1.split(" ").map((word, i) => (
@@ -215,11 +251,9 @@ const Aboutsection = () => {
             </span>
           </h2>
 
-          {/* 4 Cards Composition */}
           <div className="about-cards-row">
             {/* Card 1: WhatsApp Chat Option (Black/Dark Theme) */}
             <div ref={card1Ref} className="about-card about-card-whatsapp">
-              {/* Message 1 */}
               <div className="whatsapp-bubble whatsapp-bubble-top">
                 <p className="whatsapp-text">
                   Your friend says he knows a guy who builds websites.
@@ -229,7 +263,6 @@ const Aboutsection = () => {
                 </div>
               </div>
 
-              {/* Message 2 */}
               <div className="whatsapp-bubble whatsapp-bubble-bottom">
                 <p className="whatsapp-text">
                   Someone else says social media is all you need.
@@ -249,7 +282,6 @@ const Aboutsection = () => {
                   </svg>
                 </div>
 
-                {/* Bubble Tail */}
                 <svg
                   className="whatsapp-tail"
                   viewBox="0 0 15 19"
@@ -267,12 +299,10 @@ const Aboutsection = () => {
             {/* Card 2: AI / Claude Chat (Black/Dark Theme) */}
             <div ref={card2Ref} className="about-card about-card-ai">
               <div className="ai-chat-container">
-                {/* User Prompt */}
                 <div className="ai-user-bubble">
                   <span>Your cousin says you should just use AI.</span>
                 </div>
 
-                {/* AI Reply Block */}
                 <div className="ai-reply-block">
                   <div className="ai-header">
                     <svg
@@ -295,7 +325,6 @@ const Aboutsection = () => {
                   </p>
                 </div>
 
-                {/* Bottom Actions */}
                 <div ref={aiBottomBarRef} className="ai-bottom-bar">
                   <div className="ai-action-icons">
                     <button
@@ -332,7 +361,7 @@ const Aboutsection = () => {
               </div>
             </div>
 
-            {/* Card 3: VS Code Actual Image (No overlay items) */}
+            {/* Card 3: VS Code Actual Image */}
             <div ref={card3Ref} className="about-card about-card-vscode">
               <Image
                 src="/vs-code.png"
@@ -344,7 +373,7 @@ const Aboutsection = () => {
               />
             </div>
 
-            {/* Card 4: Sticky Note Actual Image (No overlay items) */}
+            {/* Card 4: Sticky Note Actual Image */}
             <div ref={card4Ref} className="about-card about-card-stickynote">
               <Image
                 src="/sticky-note.png"
