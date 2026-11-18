@@ -1,0 +1,346 @@
+.about-scroll-section {
+  position: relative;
+  width: 100%;
+  background-color: #000000;
+  color: #ffffff;
+  z-index: 10;
+  /* Runway height for smooth scroll scrub */
+  min-height: 280vh;
+}
+
+.about-sticky-container {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Ensure the inner container uses standard site-wide padding */
+.about-sticky-container > .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.about-incroy-heading {
+  font-family: var(--font-neue, 'Neue Montreal'), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 500;
+  font-size: clamp(26px, 3.6vw, 54px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  text-align: center;
+  margin: 0 0 clamp(24px, 4vh, 48px) 0;
+  max-width: 980px;
+}
+
+.about-incroy-heading .heading-word {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.about-cards-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(10px, 1.5vw, 24px);
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+
+/* Base card positioning */
+.about-card {
+  position: relative;
+  will-change: transform, opacity;
+  flex-shrink: 0;
+}
+
+/* Card 1: WhatsApp (Chat Option 1) */
+.about-card-whatsapp {
+  align-self: flex-end;
+  margin-bottom: clamp(6px, 2vh, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: clamp(230px, 17vw, 265px);
+}
+
+.whatsapp-bubble {
+  position: relative;
+  background-color: #005c4b;
+  color: #ffffff;
+  border-radius: 14px;
+  padding: 10px 14px 7px 14px;
+  width: 100%;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+  will-change: transform, opacity;
+  box-sizing: border-box;
+}
+
+.whatsapp-bubble-top {
+  border-bottom-right-radius: 6px;
+}
+
+.whatsapp-bubble-bottom {
+  border-top-right-radius: 6px;
+}
+
+.whatsapp-text {
+  font-family: var(--font-neue, -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 14px;
+  line-height: 1.4;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+  font-weight: 400;
+}
+
+.whatsapp-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.whatsapp-time {
+  font-size: 11px;
+  color: #9cb1a9;
+  font-weight: 400;
+}
+
+.whatsapp-check {
+  width: 15px;
+  height: 15px;
+}
+
+.whatsapp-tail {
+  position: absolute;
+  right: -7px;
+  bottom: 0;
+  width: 12px;
+  height: 16px;
+  color: #005c4b;
+}
+
+/* Card 2: AI / Claude Chat (Chat Option 2) */
+.about-card-ai {
+  align-self: center;
+  width: clamp(245px, 19vw, 285px);
+}
+
+.ai-chat-container {
+  background-color: #161618;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 14px;
+  width: 100%;
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.ai-user-bubble {
+  align-self: flex-end;
+  background-color: #262629;
+  border-radius: 12px;
+  padding: 9px 13px;
+  max-width: 230px;
+}
+
+.ai-user-bubble span {
+  font-family: var(--font-neue, sans-serif);
+  font-size: 13px;
+  line-height: 1.4;
+  color: #ffffff;
+  display: block;
+}
+
+.ai-reply-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ai-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.claude-sparkle {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.ai-thinking-text {
+  font-size: 12.5px;
+  font-weight: 500;
+  background: linear-gradient(90deg, #71717a 0%, #ffffff 50%, #71717a 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: aiShimmer 1.8s infinite linear;
+}
+
+@keyframes aiShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.ai-reply-text {
+  font-family: var(--font-neue, sans-serif);
+  font-size: 15px;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.ai-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 8px;
+  margin-top: 2px;
+}
+
+.ai-action-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ai-icon-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #71717a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.ai-icon-btn:hover {
+  color: #ffffff;
+}
+
+.ai-timestamp {
+  font-size: 11px;
+  color: #71717a;
+}
+
+/* Card 3: VS Code (Direct actual image, no artificial overlay) */
+.about-card-vscode {
+  align-self: center;
+  width: clamp(360px, 31vw, 500px);
+}
+
+.vscode-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 20px 48px rgba(0, 0, 0, 0.7));
+  transition: transform 0.3s ease;
+}
+
+.vscode-img:hover {
+  transform: scale(1.03);
+}
+
+/* Card 4: Sticky Note (Direct actual image, no artificial overlay) */
+.about-card-stickynote {
+  align-self: center;
+  width: clamp(180px, 15vw, 240px);
+}
+
+.stickynote-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 16px 36px rgba(0, 0, 0, 0.5));
+  transition: transform 0.3s ease;
+}
+
+.stickynote-img:hover {
+  transform: scale(1.05) rotate(-5deg);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1180px) {
+  .about-cards-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, auto));
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .about-card-whatsapp {
+    align-self: center;
+    margin-bottom: 0;
+    width: clamp(260px, 40vw, 320px);
+  }
+
+  .about-card-ai {
+    width: clamp(260px, 40vw, 320px);
+  }
+
+  .about-card-vscode {
+    width: clamp(320px, 44vw, 440px);
+  }
+
+  .about-card-stickynote {
+    width: clamp(180px, 24vw, 240px);
+  }
+}
+
+@media (max-width: 640px) {
+  .about-scroll-section {
+    min-height: 230vh;
+  }
+
+  .about-incroy-heading {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .about-cards-row {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 16px;
+    max-height: 62vh;
+    overflow: visible;
+  }
+
+  .about-card-whatsapp {
+    width: 260px;
+  }
+
+  .about-card-ai {
+    width: 260px;
+  }
+
+  .about-card-vscode {
+    width: 290px;
+  }
+
+  .about-card-stickynote {
+    width: 160px;
+  }
+}
