@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import LogoWhite from "../../../assets/Domine Dude white.svg";
 import LogoBlack from "../../../assets/Domine-Dude_black.png";
