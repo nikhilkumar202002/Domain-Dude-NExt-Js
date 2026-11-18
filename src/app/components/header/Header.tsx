@@ -23,6 +23,7 @@ import "./Header.css";
 import { navItems, megaMenuColumns, socialLinks } from "../../data/NavigationMenu";
 
 const Header = () => {
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   
@@ -33,6 +34,20 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
+      const isHome = pathname === "/" || pathname === "";
+      if (isHome) {
+        const aboutEl = document.querySelector(".about-scroll-section");
+        if (aboutEl) {
+          const rect = aboutEl.getBoundingClientRect();
+          const navH = navRef.current?.offsetHeight || headerHeight || 77;
+          // Keep transparent throughout Hero and About sections.
+          // Switch to scrolled background once the bottom of the About section passes the header.
+          const isPastAbout = rect.bottom <= navH;
+          setIsScrolled(isPastAbout);
+          return;
+        }
+      }
+
       if (window.scrollY > 20) {
         setIsScrolled(true);
       } else {
@@ -44,6 +59,7 @@ const Header = () => {
       if (navRef.current) {
         setHeaderHeight(navRef.current.offsetHeight);
       }
+      handleScroll();
     };
 
     handleScroll();
@@ -54,7 +70,7 @@ const Header = () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", updateHeight);
     };
-  }, []);
+  }, [pathname, headerHeight]);
 
   const megaMenuVariants: Variants = {
     hidden: { opacity: 0, y: -4, display: "none" },

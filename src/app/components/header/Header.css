@@ -11,6 +11,7 @@
   border: 1px solid transparent;
   border-radius: 0;
   box-shadow: none;
+  transition: background 0.3s ease;
 }
 
 .navbar.is-scrolled {
