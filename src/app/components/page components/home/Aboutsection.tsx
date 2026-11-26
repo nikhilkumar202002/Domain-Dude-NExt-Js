@@ -116,19 +116,12 @@ const Aboutsection = () => {
   return (
     <section className="about-scroll-section" id="about-section">
       <div className="container">
-        {/* ROW 1: Left About Content & Right Image Placeholder (Blank Space) */}
+        {/* ROW 1: Left About Content (2 Lines) & Right Image Placeholder (Blank Space) */}
         <div className="about-first-row">
           <div className="about-first-row-left">
-            <div className="about-badge">
-              <span className="about-badge-dot"></span>
-              <span>Who We Are</span>
-            </div>
             <h2 className="about-statement">
               We craft memorable digital experiences and high-growth websites that elevate brands.
             </h2>
-            <p className="about-description">
-              From full-stack development and UI/UX design to creative branding and growth strategy, we turn bold ideas into high-converting digital products.
-            </p>
           </div>
 
           <div className="about-first-row-right">
